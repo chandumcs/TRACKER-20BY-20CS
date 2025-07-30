@@ -12,9 +12,9 @@ export default function Dashboard() {
     // Set current login time and get last logout time
     const now = new Date().toLocaleString();
     setLastLogin(now);
-    localStorage.setItem('lastLoginTime', now);
+    localStorage.setItem("lastLoginTime", now);
 
-    const lastLogoutTime = localStorage.getItem('lastLogoutTime');
+    const lastLogoutTime = localStorage.getItem("lastLogoutTime");
     if (lastLogoutTime) {
       setLastLogout(lastLogoutTime);
     }
@@ -22,9 +22,9 @@ export default function Dashboard() {
 
   const handleLogout = () => {
     const logoutTime = new Date().toLocaleString();
-    localStorage.setItem('lastLogoutTime', logoutTime);
-    localStorage.removeItem('userEmail');
-    navigate('/');
+    localStorage.setItem("lastLogoutTime", logoutTime);
+    localStorage.removeItem("userEmail");
+    navigate("/");
   };
 
   return (

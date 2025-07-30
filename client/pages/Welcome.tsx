@@ -5,24 +5,25 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 export default function Welcome() {
   const location = useLocation();
   const email = location.state?.email || "User";
-  
+
   // Extract name from email (part before @)
-  const userName = email.split('@')[0];
+  const userName = email.split("@")[0];
 
   return (
-    <div 
+    <div
       className="min-h-screen flex items-center justify-center px-4"
       style={{
-        backgroundImage: "url('https://cdn.builder.io/api/v1/image/assets%2F68d80f357eb44d4f91b54f9959266e98%2F8d16a2e9ec1743bca22b41627cfcc12a?format=webp&width=800')",
+        backgroundImage:
+          "url('https://cdn.builder.io/api/v1/image/assets%2F68d80f357eb44d4f91b54f9959266e98%2F8d16a2e9ec1743bca22b41627cfcc12a?format=webp&width=800')",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundRepeat: "no-repeat"
+        backgroundRepeat: "no-repeat",
       }}
     >
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-center">
-            <img 
+            <img
               src="https://cdn.builder.io/api/v1/image/assets%2F68d80f357eb44d4f91b54f9959266e98%2F8cee284c0a70412183ad1ae114224f28?format=webp&width=800"
               alt="Olive"
               className="h-12 mx-auto"

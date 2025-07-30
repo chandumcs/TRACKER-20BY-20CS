@@ -38,7 +38,8 @@ export default function Register() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
             <Label htmlFor="firstName">First Name</Label>
             <Input
               id="firstName"
@@ -83,9 +84,10 @@ export default function Register() {
               required
             />
           </div>
-          <Button className="w-full" type="submit">
-            Create Account
-          </Button>
+            <Button className="w-full" type="submit">
+              Create Account
+            </Button>
+          </form>
           <div className="text-center text-sm text-muted-foreground">
             Already have an account?{" "}
             <Link to="/" className="text-primary hover:underline">

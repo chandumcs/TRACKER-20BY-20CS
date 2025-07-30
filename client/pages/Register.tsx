@@ -6,6 +6,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { FormEvent } from "react";
 
 export default function Register() {
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    // Here you would typically handle form validation and API call
+    // For now, just redirect to dashboard
+    navigate('/dashboard');
+  };
   return (
     <div 
       className="min-h-screen flex items-center justify-center px-4"

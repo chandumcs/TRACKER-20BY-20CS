@@ -6,6 +6,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { FormEvent, useState } from "react";
 
 export default function Index() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    // Here you would typically handle authentication
+    // For now, just redirect to welcome page with email
+    navigate('/welcome', { state: { email } });
+  };
   return (
     <div
       className="min-h-screen flex items-center justify-center px-4"

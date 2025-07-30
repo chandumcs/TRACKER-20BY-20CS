@@ -5,22 +5,24 @@ import { useState, useEffect } from "react";
 export default function Dashboard() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [userName, setUserName] = useState("User");
+  const [lastLogin, setLastLogin] = useState("");
+  const [lastLogout, setLastLogout] = useState("");
 
   useEffect(() => {
-    // Try to get user info from location state or localStorage
-    const emailFromState = location.state?.email;
-    const emailFromStorage = localStorage.getItem('userEmail');
-    
-    const email = emailFromState || emailFromStorage;
-    
-    if (email) {
-      localStorage.setItem('userEmail', email);
-      setUserName(email.split('@')[0]);
+    // Set current login time and get last logout time
+    const now = new Date().toLocaleString();
+    setLastLogin(now);
+    localStorage.setItem('lastLoginTime', now);
+
+    const lastLogoutTime = localStorage.getItem('lastLogoutTime');
+    if (lastLogoutTime) {
+      setLastLogout(lastLogoutTime);
     }
-  }, [location.state]);
+  }, []);
 
   const handleLogout = () => {
+    const logoutTime = new Date().toLocaleString();
+    localStorage.setItem('lastLogoutTime', logoutTime);
     localStorage.removeItem('userEmail');
     navigate('/');
   };

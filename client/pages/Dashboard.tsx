@@ -33,17 +33,26 @@ export default function Dashboard() {
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Left side - Username */}
+            {/* Left side - Last Login Time */}
             <div className="flex items-center">
-              <h1 className="text-lg font-semibold text-gray-900">
-                Welcome, {userName}
-              </h1>
+              <div>
+                <span className="text-sm text-gray-500">Last Login:</span>
+                <div className="text-lg font-semibold text-gray-900">
+                  {lastLogin}
+                </div>
+              </div>
             </div>
-            
-            {/* Right side - Logout button */}
-            <div>
-              <Button 
-                variant="outline" 
+
+            {/* Right side - Last Logout Time and Logout button */}
+            <div className="flex items-center space-x-6">
+              <div className="text-right">
+                <span className="text-sm text-gray-500">Last Logout:</span>
+                <div className="text-lg font-semibold text-gray-900">
+                  {lastLogout || "Never"}
+                </div>
+              </div>
+              <Button
+                variant="outline"
                 onClick={handleLogout}
                 className="text-gray-700 hover:text-gray-900"
               >

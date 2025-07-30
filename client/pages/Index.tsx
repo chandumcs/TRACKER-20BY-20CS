@@ -50,6 +50,12 @@ export default function Index() {
           <Button className="w-full" type="submit">
             Sign In
           </Button>
+          <div className="text-center text-sm text-muted-foreground">
+            Don't have an account?{" "}
+            <Link to="/register" className="text-primary hover:underline">
+              Sign up
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>

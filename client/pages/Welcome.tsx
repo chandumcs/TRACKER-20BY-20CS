@@ -39,7 +39,7 @@ export default function Welcome() {
             </p>
           </div>
           <Button asChild className="w-full">
-            <Link to="/dashboard">
+            <Link to="/dashboard" state={{ email }}>
               Continue to Dashboard
             </Link>
           </Button>

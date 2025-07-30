@@ -39,12 +39,15 @@ export default function Index() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               type="email"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -57,9 +60,10 @@ export default function Index() {
               required
             />
           </div>
-          <Button className="w-full" type="submit">
-            Sign In
-          </Button>
+            <Button className="w-full" type="submit">
+              Sign In
+            </Button>
+          </form>
           <div className="text-center text-sm text-muted-foreground">
             Don't have an account?{" "}
             <Link to="/register" className="text-primary hover:underline">

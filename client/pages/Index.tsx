@@ -18,7 +18,7 @@ export default function Index() {
         <CardHeader className="space-y-1">
           <CardTitle className="text-center">
             <img
-              src="https://cdn.builder.io/api/v1/image/assets%2F68d80f357eb44d4f91b54f9959266e98%2F55d9fc5b2e1a469f9dcb50f952b3c456?format=webp&width=800"
+              src="https://cdn.builder.io/api/v1/image/assets%2F68d80f357eb44d4f91b54f9959266e98%2F8cee284c0a70412183ad1ae114224f28?format=webp&width=800"
               alt="Olive"
               className="h-12 mx-auto"
             />

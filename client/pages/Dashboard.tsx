@@ -81,35 +81,79 @@ export default function Dashboard() {
       <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         {/* Four-part grid layout */}
         <div className="grid grid-cols-2 gap-6 h-[calc(100vh-12rem)]">
-          {/* Top Left */}
-          <div className="bg-white rounded-lg shadow-md p-6 border">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Section 1</h2>
+          {/* Daily Tracker */}
+          <div
+            className={`bg-white rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
+              activeSection === 'daily-tracker' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
+            }`}
+            onClick={() => handleSectionClick('daily-tracker')}
+          >
+            <div className="flex items-center mb-4">
+              <Calendar className="h-6 w-6 text-blue-600 mr-3" />
+              <h2 className="text-xl font-semibold text-gray-800">Daily Tracker</h2>
+            </div>
             <div className="text-gray-600">
-              Content for top left section
+              <p className="mb-2">Track your daily activities and progress</p>
+              <div className="bg-blue-50 p-3 rounded">
+                <p className="text-sm text-blue-700">Today's Tasks: 5 completed, 3 pending</p>
+              </div>
             </div>
           </div>
 
-          {/* Top Right */}
-          <div className="bg-white rounded-lg shadow-md p-6 border">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Section 2</h2>
+          {/* Shift Hand Over */}
+          <div
+            className={`bg-white rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
+              activeSection === 'shift-handover' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
+            }`}
+            onClick={() => handleSectionClick('shift-handover')}
+          >
+            <div className="flex items-center mb-4">
+              <ClipboardList className="h-6 w-6 text-green-600 mr-3" />
+              <h2 className="text-xl font-semibold text-gray-800">Shift Hand Over</h2>
+            </div>
             <div className="text-gray-600">
-              Content for top right section
+              <p className="mb-2">Manage shift transitions and handovers</p>
+              <div className="bg-green-50 p-3 rounded">
+                <p className="text-sm text-green-700">Next shift: 6:00 PM - 2:00 AM</p>
+              </div>
             </div>
           </div>
 
-          {/* Bottom Left */}
-          <div className="bg-white rounded-lg shadow-md p-6 border">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Section 3</h2>
+          {/* All Users Data */}
+          <div
+            className={`bg-white rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
+              activeSection === 'users-data' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
+            }`}
+            onClick={() => handleSectionClick('users-data')}
+          >
+            <div className="flex items-center mb-4">
+              <Users className="h-6 w-6 text-purple-600 mr-3" />
+              <h2 className="text-xl font-semibold text-gray-800">All Users Data</h2>
+            </div>
             <div className="text-gray-600">
-              Content for bottom left section
+              <p className="mb-2">View and manage all user information</p>
+              <div className="bg-purple-50 p-3 rounded">
+                <p className="text-sm text-purple-700">Total users: 1,245 active</p>
+              </div>
             </div>
           </div>
 
-          {/* Bottom Right */}
-          <div className="bg-white rounded-lg shadow-md p-6 border">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Section 4</h2>
+          {/* Others */}
+          <div
+            className={`bg-white rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
+              activeSection === 'others' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
+            }`}
+            onClick={() => handleSectionClick('others')}
+          >
+            <div className="flex items-center mb-4">
+              <MoreHorizontal className="h-6 w-6 text-orange-600 mr-3" />
+              <h2 className="text-xl font-semibold text-gray-800">Others</h2>
+            </div>
             <div className="text-gray-600">
-              Content for bottom right section
+              <p className="mb-2">Additional tools and features</p>
+              <div className="bg-orange-50 p-3 rounded">
+                <p className="text-sm text-orange-700">Reports, Settings, Analytics</p>
+              </div>
             </div>
           </div>
         </div>

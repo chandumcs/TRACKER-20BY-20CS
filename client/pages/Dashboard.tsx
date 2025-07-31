@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Calendar, Users, ClipboardList, MoreHorizontal } from "lucide-react";
 
 export default function Dashboard() {
   const navigate = useNavigate();

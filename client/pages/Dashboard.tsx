@@ -102,19 +102,19 @@ export default function Dashboard() {
 
           {/* Shift Hand Over */}
           <div
-            className={`bg-white rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
+            className={`bg-gradient-to-br from-green-400 to-green-600 rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
               activeSection === 'shift-handover' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
             }`}
             onClick={() => handleSectionClick('shift-handover')}
           >
             <div className="flex items-center mb-4">
-              <ClipboardList className="h-6 w-6 text-green-600 mr-3" />
-              <h2 className="text-xl font-semibold text-gray-800">Shift Hand Over</h2>
+              <ClipboardList className="h-6 w-6 text-white mr-3" />
+              <h2 className="text-xl font-semibold text-white">Shift Hand Over</h2>
             </div>
-            <div className="text-gray-600">
+            <div className="text-white/90">
               <p className="mb-2">Manage shift transitions and handovers</p>
-              <div className="bg-green-50 p-3 rounded">
-                <p className="text-sm text-green-700">Next shift: 6:00 PM - 2:00 AM</p>
+              <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
+                <p className="text-sm text-white">Next shift: 6:00 PM - 2:00 AM</p>
               </div>
             </div>
           </div>

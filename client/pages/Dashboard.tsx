@@ -4,6 +4,24 @@ import { useState, useEffect } from "react";
 import { Calendar, Users, ClipboardList, MoreHorizontal } from "lucide-react";
 
 export default function Dashboard() {
+  // Add CSS animation keyframes
+  const gradientStyle = `
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  `;
+
+  // Inject styles
+  if (typeof document !== 'undefined') {
+    const styleElement = document.getElementById('gradient-animation') || document.createElement('style');
+    styleElement.id = 'gradient-animation';
+    styleElement.textContent = gradientStyle;
+    if (!document.getElementById('gradient-animation')) {
+      document.head.appendChild(styleElement);
+    }
+  }
   const navigate = useNavigate();
   const location = useLocation();
   const [lastLogin, setLastLogin] = useState("");

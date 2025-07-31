@@ -45,7 +45,7 @@ export default function Dashboard() {
 
             {/* Center - Heading */}
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent animate-pulse">
                 OLIVE-DCB
               </h1>
             </div>

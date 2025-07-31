@@ -121,19 +121,19 @@ export default function Dashboard() {
 
           {/* All Users Data */}
           <div
-            className={`bg-white rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
+            className={`bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
               activeSection === 'users-data' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
             }`}
             onClick={() => handleSectionClick('users-data')}
           >
             <div className="flex items-center mb-4">
-              <Users className="h-6 w-6 text-purple-600 mr-3" />
-              <h2 className="text-xl font-semibold text-gray-800">All Users Data</h2>
+              <Users className="h-6 w-6 text-white mr-3" />
+              <h2 className="text-xl font-semibold text-white">All Users Data</h2>
             </div>
-            <div className="text-gray-600">
+            <div className="text-white/90">
               <p className="mb-2">View and manage all user information</p>
-              <div className="bg-purple-50 p-3 rounded">
-                <p className="text-sm text-purple-700">Total users: 1,245 active</p>
+              <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
+                <p className="text-sm text-white">Total users: 1,245 active</p>
               </div>
             </div>
           </div>

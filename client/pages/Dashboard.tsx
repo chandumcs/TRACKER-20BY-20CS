@@ -83,19 +83,19 @@ export default function Dashboard() {
         <div className="grid grid-cols-2 gap-6 h-[calc(100vh-12rem)]">
           {/* Daily Tracker */}
           <div
-            className={`bg-white rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
+            className={`bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
               activeSection === 'daily-tracker' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
             }`}
             onClick={() => handleSectionClick('daily-tracker')}
           >
             <div className="flex items-center mb-4">
-              <Calendar className="h-6 w-6 text-blue-600 mr-3" />
-              <h2 className="text-xl font-semibold text-gray-800">Daily Tracker</h2>
+              <Calendar className="h-6 w-6 text-white mr-3" />
+              <h2 className="text-xl font-semibold text-white">Daily Tracker</h2>
             </div>
-            <div className="text-gray-600">
+            <div className="text-white/90">
               <p className="mb-2">Track your daily activities and progress</p>
-              <div className="bg-blue-50 p-3 rounded">
-                <p className="text-sm text-blue-700">Today's Tasks: 5 completed, 3 pending</p>
+              <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
+                <p className="text-sm text-white">Today's Tasks: 5 completed, 3 pending</p>
               </div>
             </div>
           </div>

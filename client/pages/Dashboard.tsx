@@ -8,6 +8,7 @@ export default function Dashboard() {
   const location = useLocation();
   const [lastLogin, setLastLogin] = useState("");
   const [lastLogout, setLastLogout] = useState("");
+  const [activeSection, setActiveSection] = useState<string | null>(null);
 
   useEffect(() => {
     // Set current login time and get last logout time

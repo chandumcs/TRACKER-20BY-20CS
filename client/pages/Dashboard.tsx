@@ -43,6 +43,13 @@ export default function Dashboard() {
               </div>
             </div>
 
+            {/* Center - Heading */}
+            <div className="flex items-center">
+              <h1 className="text-2xl font-bold text-gray-900">
+                olive-dcb
+              </h1>
+            </div>
+
             {/* Right side - Last Logout Time and Logout button */}
             <div className="flex items-center space-x-6">
               <div className="text-right">

@@ -140,19 +140,19 @@ export default function Dashboard() {
 
           {/* Others */}
           <div
-            className={`bg-white rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
+            className={`bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
               activeSection === 'others' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
             }`}
             onClick={() => handleSectionClick('others')}
           >
             <div className="flex items-center mb-4">
-              <MoreHorizontal className="h-6 w-6 text-orange-600 mr-3" />
-              <h2 className="text-xl font-semibold text-gray-800">Others</h2>
+              <MoreHorizontal className="h-6 w-6 text-white mr-3" />
+              <h2 className="text-xl font-semibold text-white">Others</h2>
             </div>
-            <div className="text-gray-600">
+            <div className="text-white/90">
               <p className="mb-2">Additional tools and features</p>
-              <div className="bg-orange-50 p-3 rounded">
-                <p className="text-sm text-orange-700">Reports, Settings, Analytics</p>
+              <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
+                <p className="text-sm text-white">Reports, Settings, Analytics</p>
               </div>
             </div>
           </div>

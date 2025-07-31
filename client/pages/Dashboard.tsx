@@ -72,7 +72,40 @@ export default function Dashboard() {
 
       {/* Main content area */}
       <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        {/* Dashboard content will go here */}
+        {/* Four-part grid layout */}
+        <div className="grid grid-cols-2 gap-6 h-[calc(100vh-12rem)]">
+          {/* Top Left */}
+          <div className="bg-white rounded-lg shadow-md p-6 border">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Section 1</h2>
+            <div className="text-gray-600">
+              Content for top left section
+            </div>
+          </div>
+
+          {/* Top Right */}
+          <div className="bg-white rounded-lg shadow-md p-6 border">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Section 2</h2>
+            <div className="text-gray-600">
+              Content for top right section
+            </div>
+          </div>
+
+          {/* Bottom Left */}
+          <div className="bg-white rounded-lg shadow-md p-6 border">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Section 3</h2>
+            <div className="text-gray-600">
+              Content for bottom left section
+            </div>
+          </div>
+
+          {/* Bottom Right */}
+          <div className="bg-white rounded-lg shadow-md p-6 border">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Section 4</h2>
+            <div className="text-gray-600">
+              Content for bottom right section
+            </div>
+          </div>
+        </div>
       </main>
     </div>
   );

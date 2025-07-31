@@ -53,15 +53,15 @@ export default function Dashboard() {
             {/* Right side - Last Logout Time and Logout button */}
             <div className="flex items-center space-x-6">
               <div className="text-right">
-                <span className="text-sm text-gray-500">Last Logout:</span>
-                <div className="text-lg font-semibold text-gray-900">
+                <span className="text-sm text-white/80">Last Logout:</span>
+                <div className="text-lg font-semibold text-white">
                   {lastLogout || "Never"}
                 </div>
               </div>
               <Button
                 variant="outline"
                 onClick={handleLogout}
-                className="text-gray-700 hover:text-gray-900"
+                className="text-white border-white/50 hover:bg-white/20 hover:text-white"
               >
                 Logout
               </Button>

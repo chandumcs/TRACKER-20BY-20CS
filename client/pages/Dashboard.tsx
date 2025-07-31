@@ -86,9 +86,14 @@ export default function Dashboard() {
         <div className="grid grid-cols-2 gap-6 h-[calc(100vh-12rem)]">
           {/* Daily Tracker */}
           <div
-            className={`bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
+            className={`rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
               activeSection === 'daily-tracker' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
             }`}
+            style={{
+              backgroundImage: 'linear-gradient(-45deg, #60A5FA, #3B82F6, #1D4ED8, #1E40AF)',
+              backgroundSize: '400% 400%',
+              animation: 'gradient 6s ease infinite'
+            }}
             onClick={() => handleSectionClick('daily-tracker')}
           >
             <div className="flex items-center mb-4">

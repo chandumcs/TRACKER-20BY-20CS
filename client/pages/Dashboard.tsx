@@ -35,7 +35,14 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundImage: 'linear-gradient(-45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7, #DDA0DD, #98D8E8, #F7DC6F)',
+        backgroundSize: '400% 400%',
+        animation: 'gradient 15s ease infinite'
+      }}
+    >
       {/* Header */}
       <header className="bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 shadow-lg border-b animate-gradient-x bg-[length:400%_400%]" style={{
         backgroundImage: 'linear-gradient(-45deg, #3B82F6, #8B5CF6, #10B981, #F59E0B, #EF4444, #3B82F6)',

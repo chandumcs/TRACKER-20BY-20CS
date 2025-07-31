@@ -44,10 +44,7 @@ export default function Dashboard() {
       }}
     >
       {/* Header */}
-      <header className="bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 shadow-lg border-b animate-gradient-x bg-[length:400%_400%]" style={{
-        backgroundImage: 'linear-gradient(-45deg, #3B82F6, #8B5CF6, #10B981, #F59E0B, #EF4444, #3B82F6)',
-        animation: 'gradient 8s ease infinite'
-      }}>
+      <header className="bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 shadow-lg border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Left side - Last Login Time */}

@@ -14,11 +14,13 @@ export default function Dashboard() {
   `;
 
   // Inject styles
-  if (typeof document !== 'undefined') {
-    const styleElement = document.getElementById('gradient-animation') || document.createElement('style');
-    styleElement.id = 'gradient-animation';
+  if (typeof document !== "undefined") {
+    const styleElement =
+      document.getElementById("gradient-animation") ||
+      document.createElement("style");
+    styleElement.id = "gradient-animation";
     styleElement.textContent = gradientStyle;
-    if (!document.getElementById('gradient-animation')) {
+    if (!document.getElementById("gradient-animation")) {
       document.head.appendChild(styleElement);
     }
   }
@@ -56,9 +58,10 @@ export default function Dashboard() {
     <div
       className="min-h-screen"
       style={{
-        backgroundImage: 'linear-gradient(-45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7, #DDA0DD, #98D8E8, #F7DC6F)',
-        backgroundSize: '400% 400%',
-        animation: 'gradient 15s ease infinite'
+        backgroundImage:
+          "linear-gradient(-45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7, #DDA0DD, #98D8E8, #F7DC6F)",
+        backgroundSize: "400% 400%",
+        animation: "gradient 15s ease infinite",
       }}
     >
       {/* Header */}
@@ -77,9 +80,7 @@ export default function Dashboard() {
 
             {/* Center - Heading */}
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-white">
-                OLIVE-DCB
-              </h1>
+              <h1 className="text-2xl font-bold text-white">OLIVE-DCB</h1>
             </div>
 
             {/* Right side - Last Logout Time and Logout button */}
@@ -109,23 +110,30 @@ export default function Dashboard() {
           {/* Daily Tracker */}
           <div
             className={`rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
-              activeSection === 'daily-tracker' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
+              activeSection === "daily-tracker"
+                ? "transform scale-105 shadow-2xl -translate-y-2"
+                : ""
             }`}
             style={{
-              backgroundImage: 'linear-gradient(-45deg, #60A5FA, #3B82F6, #1D4ED8, #1E40AF)',
-              backgroundSize: '400% 400%',
-              animation: 'gradient 6s ease infinite'
+              backgroundImage:
+                "linear-gradient(-45deg, #60A5FA, #3B82F6, #1D4ED8, #1E40AF)",
+              backgroundSize: "400% 400%",
+              animation: "gradient 6s ease infinite",
             }}
-            onClick={() => handleSectionClick('daily-tracker')}
+            onClick={() => handleSectionClick("daily-tracker")}
           >
             <div className="flex items-center mb-4">
               <Calendar className="h-6 w-6 text-white mr-3" />
-              <h2 className="text-xl font-semibold text-white">Daily Tracker</h2>
+              <h2 className="text-xl font-semibold text-white">
+                Daily Tracker
+              </h2>
             </div>
             <div className="text-white/90">
               <p className="mb-2">Track your daily activities and progress</p>
               <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
-                <p className="text-sm text-white">Today's Tasks: 5 completed, 3 pending</p>
+                <p className="text-sm text-white">
+                  Today's Tasks: 5 completed, 3 pending
+                </p>
               </div>
             </div>
           </div>
@@ -133,23 +141,30 @@ export default function Dashboard() {
           {/* Shift Hand Over */}
           <div
             className={`rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
-              activeSection === 'shift-handover' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
+              activeSection === "shift-handover"
+                ? "transform scale-105 shadow-2xl -translate-y-2"
+                : ""
             }`}
             style={{
-              backgroundImage: 'linear-gradient(-45deg, #4ADE80, #10B981, #059669, #047857)',
-              backgroundSize: '400% 400%',
-              animation: 'gradient 7s ease infinite'
+              backgroundImage:
+                "linear-gradient(-45deg, #4ADE80, #10B981, #059669, #047857)",
+              backgroundSize: "400% 400%",
+              animation: "gradient 7s ease infinite",
             }}
-            onClick={() => handleSectionClick('shift-handover')}
+            onClick={() => handleSectionClick("shift-handover")}
           >
             <div className="flex items-center mb-4">
               <ClipboardList className="h-6 w-6 text-white mr-3" />
-              <h2 className="text-xl font-semibold text-white">Shift Hand Over</h2>
+              <h2 className="text-xl font-semibold text-white">
+                Shift Hand Over
+              </h2>
             </div>
             <div className="text-white/90">
               <p className="mb-2">Manage shift transitions and handovers</p>
               <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
-                <p className="text-sm text-white">Next shift: 6:00 PM - 2:00 AM</p>
+                <p className="text-sm text-white">
+                  Next shift: 6:00 PM - 2:00 AM
+                </p>
               </div>
             </div>
           </div>
@@ -157,18 +172,23 @@ export default function Dashboard() {
           {/* All Users Data */}
           <div
             className={`rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
-              activeSection === 'users-data' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
+              activeSection === "users-data"
+                ? "transform scale-105 shadow-2xl -translate-y-2"
+                : ""
             }`}
             style={{
-              backgroundImage: 'linear-gradient(-45deg, #A78BFA, #8B5CF6, #7C3AED, #6D28D9)',
-              backgroundSize: '400% 400%',
-              animation: 'gradient 9s ease infinite'
+              backgroundImage:
+                "linear-gradient(-45deg, #A78BFA, #8B5CF6, #7C3AED, #6D28D9)",
+              backgroundSize: "400% 400%",
+              animation: "gradient 9s ease infinite",
             }}
-            onClick={() => handleSectionClick('users-data')}
+            onClick={() => handleSectionClick("users-data")}
           >
             <div className="flex items-center mb-4">
               <Users className="h-6 w-6 text-white mr-3" />
-              <h2 className="text-xl font-semibold text-white">All Users Data</h2>
+              <h2 className="text-xl font-semibold text-white">
+                All Users Data
+              </h2>
             </div>
             <div className="text-white/90">
               <p className="mb-2">View and manage all user information</p>
@@ -181,14 +201,17 @@ export default function Dashboard() {
           {/* Others */}
           <div
             className={`rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
-              activeSection === 'others' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
+              activeSection === "others"
+                ? "transform scale-105 shadow-2xl -translate-y-2"
+                : ""
             }`}
             style={{
-              backgroundImage: 'linear-gradient(-45deg, #FB923C, #F97316, #EA580C, #DC2626)',
-              backgroundSize: '400% 400%',
-              animation: 'gradient 5s ease infinite'
+              backgroundImage:
+                "linear-gradient(-45deg, #FB923C, #F97316, #EA580C, #DC2626)",
+              backgroundSize: "400% 400%",
+              animation: "gradient 5s ease infinite",
             }}
-            onClick={() => handleSectionClick('others')}
+            onClick={() => handleSectionClick("others")}
           >
             <div className="flex items-center mb-4">
               <MoreHorizontal className="h-6 w-6 text-white mr-3" />
@@ -197,7 +220,9 @@ export default function Dashboard() {
             <div className="text-white/90">
               <p className="mb-2">Additional tools and features</p>
               <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
-                <p className="text-sm text-white">Reports, Settings, Analytics</p>
+                <p className="text-sm text-white">
+                  Reports, Settings, Analytics
+                </p>
               </div>
             </div>
           </div>

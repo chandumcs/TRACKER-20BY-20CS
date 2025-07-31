@@ -29,6 +29,11 @@ export default function Dashboard() {
     navigate("/");
   };
 
+  const handleSectionClick = (sectionName: string) => {
+    setActiveSection(sectionName);
+    setTimeout(() => setActiveSection(null), 300); // Reset after animation
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}

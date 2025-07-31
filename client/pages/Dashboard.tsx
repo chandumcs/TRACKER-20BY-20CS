@@ -110,9 +110,14 @@ export default function Dashboard() {
 
           {/* Shift Hand Over */}
           <div
-            className={`bg-gradient-to-br from-green-400 to-green-600 rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
+            className={`rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
               activeSection === 'shift-handover' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
             }`}
+            style={{
+              backgroundImage: 'linear-gradient(-45deg, #4ADE80, #10B981, #059669, #047857)',
+              backgroundSize: '400% 400%',
+              animation: 'gradient 7s ease infinite'
+            }}
             onClick={() => handleSectionClick('shift-handover')}
           >
             <div className="flex items-center mb-4">

@@ -158,9 +158,14 @@ export default function Dashboard() {
 
           {/* Others */}
           <div
-            className={`bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
+            className={`rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
               activeSection === 'others' ? 'transform scale-105 shadow-2xl -translate-y-2' : ''
             }`}
+            style={{
+              backgroundImage: 'linear-gradient(-45deg, #FB923C, #F97316, #EA580C, #DC2626)',
+              backgroundSize: '400% 400%',
+              animation: 'gradient 5s ease infinite'
+            }}
             onClick={() => handleSectionClick('others')}
           >
             <div className="flex items-center mb-4">

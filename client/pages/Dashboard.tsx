@@ -36,8 +36,8 @@ export default function Dashboard() {
             {/* Left side - Last Login Time */}
             <div className="flex items-center">
               <div>
-                <span className="text-sm text-gray-500">Last Login:</span>
-                <div className="text-lg font-semibold text-gray-900">
+                <span className="text-sm text-white/80">Last Login:</span>
+                <div className="text-lg font-semibold text-white">
                   {lastLogin}
                 </div>
               </div>

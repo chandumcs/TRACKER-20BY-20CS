@@ -483,50 +483,17 @@ export default function DailyTracker() {
                           <div className="grid grid-cols-1 gap-4">
                             <div className="space-y-2">
                               <Label>Developer Name</Label>
-                              <Select>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select developer..." />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="dev1">John Smith</SelectItem>
-                                  <SelectItem value="dev2">Sarah Johnson</SelectItem>
-                                  <SelectItem value="dev3">Mike Chen</SelectItem>
-                                  <SelectItem value="dev4">Emily Davis</SelectItem>
-                                  <SelectItem value="dev5">David Wilson</SelectItem>
-                                </SelectContent>
-                              </Select>
+                              <Input placeholder="Enter developer name..." />
                             </div>
 
                             <div className="space-y-2">
                               <Label>UAT Person</Label>
-                              <Select>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select UAT person..." />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="uat1">Alex Kumar</SelectItem>
-                                  <SelectItem value="uat2">Lisa Anderson</SelectItem>
-                                  <SelectItem value="uat3">Robert Taylor</SelectItem>
-                                  <SelectItem value="uat4">Jennifer Lee</SelectItem>
-                                  <SelectItem value="uat5">Mark Thompson</SelectItem>
-                                </SelectContent>
-                              </Select>
+                              <Input placeholder="Enter UAT person name..." />
                             </div>
 
                             <div className="space-y-2">
                               <Label>Production Person</Label>
-                              <Select>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select production person..." />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="prod1">Amanda Clark</SelectItem>
-                                  <SelectItem value="prod2">Steven Martinez</SelectItem>
-                                  <SelectItem value="prod3">Rachel Brown</SelectItem>
-                                  <SelectItem value="prod4">Kevin Jones</SelectItem>
-                                  <SelectItem value="prod5">Michelle White</SelectItem>
-                                </SelectContent>
-                              </Select>
+                              <Input placeholder="Enter production person name..." />
                             </div>
                           </div>
                         </div>

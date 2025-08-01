@@ -108,6 +108,22 @@ export default function DailyTracker() {
                   </Select>
                 </div>
 
+                {/* Issue Type Filter */}
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium">Issue Type</Label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select issue type..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Types</SelectItem>
+                      <SelectItem value="bug">BUG</SelectItem>
+                      <SelectItem value="brd">BRD</SelectItem>
+                      <SelectItem value="reopened-bug">REOPENED BUG</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 {/* Apply Filters Button */}
                 <Button className="w-full">
                   <Filter className="h-4 w-4 mr-2" />

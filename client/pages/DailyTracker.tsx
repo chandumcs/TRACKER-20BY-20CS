@@ -41,7 +41,7 @@ export default function DailyTracker() {
     dateTo: new Date().toISOString().split("T")[0],
     product: "all",
     issueType: "all",
-    status: "all"
+    status: "all",
   });
 
   // Sample tasks data
@@ -53,7 +53,7 @@ export default function DailyTracker() {
       issueType: "bug",
       status: "completed",
       time: "Completed at 10:30 AM",
-      date: "2025-01-08"
+      date: "2025-01-08",
     },
     {
       id: 2,
@@ -62,7 +62,7 @@ export default function DailyTracker() {
       issueType: "brd",
       status: "in-progress",
       time: "Started at 2:15 PM",
-      date: "2025-01-08"
+      date: "2025-01-08",
     },
     {
       id: 3,
@@ -71,7 +71,7 @@ export default function DailyTracker() {
       issueType: "reopened-bug",
       status: "pending",
       time: "Due by 5:00 PM",
-      date: "2025-01-08"
+      date: "2025-01-08",
     },
     {
       id: 4,
@@ -80,7 +80,7 @@ export default function DailyTracker() {
       issueType: "bug",
       status: "completed",
       time: "Completed at 1:45 PM",
-      date: "2025-01-08"
+      date: "2025-01-08",
     },
     {
       id: 5,
@@ -89,7 +89,7 @@ export default function DailyTracker() {
       issueType: "brd",
       status: "in-progress",
       time: "In progress since 3:30 PM",
-      date: "2025-01-08"
+      date: "2025-01-08",
     },
     {
       id: 6,
@@ -98,29 +98,35 @@ export default function DailyTracker() {
       issueType: "bug",
       status: "pending",
       time: "Reported at 4:00 PM",
-      date: "2025-01-08"
-    }
+      date: "2025-01-08",
+    },
   ];
 
   // Filter tasks based on current filters
-  const filteredTasks = allTasks.filter(task => {
-    const matchesProduct = filters.product === "all" || task.product === filters.product;
-    const matchesIssueType = filters.issueType === "all" || task.issueType === filters.issueType;
-    const matchesStatus = filters.status === "all" || task.status === filters.status;
-    const matchesDate = task.date >= filters.dateFrom && task.date <= filters.dateTo;
+  const filteredTasks = allTasks.filter((task) => {
+    const matchesProduct =
+      filters.product === "all" || task.product === filters.product;
+    const matchesIssueType =
+      filters.issueType === "all" || task.issueType === filters.issueType;
+    const matchesStatus =
+      filters.status === "all" || task.status === filters.status;
+    const matchesDate =
+      task.date >= filters.dateFrom && task.date <= filters.dateTo;
 
     return matchesProduct && matchesIssueType && matchesStatus && matchesDate;
   });
 
   // Calculate stats based on filtered tasks
   const stats = {
-    completed: filteredTasks.filter(task => task.status === "completed").length,
-    inProgress: filteredTasks.filter(task => task.status === "in-progress").length,
-    pending: filteredTasks.filter(task => task.status === "pending").length
+    completed: filteredTasks.filter((task) => task.status === "completed")
+      .length,
+    inProgress: filteredTasks.filter((task) => task.status === "in-progress")
+      .length,
+    pending: filteredTasks.filter((task) => task.status === "pending").length,
   };
 
   const handleFilterChange = (key: string, value: string) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
+    setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
   const clearFilters = () => {
@@ -129,7 +135,7 @@ export default function DailyTracker() {
       dateTo: new Date().toISOString().split("T")[0],
       product: "all",
       issueType: "all",
-      status: "all"
+      status: "all",
     });
   };
   return (
@@ -191,7 +197,9 @@ export default function DailyTracker() {
                       <Input
                         type="date"
                         value={filters.dateFrom}
-                        onChange={(e) => handleFilterChange("dateFrom", e.target.value)}
+                        onChange={(e) =>
+                          handleFilterChange("dateFrom", e.target.value)
+                        }
                         className="mt-1"
                       />
                     </div>
@@ -200,7 +208,9 @@ export default function DailyTracker() {
                       <Input
                         type="date"
                         value={filters.dateTo}
-                        onChange={(e) => handleFilterChange("dateTo", e.target.value)}
+                        onChange={(e) =>
+                          handleFilterChange("dateTo", e.target.value)
+                        }
                         className="mt-1"
                       />
                     </div>
@@ -210,50 +220,65 @@ export default function DailyTracker() {
                 {/* Product Filter */}
                 <div className="space-y-3">
                   <Label className="text-sm font-medium">Product</Label>
-                  <Select value={filters.product} onValueChange={(value) => handleFilterChange("product", value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select product..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Products</SelectItem>
-                    <SelectItem value="neft-rtgs">NEFT-RTGS</SelectItem>
-                    <SelectItem value="imps">IMPS</SelectItem>
-                    <SelectItem value="upi">UPI</SelectItem>
-                    <SelectItem value="e-mandate">E MANDATE</SelectItem>
-                  </SelectContent>
-                </Select>
+                  <Select
+                    value={filters.product}
+                    onValueChange={(value) =>
+                      handleFilterChange("product", value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select product..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Products</SelectItem>
+                      <SelectItem value="neft-rtgs">NEFT-RTGS</SelectItem>
+                      <SelectItem value="imps">IMPS</SelectItem>
+                      <SelectItem value="upi">UPI</SelectItem>
+                      <SelectItem value="e-mandate">E MANDATE</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 {/* Issue Type Filter */}
                 <div className="space-y-3">
                   <Label className="text-sm font-medium">Issue Type</Label>
-                  <Select value={filters.issueType} onValueChange={(value) => handleFilterChange("issueType", value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select issue type..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Types</SelectItem>
-                    <SelectItem value="bug">BUG</SelectItem>
-                    <SelectItem value="brd">BRD</SelectItem>
-                    <SelectItem value="reopened-bug">REOPENED BUG</SelectItem>
-                  </SelectContent>
-                </Select>
+                  <Select
+                    value={filters.issueType}
+                    onValueChange={(value) =>
+                      handleFilterChange("issueType", value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select issue type..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Types</SelectItem>
+                      <SelectItem value="bug">BUG</SelectItem>
+                      <SelectItem value="brd">BRD</SelectItem>
+                      <SelectItem value="reopened-bug">REOPENED BUG</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 {/* Status Filter */}
                 <div className="space-y-3">
                   <Label className="text-sm font-medium">Status</Label>
-                  <Select value={filters.status} onValueChange={(value) => handleFilterChange("status", value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select status..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="in-progress">In Progress</SelectItem>
-                  </SelectContent>
-                </Select>
+                  <Select
+                    value={filters.status}
+                    onValueChange={(value) =>
+                      handleFilterChange("status", value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select status..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Status</SelectItem>
+                      <SelectItem value="completed">Completed</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="in-progress">In Progress</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 {/* Apply Filters Button */}
@@ -263,7 +288,11 @@ export default function DailyTracker() {
                 </Button>
 
                 {/* Clear Filters */}
-                <Button variant="outline" className="w-full" onClick={clearFilters}>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={clearFilters}
+                >
                   Clear All Filters
                 </Button>
               </CardContent>
@@ -371,21 +400,30 @@ export default function DailyTracker() {
                               completed: {
                                 bg: "bg-green-50",
                                 border: "border-green-200",
-                                icon: <CheckCircle className="h-5 w-5 text-green-600" />
+                                icon: (
+                                  <CheckCircle className="h-5 w-5 text-green-600" />
+                                ),
                               },
                               "in-progress": {
                                 bg: "bg-yellow-50",
                                 border: "border-yellow-200",
-                                icon: <Clock className="h-5 w-5 text-yellow-600" />
+                                icon: (
+                                  <Clock className="h-5 w-5 text-yellow-600" />
+                                ),
                               },
                               pending: {
                                 bg: "bg-red-50",
                                 border: "border-red-200",
-                                icon: <XCircle className="h-5 w-5 text-red-600" />
-                              }
+                                icon: (
+                                  <XCircle className="h-5 w-5 text-red-600" />
+                                ),
+                              },
                             };
 
-                            const config = statusConfig[task.status as keyof typeof statusConfig];
+                            const config =
+                              statusConfig[
+                                task.status as keyof typeof statusConfig
+                              ];
 
                             return (
                               <div
@@ -394,14 +432,20 @@ export default function DailyTracker() {
                               >
                                 <div className="flex items-center justify-between">
                                   <div>
-                                    <h4 className="font-medium">{task.title}</h4>
-                                    <p className="text-sm text-gray-600">{task.time}</p>
+                                    <h4 className="font-medium">
+                                      {task.title}
+                                    </h4>
+                                    <p className="text-sm text-gray-600">
+                                      {task.time}
+                                    </p>
                                     <div className="flex gap-2 mt-1">
                                       <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
                                         {task.product.toUpperCase()}
                                       </span>
                                       <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
-                                        {task.issueType.toUpperCase().replace('-', ' ')}
+                                        {task.issueType
+                                          .toUpperCase()
+                                          .replace("-", " ")}
                                       </span>
                                     </div>
                                   </div>
@@ -479,7 +523,9 @@ export default function DailyTracker() {
 
                         {/* Team Assignment Section */}
                         <div className="space-y-4 border-t pt-4">
-                          <h4 className="font-medium text-gray-800">Team Assignment</h4>
+                          <h4 className="font-medium text-gray-800">
+                            Team Assignment
+                          </h4>
 
                           <div className="grid grid-cols-1 gap-4">
                             <div className="space-y-2">
@@ -515,22 +561,33 @@ export default function DailyTracker() {
 
                         {/* Date Tracking Section */}
                         <div className="space-y-4 border-t pt-4">
-                          <h4 className="font-medium text-gray-800">Date Tracking</h4>
+                          <h4 className="font-medium text-gray-800">
+                            Date Tracking
+                          </h4>
 
                           <div className="grid grid-cols-1 gap-4">
                             <div className="space-y-2">
                               <Label>Reported Date</Label>
-                              <Input type="date" placeholder="Select reported date..." />
+                              <Input
+                                type="date"
+                                placeholder="Select reported date..."
+                              />
                             </div>
 
                             <div className="space-y-2">
                               <Label>Fixed Date</Label>
-                              <Input type="date" placeholder="Select fixed date..." />
+                              <Input
+                                type="date"
+                                placeholder="Select fixed date..."
+                              />
                             </div>
 
                             <div className="space-y-2">
                               <Label>Closed Date</Label>
-                              <Input type="date" placeholder="Select closed date..." />
+                              <Input
+                                type="date"
+                                placeholder="Select closed date..."
+                              />
                             </div>
                           </div>
                         </div>
@@ -604,7 +661,10 @@ export default function DailyTracker() {
 
                           <div className="space-y-2">
                             <Label>Task Title</Label>
-                            <Input defaultValue={editingTask.title} placeholder="Enter task title..." />
+                            <Input
+                              defaultValue={editingTask.title}
+                              placeholder="Enter task title..."
+                            />
                           </div>
 
                           <div className="space-y-2">
@@ -618,7 +678,9 @@ export default function DailyTracker() {
 
                           {/* Team Assignment Section */}
                           <div className="space-y-4 border-t pt-4">
-                            <h4 className="font-medium text-gray-800">Team Assignment</h4>
+                            <h4 className="font-medium text-gray-800">
+                              Team Assignment
+                            </h4>
 
                             <div className="grid grid-cols-1 gap-4">
                               <div className="space-y-2">
@@ -654,7 +716,9 @@ export default function DailyTracker() {
 
                           {/* Date Tracking Section */}
                           <div className="space-y-4 border-t pt-4">
-                            <h4 className="font-medium text-gray-800">Date Tracking</h4>
+                            <h4 className="font-medium text-gray-800">
+                              Date Tracking
+                            </h4>
 
                             <div className="grid grid-cols-1 gap-4">
                               <div className="space-y-2">
@@ -702,24 +766,37 @@ export default function DailyTracker() {
 
                         <div className="space-y-3">
                           {filteredTasks.map((task) => (
-                            <div key={task.id} className="border rounded-lg p-4 hover:bg-gray-50">
+                            <div
+                              key={task.id}
+                              className="border rounded-lg p-4 hover:bg-gray-50"
+                            >
                               <div className="flex items-center justify-between">
                                 <div className="flex-1">
                                   <h4 className="font-medium">{task.title}</h4>
-                                  <p className="text-sm text-gray-600">{task.time}</p>
+                                  <p className="text-sm text-gray-600">
+                                    {task.time}
+                                  </p>
                                   <div className="flex gap-2 mt-2">
                                     <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
                                       {task.product.toUpperCase()}
                                     </span>
                                     <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
-                                      {task.issueType.toUpperCase().replace('-', ' ')}
+                                      {task.issueType
+                                        .toUpperCase()
+                                        .replace("-", " ")}
                                     </span>
-                                    <span className={`text-xs px-2 py-1 rounded ${
-                                      task.status === 'completed' ? 'bg-green-100 text-green-800' :
-                                      task.status === 'in-progress' ? 'bg-yellow-100 text-yellow-800' :
-                                      'bg-red-100 text-red-800'
-                                    }`}>
-                                      {task.status.toUpperCase().replace('-', ' ')}
+                                    <span
+                                      className={`text-xs px-2 py-1 rounded ${
+                                        task.status === "completed"
+                                          ? "bg-green-100 text-green-800"
+                                          : task.status === "in-progress"
+                                            ? "bg-yellow-100 text-yellow-800"
+                                            : "bg-red-100 text-red-800"
+                                      }`}
+                                    >
+                                      {task.status
+                                        .toUpperCase()
+                                        .replace("-", " ")}
                                     </span>
                                   </div>
                                 </div>

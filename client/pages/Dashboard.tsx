@@ -1,10 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Calendar, Users, ClipboardList, MoreHorizontal, Filter } from "lucide-react";
+import {
+  Calendar,
+  Users,
+  ClipboardList,
+  MoreHorizontal,
+  Filter,
+} from "lucide-react";
 
 export default function Dashboard() {
   // Add CSS animation keyframes
@@ -57,8 +69,8 @@ export default function Dashboard() {
     setTimeout(() => setActiveSection(null), 300); // Reset after animation
 
     // Navigate to specific pages
-    if (sectionName === 'daily-tracker') {
-      navigate('/daily-tracker');
+    if (sectionName === "daily-tracker") {
+      navigate("/daily-tracker");
     }
     // Add other navigation logic here for other sections
   };
@@ -140,15 +152,15 @@ export default function Dashboard() {
             <div className="text-white/90">
               <p className="mb-4">Track your daily activities and progress</p>
               <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
-                <p className="text-sm text-white mb-2">
-                  Today's Summary:
-                </p>
+                <p className="text-sm text-white mb-2">Today's Summary:</p>
                 <p className="text-sm text-white">
                   ✅ 5 completed • ⏳ 3 in progress • ❌ 2 pending
                 </p>
               </div>
               <div className="mt-4 text-center">
-                <p className="text-sm text-white/80">Click to view detailed tracker</p>
+                <p className="text-sm text-white/80">
+                  Click to view detailed tracker
+                </p>
               </div>
             </div>
           </div>

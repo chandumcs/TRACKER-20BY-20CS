@@ -159,7 +159,7 @@ export default function DailyTracker() {
                   <div className="border rounded-lg p-4 bg-green-50 border-green-200">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-medium">Product A - Quality Check</h4>
+                        <h4 className="font-medium">NEFT - Transaction Processing</h4>
                         <p className="text-sm text-gray-600">Completed at 10:30 AM</p>
                       </div>
                       <CheckCircle className="h-5 w-5 text-green-600" />
@@ -169,7 +169,7 @@ export default function DailyTracker() {
                   <div className="border rounded-lg p-4 bg-yellow-50 border-yellow-200">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-medium">Product B - Inventory Update</h4>
+                        <h4 className="font-medium">UPI - System Monitoring</h4>
                         <p className="text-sm text-gray-600">Started at 2:15 PM</p>
                       </div>
                       <Clock className="h-5 w-5 text-yellow-600" />
@@ -179,7 +179,7 @@ export default function DailyTracker() {
                   <div className="border rounded-lg p-4 bg-red-50 border-red-200">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-medium">Product C - Documentation</h4>
+                        <h4 className="font-medium">RTGS - Settlement Review</h4>
                         <p className="text-sm text-gray-600">Due by 5:00 PM</p>
                       </div>
                       <XCircle className="h-5 w-5 text-red-600" />
@@ -189,10 +189,20 @@ export default function DailyTracker() {
                   <div className="border rounded-lg p-4 bg-green-50 border-green-200">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-medium">Product D - Testing</h4>
+                        <h4 className="font-medium">IMPS - Performance Testing</h4>
                         <p className="text-sm text-gray-600">Completed at 1:45 PM</p>
                       </div>
                       <CheckCircle className="h-5 w-5 text-green-600" />
+                    </div>
+                  </div>
+
+                  <div className="border rounded-lg p-4 bg-yellow-50 border-yellow-200">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="font-medium">E MANDATE - Authorization Check</h4>
+                        <p className="text-sm text-gray-600">In progress since 3:30 PM</p>
+                      </div>
+                      <Clock className="h-5 w-5 text-yellow-600" />
                     </div>
                   </div>
                 </div>

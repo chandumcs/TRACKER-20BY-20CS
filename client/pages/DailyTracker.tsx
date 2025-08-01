@@ -83,8 +83,7 @@ export default function DailyTracker() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">All Products</SelectItem>
-                      <SelectItem value="neft">NEFT</SelectItem>
-                      <SelectItem value="rtgs">RTGS</SelectItem>
+                      <SelectItem value="neft-rtgs">NEFT-RTGS</SelectItem>
                       <SelectItem value="imps">IMPS</SelectItem>
                       <SelectItem value="upi">UPI</SelectItem>
                       <SelectItem value="e-mandate">E MANDATE</SelectItem>

@@ -55,6 +55,12 @@ export default function Dashboard() {
   const handleSectionClick = (sectionName: string) => {
     setActiveSection(sectionName);
     setTimeout(() => setActiveSection(null), 300); // Reset after animation
+
+    // Navigate to specific pages
+    if (sectionName === 'daily-tracker') {
+      navigate('/daily-tracker');
+    }
+    // Add other navigation logic here for other sections
   };
 
   return (

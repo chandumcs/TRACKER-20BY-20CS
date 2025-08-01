@@ -189,7 +189,8 @@ export default function DailyTracker() {
                       <Label className="text-xs text-gray-500">From</Label>
                       <Input
                         type="date"
-                        defaultValue={new Date().toISOString().split("T")[0]}
+                        value={filters.dateFrom}
+                        onChange={(e) => handleFilterChange("dateFrom", e.target.value)}
                         className="mt-1"
                       />
                     </div>
@@ -197,7 +198,8 @@ export default function DailyTracker() {
                       <Label className="text-xs text-gray-500">To</Label>
                       <Input
                         type="date"
-                        defaultValue={new Date().toISOString().split("T")[0]}
+                        value={filters.dateTo}
+                        onChange={(e) => handleFilterChange("dateTo", e.target.value)}
                         className="mt-1"
                       />
                     </div>

@@ -242,17 +242,17 @@ export default function DailyTracker() {
                 {/* Status Filter */}
                 <div className="space-y-3">
                   <Label className="text-sm font-medium">Status</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select status..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Status</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                      <SelectItem value="pending">Pending</SelectItem>
-                      <SelectItem value="in-progress">In Progress</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Select value={filters.status} onValueChange={(value) => handleFilterChange("status", value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select status..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Status</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="in-progress">In Progress</SelectItem>
+                  </SelectContent>
+                </Select>
                 </div>
 
                 {/* Apply Filters Button */}

@@ -91,22 +91,6 @@ export default function DailyTracker() {
                   </Select>
                 </div>
 
-                {/* Status Filter */}
-                <div className="space-y-3">
-                  <Label className="text-sm font-medium">Status</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select status..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Status</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                      <SelectItem value="pending">Pending</SelectItem>
-                      <SelectItem value="in-progress">In Progress</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
                 {/* Issue Type Filter */}
                 <div className="space-y-3">
                   <Label className="text-sm font-medium">Issue Type</Label>
@@ -119,6 +103,22 @@ export default function DailyTracker() {
                       <SelectItem value="bug">BUG</SelectItem>
                       <SelectItem value="brd">BRD</SelectItem>
                       <SelectItem value="reopened-bug">REOPENED BUG</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Status Filter */}
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium">Status</Label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select status..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Status</SelectItem>
+                      <SelectItem value="completed">Completed</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="in-progress">In Progress</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

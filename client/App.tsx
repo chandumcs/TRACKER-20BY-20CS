@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import Register from "./pages/Register";
 import Welcome from "./pages/Welcome";
 import Dashboard from "./pages/Dashboard";
+import DailyTracker from "./pages/DailyTracker";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();

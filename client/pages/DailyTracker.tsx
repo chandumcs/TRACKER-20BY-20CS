@@ -498,23 +498,39 @@ export default function DailyTracker() {
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <Label>Priority</Label>
-                            <Select>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select priority..." />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="high">High</SelectItem>
-                                <SelectItem value="medium">Medium</SelectItem>
-                                <SelectItem value="low">Low</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <div className="space-y-2">
-                            <Label>Due Date</Label>
-                            <Input type="date" />
+                        <div className="space-y-2">
+                          <Label>Priority</Label>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select priority..." />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="high">High</SelectItem>
+                              <SelectItem value="medium">Medium</SelectItem>
+                              <SelectItem value="low">Low</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* Date Tracking Section */}
+                        <div className="space-y-4 border-t pt-4">
+                          <h4 className="font-medium text-gray-800">Date Tracking</h4>
+
+                          <div className="grid grid-cols-1 gap-4">
+                            <div className="space-y-2">
+                              <Label>Reported Date</Label>
+                              <Input type="date" placeholder="Select reported date..." />
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label>Fixed Date</Label>
+                              <Input type="date" placeholder="Select fixed date..." />
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label>Closed Date</Label>
+                              <Input type="date" placeholder="Select closed date..." />
+                            </div>
                           </div>
                         </div>
 

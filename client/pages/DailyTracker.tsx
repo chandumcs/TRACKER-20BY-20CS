@@ -10,6 +10,7 @@ import { ArrowLeft, Calendar, Filter, Clock, CheckCircle, XCircle, Plus, Edit, B
 import { useState } from "react";
 
 export default function DailyTracker() {
+  const [activeTab, setActiveTab] = useState("track");
   return (
     <div 
       className="min-h-screen" 

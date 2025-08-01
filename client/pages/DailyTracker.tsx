@@ -262,7 +262,7 @@ export default function DailyTracker() {
                 </Button>
 
                 {/* Clear Filters */}
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" onClick={clearFilters}>
                   Clear All Filters
                 </Button>
               </CardContent>

@@ -209,18 +209,18 @@ export default function DailyTracker() {
                 {/* Product Filter */}
                 <div className="space-y-3">
                   <Label className="text-sm font-medium">Product</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select product..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Products</SelectItem>
-                      <SelectItem value="neft-rtgs">NEFT-RTGS</SelectItem>
-                      <SelectItem value="imps">IMPS</SelectItem>
-                      <SelectItem value="upi">UPI</SelectItem>
-                      <SelectItem value="e-mandate">E MANDATE</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Select value={filters.product} onValueChange={(value) => handleFilterChange("product", value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select product..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Products</SelectItem>
+                    <SelectItem value="neft-rtgs">NEFT-RTGS</SelectItem>
+                    <SelectItem value="imps">IMPS</SelectItem>
+                    <SelectItem value="upi">UPI</SelectItem>
+                    <SelectItem value="e-mandate">E MANDATE</SelectItem>
+                  </SelectContent>
+                </Select>
                 </div>
 
                 {/* Issue Type Filter */}

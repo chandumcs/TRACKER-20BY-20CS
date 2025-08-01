@@ -3,8 +3,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Calendar, Filter, Clock, CheckCircle, XCircle } from "lucide-react";
+import { ArrowLeft, Calendar, Filter, Clock, CheckCircle, XCircle, Plus, Edit, BarChart3 } from "lucide-react";
+import { useState } from "react";
 
 export default function DailyTracker() {
   return (

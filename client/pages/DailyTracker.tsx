@@ -545,82 +545,204 @@ export default function DailyTracker() {
 
                   {/* EDIT Screen */}
                   <TabsContent value="edit" className="p-6">
-                    <div className="space-y-6">
-                      <div>
-                        <h2 className="text-xl font-semibold mb-2">
-                          Edit Tasks
-                        </h2>
-                        <p className="text-gray-600">
-                          Modify existing tasks and update their status
-                        </p>
-                      </div>
-
-                      <div className="space-y-4">
-                        <div className="border rounded-lg p-4">
-                          <div className="flex items-center justify-between mb-3">
-                            <div>
-                              <h4 className="font-medium">
-                                UPI - System Monitoring
-                              </h4>
-                              <p className="text-sm text-gray-600">
-                                In Progress
-                              </p>
-                            </div>
-                            <Button size="sm" variant="outline">
-                              <Edit className="h-4 w-4 mr-1" />
-                              Edit
-                            </Button>
+                    {editingTask ? (
+                      /* Edit Form - Similar to ADD but with existing data */
+                      <div className="space-y-6">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h2 className="text-xl font-semibold mb-2">
+                              Edit Task
+                            </h2>
+                            <p className="text-gray-600">
+                              Update task details and information
+                            </p>
                           </div>
-                          <div className="grid grid-cols-2 gap-2">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="text-green-600"
-                            >
-                              Mark Complete
+                          <Button
+                            variant="outline"
+                            onClick={() => setEditingTask(null)}
+                          >
+                            Back to List
+                          </Button>
+                        </div>
+
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                              <Label>Product</Label>
+                              <Select defaultValue={editingTask.product}>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select product..." />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="neft-rtgs">
+                                    NEFT-RTGS
+                                  </SelectItem>
+                                  <SelectItem value="imps">IMPS</SelectItem>
+                                  <SelectItem value="upi">UPI</SelectItem>
+                                  <SelectItem value="e-mandate">
+                                    E MANDATE
+                                  </SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            <div className="space-y-2">
+                              <Label>Issue Type</Label>
+                              <Select defaultValue={editingTask.issueType}>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select type..." />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="bug">BUG</SelectItem>
+                                  <SelectItem value="brd">BRD</SelectItem>
+                                  <SelectItem value="reopened-bug">
+                                    REOPENED BUG
+                                  </SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label>Task Title</Label>
+                            <Input defaultValue={editingTask.title} placeholder="Enter task title..." />
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label>Description</Label>
+                            <Textarea
+                              defaultValue="Task description details..."
+                              placeholder="Enter task description..."
+                              rows={4}
+                            />
+                          </div>
+
+                          {/* Team Assignment Section */}
+                          <div className="space-y-4 border-t pt-4">
+                            <h4 className="font-medium text-gray-800">Team Assignment</h4>
+
+                            <div className="grid grid-cols-1 gap-4">
+                              <div className="space-y-2">
+                                <Label>Developer Name</Label>
+                                <Input placeholder="Enter developer name..." />
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label>UAT Person</Label>
+                                <Input placeholder="Enter UAT person name..." />
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label>Production Person</Label>
+                                <Input placeholder="Enter production person name..." />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label>Priority</Label>
+                            <Select defaultValue="medium">
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select priority..." />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="high">High</SelectItem>
+                                <SelectItem value="medium">Medium</SelectItem>
+                                <SelectItem value="low">Low</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          {/* Date Tracking Section */}
+                          <div className="space-y-4 border-t pt-4">
+                            <h4 className="font-medium text-gray-800">Date Tracking</h4>
+
+                            <div className="grid grid-cols-1 gap-4">
+                              <div className="space-y-2">
+                                <Label>Reported Date</Label>
+                                <Input type="date" defaultValue="2025-01-08" />
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label>Fixed Date</Label>
+                                <Input type="date" />
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label>Closed Date</Label>
+                                <Input type="date" />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex gap-3">
+                            <Button className="flex-1">
+                              <Edit className="h-4 w-4 mr-2" />
+                              Update Task
                             </Button>
                             <Button
-                              size="sm"
                               variant="outline"
-                              className="text-red-600"
+                              onClick={() => setEditingTask(null)}
                             >
-                              Mark Pending
+                              Cancel
                             </Button>
                           </div>
                         </div>
+                      </div>
+                    ) : (
+                      /* Task List for Editing */
+                      <div className="space-y-6">
+                        <div>
+                          <h2 className="text-xl font-semibold mb-2">
+                            Edit Tasks
+                          </h2>
+                          <p className="text-gray-600">
+                            Select a task to edit its details
+                          </p>
+                        </div>
 
-                        <div className="border rounded-lg p-4">
-                          <div className="flex items-center justify-between mb-3">
-                            <div>
-                              <h4 className="font-medium">
-                                NEFT-RTGS - Settlement Review
-                              </h4>
-                              <p className="text-sm text-gray-600">Pending</p>
+                        <div className="space-y-3">
+                          {filteredTasks.map((task) => (
+                            <div key={task.id} className="border rounded-lg p-4 hover:bg-gray-50">
+                              <div className="flex items-center justify-between">
+                                <div className="flex-1">
+                                  <h4 className="font-medium">{task.title}</h4>
+                                  <p className="text-sm text-gray-600">{task.time}</p>
+                                  <div className="flex gap-2 mt-2">
+                                    <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                                      {task.product.toUpperCase()}
+                                    </span>
+                                    <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
+                                      {task.issueType.toUpperCase().replace('-', ' ')}
+                                    </span>
+                                    <span className={`text-xs px-2 py-1 rounded ${
+                                      task.status === 'completed' ? 'bg-green-100 text-green-800' :
+                                      task.status === 'in-progress' ? 'bg-yellow-100 text-yellow-800' :
+                                      'bg-red-100 text-red-800'
+                                    }`}>
+                                      {task.status.toUpperCase().replace('-', ' ')}
+                                    </span>
+                                  </div>
+                                </div>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => setEditingTask(task)}
+                                >
+                                  <Edit className="h-4 w-4 mr-1" />
+                                  Edit
+                                </Button>
+                              </div>
                             </div>
-                            <Button size="sm" variant="outline">
-                              <Edit className="h-4 w-4 mr-1" />
-                              Edit
-                            </Button>
-                          </div>
-                          <div className="grid grid-cols-2 gap-2">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="text-green-600"
-                            >
-                              Mark Complete
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="text-yellow-600"
-                            >
-                              Start Task
-                            </Button>
-                          </div>
+                          ))}
+
+                          {filteredTasks.length === 0 && (
+                            <div className="text-center py-8 text-gray-500">
+                              <p>No tasks available for editing.</p>
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </div>
+                    )}
                   </TabsContent>
 
                   {/* REPORTS Screen */}

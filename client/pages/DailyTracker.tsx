@@ -323,7 +323,7 @@ export default function DailyTracker() {
                         <div className="bg-green-50 p-4 rounded-lg text-center">
                           <CheckCircle className="h-8 w-8 text-green-600 mx-auto mb-2" />
                           <div className="text-2xl font-bold text-green-600">
-                            5
+                            {stats.completed}
                           </div>
                           <div className="text-sm text-green-700">
                             Completed
@@ -332,7 +332,7 @@ export default function DailyTracker() {
                         <div className="bg-yellow-50 p-4 rounded-lg text-center">
                           <Clock className="h-8 w-8 text-yellow-600 mx-auto mb-2" />
                           <div className="text-2xl font-bold text-yellow-600">
-                            3
+                            {stats.inProgress}
                           </div>
                           <div className="text-sm text-yellow-700">
                             In Progress
@@ -341,7 +341,7 @@ export default function DailyTracker() {
                         <div className="bg-red-50 p-4 rounded-lg text-center">
                           <XCircle className="h-8 w-8 text-red-600 mx-auto mb-2" />
                           <div className="text-2xl font-bold text-red-600">
-                            2
+                            {stats.pending}
                           </div>
                           <div className="text-sm text-red-700">Pending</div>
                         </div>

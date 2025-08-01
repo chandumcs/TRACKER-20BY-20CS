@@ -226,17 +226,17 @@ export default function DailyTracker() {
                 {/* Issue Type Filter */}
                 <div className="space-y-3">
                   <Label className="text-sm font-medium">Issue Type</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select issue type..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Types</SelectItem>
-                      <SelectItem value="bug">BUG</SelectItem>
-                      <SelectItem value="brd">BRD</SelectItem>
-                      <SelectItem value="reopened-bug">REOPENED BUG</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Select value={filters.issueType} onValueChange={(value) => handleFilterChange("issueType", value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select issue type..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Types</SelectItem>
+                    <SelectItem value="bug">BUG</SelectItem>
+                    <SelectItem value="brd">BRD</SelectItem>
+                    <SelectItem value="reopened-bug">REOPENED BUG</SelectItem>
+                  </SelectContent>
+                </Select>
                 </div>
 
                 {/* Status Filter */}

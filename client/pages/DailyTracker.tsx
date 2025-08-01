@@ -174,7 +174,7 @@ export default function DailyTracker() {
                   <div className="border rounded-lg p-4 bg-green-50 border-green-200">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-medium">NEFT - Transaction Processing</h4>
+                        <h4 className="font-medium">NEFT-RTGS - Transaction Processing</h4>
                         <p className="text-sm text-gray-600">Completed at 10:30 AM</p>
                       </div>
                       <CheckCircle className="h-5 w-5 text-green-600" />
@@ -194,7 +194,7 @@ export default function DailyTracker() {
                   <div className="border rounded-lg p-4 bg-red-50 border-red-200">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-medium">RTGS - Settlement Review</h4>
+                        <h4 className="font-medium">NEFT-RTGS - Settlement Review</h4>
                         <p className="text-sm text-gray-600">Due by 5:00 PM</p>
                       </div>
                       <XCircle className="h-5 w-5 text-red-600" />

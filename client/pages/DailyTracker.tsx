@@ -349,49 +349,67 @@ export default function DailyTracker() {
 
                       {/* Task List */}
                       <div className="space-y-3">
-                        <h3 className="text-lg font-semibold">Today's Tasks</h3>
+                        <h3 className="text-lg font-semibold">
+                          Filtered Tasks ({filteredTasks.length} found)
+                        </h3>
 
-                        <div className="border rounded-lg p-4 bg-green-50 border-green-200">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <h4 className="font-medium">
-                                NEFT-RTGS - Transaction Processing
-                              </h4>
-                              <p className="text-sm text-gray-600">
-                                Completed at 10:30 AM
-                              </p>
-                            </div>
-                            <CheckCircle className="h-5 w-5 text-green-600" />
+                        {filteredTasks.length === 0 ? (
+                          <div className="text-center py-8 text-gray-500">
+                            <p>No tasks found matching the current filters.</p>
+                            <Button
+                              variant="outline"
+                              onClick={clearFilters}
+                              className="mt-4"
+                            >
+                              Clear Filters
+                            </Button>
                           </div>
-                        </div>
+                        ) : (
+                          filteredTasks.map((task) => {
+                            const statusConfig = {
+                              completed: {
+                                bg: "bg-green-50",
+                                border: "border-green-200",
+                                icon: <CheckCircle className="h-5 w-5 text-green-600" />
+                              },
+                              "in-progress": {
+                                bg: "bg-yellow-50",
+                                border: "border-yellow-200",
+                                icon: <Clock className="h-5 w-5 text-yellow-600" />
+                              },
+                              pending: {
+                                bg: "bg-red-50",
+                                border: "border-red-200",
+                                icon: <XCircle className="h-5 w-5 text-red-600" />
+                              }
+                            };
 
-                        <div className="border rounded-lg p-4 bg-yellow-50 border-yellow-200">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <h4 className="font-medium">
-                                UPI - System Monitoring
-                              </h4>
-                              <p className="text-sm text-gray-600">
-                                Started at 2:15 PM
-                              </p>
-                            </div>
-                            <Clock className="h-5 w-5 text-yellow-600" />
-                          </div>
-                        </div>
+                            const config = statusConfig[task.status as keyof typeof statusConfig];
 
-                        <div className="border rounded-lg p-4 bg-red-50 border-red-200">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <h4 className="font-medium">
-                                NEFT-RTGS - Settlement Review
-                              </h4>
-                              <p className="text-sm text-gray-600">
-                                Due by 5:00 PM
-                              </p>
-                            </div>
-                            <XCircle className="h-5 w-5 text-red-600" />
-                          </div>
-                        </div>
+                            return (
+                              <div
+                                key={task.id}
+                                className={`border rounded-lg p-4 ${config.bg} ${config.border}`}
+                              >
+                                <div className="flex items-center justify-between">
+                                  <div>
+                                    <h4 className="font-medium">{task.title}</h4>
+                                    <p className="text-sm text-gray-600">{task.time}</p>
+                                    <div className="flex gap-2 mt-1">
+                                      <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                                        {task.product.toUpperCase()}
+                                      </span>
+                                      <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
+                                        {task.issueType.toUpperCase().replace('-', ' ')}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  {config.icon}
+                                </div>
+                              </div>
+                            );
+                          })
+                        )}
                       </div>
                     </div>
                   </TabsContent>

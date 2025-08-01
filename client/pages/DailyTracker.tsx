@@ -33,6 +33,104 @@ import { useState } from "react";
 
 export default function DailyTracker() {
   const [activeTab, setActiveTab] = useState("track");
+
+  // Filter state
+  const [filters, setFilters] = useState({
+    dateFrom: new Date().toISOString().split("T")[0],
+    dateTo: new Date().toISOString().split("T")[0],
+    product: "all",
+    issueType: "all",
+    status: "all"
+  });
+
+  // Sample tasks data
+  const allTasks = [
+    {
+      id: 1,
+      title: "NEFT-RTGS - Transaction Processing",
+      product: "neft-rtgs",
+      issueType: "bug",
+      status: "completed",
+      time: "Completed at 10:30 AM",
+      date: "2025-01-08"
+    },
+    {
+      id: 2,
+      title: "UPI - System Monitoring",
+      product: "upi",
+      issueType: "brd",
+      status: "in-progress",
+      time: "Started at 2:15 PM",
+      date: "2025-01-08"
+    },
+    {
+      id: 3,
+      title: "NEFT-RTGS - Settlement Review",
+      product: "neft-rtgs",
+      issueType: "reopened-bug",
+      status: "pending",
+      time: "Due by 5:00 PM",
+      date: "2025-01-08"
+    },
+    {
+      id: 4,
+      title: "IMPS - Performance Testing",
+      product: "imps",
+      issueType: "bug",
+      status: "completed",
+      time: "Completed at 1:45 PM",
+      date: "2025-01-08"
+    },
+    {
+      id: 5,
+      title: "E MANDATE - Authorization Check",
+      product: "e-mandate",
+      issueType: "brd",
+      status: "in-progress",
+      time: "In progress since 3:30 PM",
+      date: "2025-01-08"
+    },
+    {
+      id: 6,
+      title: "UPI - Payment Gateway Issue",
+      product: "upi",
+      issueType: "bug",
+      status: "pending",
+      time: "Reported at 4:00 PM",
+      date: "2025-01-08"
+    }
+  ];
+
+  // Filter tasks based on current filters
+  const filteredTasks = allTasks.filter(task => {
+    const matchesProduct = filters.product === "all" || task.product === filters.product;
+    const matchesIssueType = filters.issueType === "all" || task.issueType === filters.issueType;
+    const matchesStatus = filters.status === "all" || task.status === filters.status;
+    const matchesDate = task.date >= filters.dateFrom && task.date <= filters.dateTo;
+
+    return matchesProduct && matchesIssueType && matchesStatus && matchesDate;
+  });
+
+  // Calculate stats based on filtered tasks
+  const stats = {
+    completed: filteredTasks.filter(task => task.status === "completed").length,
+    inProgress: filteredTasks.filter(task => task.status === "in-progress").length,
+    pending: filteredTasks.filter(task => task.status === "pending").length
+  };
+
+  const handleFilterChange = (key: string, value: string) => {
+    setFilters(prev => ({ ...prev, [key]: value }));
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      dateFrom: new Date().toISOString().split("T")[0],
+      dateTo: new Date().toISOString().split("T")[0],
+      product: "all",
+      issueType: "all",
+      status: "all"
+    });
+  };
   return (
     <div
       className="min-h-screen"

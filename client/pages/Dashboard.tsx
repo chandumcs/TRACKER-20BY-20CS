@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Calendar, Users, ClipboardList, MoreHorizontal } from "lucide-react";
+import { Calendar, Users, ClipboardList, MoreHorizontal, Filter } from "lucide-react";
 
 export default function Dashboard() {
   // Add CSS animation keyframes

@@ -131,11 +131,54 @@ export default function Dashboard() {
                 Daily Tracker
               </h2>
             </div>
-            <div className="text-white/90">
-              <p className="mb-2">Track your daily activities and progress</p>
+            <div className="text-white/90 space-y-4">
+              {/* Date Filters */}
+              <div className="space-y-2">
+                <Label className="text-white text-sm font-medium">Date Range</Label>
+                <div className="grid grid-cols-2 gap-2">
+                  <Input
+                    type="date"
+                    className="bg-white/20 border-white/30 text-white placeholder:text-white/60"
+                    defaultValue={new Date().toISOString().split('T')[0]}
+                  />
+                  <Input
+                    type="date"
+                    className="bg-white/20 border-white/30 text-white placeholder:text-white/60"
+                    defaultValue={new Date().toISOString().split('T')[0]}
+                  />
+                </div>
+              </div>
+
+              {/* Product Filter */}
+              <div className="space-y-2">
+                <Label className="text-white text-sm font-medium">Product Filter</Label>
+                <Select>
+                  <SelectTrigger className="bg-white/20 border-white/30 text-white">
+                    <SelectValue placeholder="Select product..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Products</SelectItem>
+                    <SelectItem value="product-a">Product A</SelectItem>
+                    <SelectItem value="product-b">Product B</SelectItem>
+                    <SelectItem value="product-c">Product C</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Filter Button */}
+              <Button
+                size="sm"
+                className="w-full bg-white/20 hover:bg-white/30 text-white border-white/30"
+                variant="outline"
+              >
+                <Filter className="h-4 w-4 mr-2" />
+                Apply Filters
+              </Button>
+
+              {/* Results Summary */}
               <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
                 <p className="text-sm text-white">
-                  Today's Tasks: 5 completed, 3 pending
+                  Found: 5 completed, 3 pending tasks
                 </p>
               </div>
             </div>

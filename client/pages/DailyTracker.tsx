@@ -33,6 +33,7 @@ import { useState } from "react";
 
 export default function DailyTracker() {
   const [activeTab, setActiveTab] = useState("track");
+  const [editingTask, setEditingTask] = useState<any>(null);
 
   // Filter state
   const [filters, setFilters] = useState({

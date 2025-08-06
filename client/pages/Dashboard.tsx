@@ -82,6 +82,8 @@ export default function Dashboard() {
       navigate("/shift-handover");
     } else if (sectionName === "users-data") {
       navigate("/all-users-data");
+    } else if (sectionName === "others") {
+      navigate("/others");
     }
     // Add other navigation logic here for other sections
   };

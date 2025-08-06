@@ -105,6 +105,31 @@ export default function Others() {
     setSelectedRole("");
   };
 
+  // Available access levels
+  const accessLevels = [
+    { value: "Full Access", label: "Full Access", icon: "✅" },
+    { value: "View Only", label: "View Only", icon: "👁️" },
+    { value: "No Access", label: "No Access", icon: "❌" }
+  ];
+
+  // Function to update page permission
+  const updatePagePermission = (role: string, page: string, access: string) => {
+    setPagePermissions(prev => ({
+      ...prev,
+      [role]: {
+        ...prev[role as keyof typeof prev],
+        [page]: access
+      }
+    }));
+  };
+
+  // Function to save page permissions
+  const savePagePermissions = () => {
+    // Here you would typically save to backend
+    console.log("Saving page permissions:", pagePermissions);
+    alert("Page access permissions saved successfully!");
+  };
+
   // User directory data with names and positions
   const userDirectory = [
     {

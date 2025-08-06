@@ -49,6 +49,26 @@ const getRolePermissions = (role: Role): RolePermissions => {
         canAccessDailyTracker: true,
         canAccessShiftHandover: true,
         canAccessAllUsersData: true,
+        canAccessOthers: true,
+        canManageUsers: false,
+        readOnly: false
+      };
+    case 'Production Support':
+      return {
+        canAccessDashboard: true,
+        canAccessDailyTracker: true,
+        canAccessShiftHandover: true,
+        canAccessAllUsersData: false,
+        canAccessOthers: false,
+        canManageUsers: false,
+        readOnly: false
+      };
+    case 'UAT Support':
+      return {
+        canAccessDashboard: true,
+        canAccessDailyTracker: true,
+        canAccessShiftHandover: false,
+        canAccessAllUsersData: false,
         canAccessOthers: false,
         canManageUsers: false,
         readOnly: false
@@ -62,26 +82,6 @@ const getRolePermissions = (role: Role): RolePermissions => {
         canAccessOthers: false,
         canManageUsers: false,
         readOnly: false
-      };
-    case 'Tester':
-      return {
-        canAccessDashboard: true,
-        canAccessDailyTracker: true,
-        canAccessShiftHandover: false,
-        canAccessAllUsersData: false,
-        canAccessOthers: false,
-        canManageUsers: false,
-        readOnly: false
-      };
-    case 'Viewer':
-      return {
-        canAccessDashboard: true,
-        canAccessDailyTracker: false,
-        canAccessShiftHandover: false,
-        canAccessAllUsersData: false,
-        canAccessOthers: false,
-        canManageUsers: false,
-        readOnly: true
       };
     default:
       return {

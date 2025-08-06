@@ -22,6 +22,49 @@ export default function Others() {
   const [changingRoleUserId, setChangingRoleUserId] = useState<number | null>(null);
   const [selectedRole, setSelectedRole] = useState<string>("");
 
+  // Available roles for selection
+  const availableRoles = [
+    { value: "Admin", label: "Admin", color: "bg-red-100 text-red-800" },
+    { value: "Manager", label: "Manager", color: "bg-blue-100 text-blue-800" },
+    { value: "Production Support", label: "Production Support", color: "bg-green-100 text-green-800" },
+    { value: "UAT Support", label: "UAT Support", color: "bg-purple-100 text-purple-800" },
+    { value: "Developer", label: "Developer", color: "bg-orange-100 text-orange-800" }
+  ];
+
+  // Function to get current user role
+  const getCurrentUserRole = (userId: number): string => {
+    if (userId === 1) return "Admin";
+    if (userId === 2 || userId === 8) return "Manager";
+    if (userId === 3) return "Production Support";
+    if (userId === 4) return "UAT Support";
+    return "Developer";
+  };
+
+  // Function to handle role change
+  const handleRoleChange = (userId: number) => {
+    setChangingRoleUserId(userId);
+    setSelectedRole(getCurrentUserRole(userId));
+  };
+
+  // Function to save role change
+  const saveRoleChange = () => {
+    if (changingRoleUserId && selectedRole) {
+      // Here you would typically save to backend
+      console.log(`Changing user ${changingRoleUserId} role to ${selectedRole}`);
+      alert(`Role changed to ${selectedRole} successfully!`);
+
+      // Reset state
+      setChangingRoleUserId(null);
+      setSelectedRole("");
+    }
+  };
+
+  // Function to cancel role change
+  const cancelRoleChange = () => {
+    setChangingRoleUserId(null);
+    setSelectedRole("");
+  };
+
   // User directory data with names and positions
   const userDirectory = [
     {

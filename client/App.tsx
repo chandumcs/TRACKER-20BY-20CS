@@ -11,6 +11,7 @@ import Register from "./pages/Register";
 import Welcome from "./pages/Welcome";
 import Dashboard from "./pages/Dashboard";
 import DailyTracker from "./pages/DailyTracker";
+import ShiftHandover from "./pages/ShiftHandover";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();

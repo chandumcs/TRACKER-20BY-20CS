@@ -690,64 +690,61 @@ export default function Others() {
                         {/* Page Access Matrix */}
                         <div>
                           <h4 className="font-medium mb-3">Page Access Matrix</h4>
+                          <p className="text-sm text-gray-600 mb-4">Configure access permissions for each role and page</p>
+
                           <div className="overflow-x-auto">
                             <table className="w-full text-sm border rounded-lg">
                               <thead className="bg-gray-50">
                                 <tr>
-                                  <th className="text-left p-3 border-b">Role</th>
-                                  <th className="text-center p-3 border-b">Dashboard</th>
-                                  <th className="text-center p-3 border-b">Daily Tracker</th>
-                                  <th className="text-center p-3 border-b">Shift Handover</th>
-                                  <th className="text-center p-3 border-b">All Users Data</th>
-                                  <th className="text-center p-3 border-b">Others</th>
+                                  <th className="text-left p-3 border-b font-medium">Role</th>
+                                  <th className="text-center p-3 border-b font-medium">Dashboard</th>
+                                  <th className="text-center p-3 border-b font-medium">Daily Tracker</th>
+                                  <th className="text-center p-3 border-b font-medium">Shift Handover</th>
+                                  <th className="text-center p-3 border-b font-medium">All Users Data</th>
+                                  <th className="text-center p-3 border-b font-medium">Others</th>
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr className="border-b">
-                                  <td className="p-3 font-medium">Admin</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">✅</td>
-                                </tr>
-                                <tr className="border-b">
-                                  <td className="p-3 font-medium">Manager</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">✅</td>
-                                </tr>
-                                <tr className="border-b">
-                                  <td className="p-3 font-medium">Production Support</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">❌</td>
-                                  <td className="text-center p-3">❌</td>
-                                </tr>
-                                <tr className="border-b">
-                                  <td className="p-3 font-medium">UAT Support</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">❌</td>
-                                  <td className="text-center p-3">❌</td>
-                                  <td className="text-center p-3">❌</td>
-                                </tr>
-                                <tr>
-                                  <td className="p-3 font-medium">Developer</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">❌</td>
-                                  <td className="text-center p-3">❌</td>
-                                  <td className="text-center p-3">❌</td>
-                                </tr>
+                                {Object.keys(pagePermissions).map((role, index) => (
+                                  <tr key={role} className={index < Object.keys(pagePermissions).length - 1 ? "border-b" : ""}>
+                                    <td className="p-3 font-medium">{role}</td>
+                                    {["Dashboard", "Daily Tracker", "Shift Handover", "All Users Data", "Others"].map((page) => (
+                                      <td key={page} className="p-2">
+                                        <Select
+                                          value={pagePermissions[role as keyof typeof pagePermissions][page as keyof typeof pagePermissions[typeof role]]}
+                                          onValueChange={(value) => updatePagePermission(role, page, value)}
+                                        >
+                                          <SelectTrigger className="w-full min-w-[120px]">
+                                            <SelectValue />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            {accessLevels.map((level) => (
+                                              <SelectItem key={level.value} value={level.value}>
+                                                <div className="flex items-center space-x-2">
+                                                  <span>{level.icon}</span>
+                                                  <span>{level.label}</span>
+                                                </div>
+                                              </SelectItem>
+                                            ))}
+                                          </SelectContent>
+                                        </Select>
+                                      </td>
+                                    ))}
+                                  </tr>
+                                ))}
                               </tbody>
                             </table>
-                            <p className="text-xs text-gray-500 mt-2">
-                              ✅ = Full Access | 👁️ = View Only | ❌ = No Access
-                            </p>
+
+                            <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+                              <p className="text-xs text-blue-700 mb-2">
+                                <strong>Access Levels:</strong>
+                              </p>
+                              <div className="flex flex-wrap gap-4 text-xs text-blue-600">
+                                <span>✅ Full Access - Complete read/write access</span>
+                                <span>👁️ View Only - Read-only access</span>
+                                <span>❌ No Access - No access to page</span>
+                              </div>
+                            </div>
                           </div>
                         </div>
 

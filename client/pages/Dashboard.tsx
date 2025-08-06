@@ -115,9 +115,16 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Center - Heading */}
-            <div className="flex items-center">
+            {/* Center - Heading with Role Info */}
+            <div className="flex items-center space-x-4">
               <h1 className="text-2xl font-bold text-white">OLIVE-DCB</h1>
+              <div className="flex items-center space-x-2">
+                <Shield className="h-4 w-4 text-white" />
+                <div className="text-right">
+                  <div className="text-sm text-white/80">Role:</div>
+                  <div className="text-sm font-semibold text-white">{currentUser?.role || 'Unknown'}</div>
+                </div>
+              </div>
             </div>
 
             {/* Right side - Last Logout Time and Logout button */}

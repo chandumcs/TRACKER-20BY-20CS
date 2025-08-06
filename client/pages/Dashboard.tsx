@@ -149,8 +149,15 @@ export default function Dashboard() {
 
       {/* Main content area */}
       <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        {/* Four-part grid layout */}
-        <div className="grid grid-cols-2 gap-6 h-[calc(100vh-12rem)]">
+        {/* Dynamic grid layout based on permissions */}
+        <div className={`grid gap-6 h-[calc(100vh-12rem)] ${
+          [
+            hasPermission('daily-tracker'),
+            hasPermission('shift-handover'),
+            hasPermission('all-users-data'),
+            hasPermission('others')
+          ].filter(Boolean).length <= 2 ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-2'
+        }`}>
           {/* Daily Tracker */}
           <div
             className={`rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${

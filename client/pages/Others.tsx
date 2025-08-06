@@ -23,6 +23,45 @@ export default function Others() {
   const [changingRoleUserId, setChangingRoleUserId] = useState<number | null>(null);
   const [selectedRole, setSelectedRole] = useState<string>("");
 
+  // Page access permissions state
+  const [pagePermissions, setPagePermissions] = useState({
+    "Admin": {
+      "Dashboard": "Full Access",
+      "Daily Tracker": "Full Access",
+      "Shift Handover": "Full Access",
+      "All Users Data": "Full Access",
+      "Others": "Full Access"
+    },
+    "Manager": {
+      "Dashboard": "Full Access",
+      "Daily Tracker": "Full Access",
+      "Shift Handover": "Full Access",
+      "All Users Data": "Full Access",
+      "Others": "Full Access"
+    },
+    "Production Support": {
+      "Dashboard": "Full Access",
+      "Daily Tracker": "Full Access",
+      "Shift Handover": "Full Access",
+      "All Users Data": "No Access",
+      "Others": "No Access"
+    },
+    "UAT Support": {
+      "Dashboard": "Full Access",
+      "Daily Tracker": "Full Access",
+      "Shift Handover": "No Access",
+      "All Users Data": "No Access",
+      "Others": "No Access"
+    },
+    "Developer": {
+      "Dashboard": "Full Access",
+      "Daily Tracker": "Full Access",
+      "Shift Handover": "No Access",
+      "All Users Data": "No Access",
+      "Others": "No Access"
+    }
+  });
+
   // Available roles for selection
   const availableRoles = [
     { value: "Admin", label: "Admin", color: "bg-red-100 text-red-800" },

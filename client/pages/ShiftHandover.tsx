@@ -2,10 +2,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, ClipboardList, Save, User, Clock, MessageCircle, CheckSquare } from "lucide-react";
+import {
+  ArrowLeft,
+  ClipboardList,
+  Save,
+  User,
+  Clock,
+  MessageCircle,
+  CheckSquare,
+} from "lucide-react";
 import { useState } from "react";
 
 export default function ShiftHandover() {
@@ -16,26 +30,26 @@ export default function ShiftHandover() {
     shiftFrom: "",
     shiftTo: "",
     handoverText: "",
-    points: [""]
+    points: [""],
   });
 
   const handleInputChange = (field: string, value: string) => {
-    setHandoverData(prev => ({ ...prev, [field]: value }));
+    setHandoverData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handlePointChange = (index: number, value: string) => {
     const newPoints = [...handoverData.points];
     newPoints[index] = value;
-    setHandoverData(prev => ({ ...prev, points: newPoints }));
+    setHandoverData((prev) => ({ ...prev, points: newPoints }));
   };
 
   const addPoint = () => {
-    setHandoverData(prev => ({ ...prev, points: [...prev.points, ""] }));
+    setHandoverData((prev) => ({ ...prev, points: [...prev.points, ""] }));
   };
 
   const removePoint = (index: number) => {
     const newPoints = handoverData.points.filter((_, i) => i !== index);
-    setHandoverData(prev => ({ ...prev, points: newPoints }));
+    setHandoverData((prev) => ({ ...prev, points: newPoints }));
   };
 
   const saveHandover = () => {
@@ -44,20 +58,24 @@ export default function ShiftHandover() {
       ...handoverData,
       savedAt: new Date().toISOString(),
       savedDate: new Date().toLocaleDateString(),
-      savedTime: new Date().toLocaleTimeString()
+      savedTime: new Date().toLocaleTimeString(),
     };
 
-    localStorage.setItem("currentShiftHandover", JSON.stringify(handoverWithTimestamp));
+    localStorage.setItem(
+      "currentShiftHandover",
+      JSON.stringify(handoverWithTimestamp),
+    );
 
     // Navigate back to dashboard
     navigate("/dashboard");
   };
 
   return (
-    <div 
-      className="min-h-screen" 
+    <div
+      className="min-h-screen"
       style={{
-        backgroundImage: "linear-gradient(-45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7, #DDA0DD, #98D8E8, #F7DC6F)",
+        backgroundImage:
+          "linear-gradient(-45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7, #DDA0DD, #98D8E8, #F7DC6F)",
         backgroundSize: "400% 400%",
         animation: "gradient 15s ease infinite",
       }}
@@ -67,7 +85,10 @@ export default function ShiftHandover() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Link to="/dashboard" className="flex items-center text-white hover:text-white/80 mr-6">
+              <Link
+                to="/dashboard"
+                className="flex items-center text-white hover:text-white/80 mr-6"
+              >
                 <ArrowLeft className="h-5 w-5 mr-2" />
                 Back to Dashboard
               </Link>
@@ -75,7 +96,9 @@ export default function ShiftHandover() {
             </div>
             <div className="flex items-center">
               <ClipboardList className="h-6 w-6 text-white mr-2" />
-              <span className="text-white">{new Date().toLocaleDateString()}</span>
+              <span className="text-white">
+                {new Date().toLocaleDateString()}
+              </span>
             </div>
           </div>
         </div>
@@ -87,11 +110,17 @@ export default function ShiftHandover() {
           <CardContent className="p-0">
             <Tabs value={activeTab} onValueChange={setActiveTab}>
               <TabsList className="grid w-full grid-cols-2 rounded-none">
-                <TabsTrigger value="handover" className="flex items-center gap-2">
+                <TabsTrigger
+                  value="handover"
+                  className="flex items-center gap-2"
+                >
                   <ClipboardList className="h-4 w-4" />
                   HANDOVER
                 </TabsTrigger>
-                <TabsTrigger value="history" className="flex items-center gap-2">
+                <TabsTrigger
+                  value="history"
+                  className="flex items-center gap-2"
+                >
                   <Clock className="h-4 w-4" />
                   HISTORY
                 </TabsTrigger>
@@ -101,7 +130,9 @@ export default function ShiftHandover() {
               <TabsContent value="handover" className="p-6">
                 <div className="space-y-6">
                   <div>
-                    <h2 className="text-xl font-semibold mb-2">Shift Hand Over</h2>
+                    <h2 className="text-xl font-semibold mb-2">
+                      Shift Hand Over
+                    </h2>
                     <p className="text-gray-600">
                       Document important information for the next shift
                     </p>
@@ -114,13 +145,15 @@ export default function ShiftHandover() {
                         <User className="h-5 w-5 mr-2" />
                         Personal Information
                       </h3>
-                      
+
                       <div className="space-y-2">
                         <Label>Your Name</Label>
                         <Input
                           placeholder="Enter your full name..."
                           value={handoverData.name}
-                          onChange={(e) => handleInputChange("name", e.target.value)}
+                          onChange={(e) =>
+                            handleInputChange("name", e.target.value)
+                          }
                         />
                       </div>
                     </div>
@@ -131,14 +164,16 @@ export default function ShiftHandover() {
                         <Clock className="h-5 w-5 mr-2" />
                         Shift Timing
                       </h3>
-                      
+
                       <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label>Shift From</Label>
                           <Input
                             type="time"
                             value={handoverData.shiftFrom}
-                            onChange={(e) => handleInputChange("shiftFrom", e.target.value)}
+                            onChange={(e) =>
+                              handleInputChange("shiftFrom", e.target.value)
+                            }
                           />
                         </div>
                         <div className="space-y-2">
@@ -146,7 +181,9 @@ export default function ShiftHandover() {
                           <Input
                             type="time"
                             value={handoverData.shiftTo}
-                            onChange={(e) => handleInputChange("shiftTo", e.target.value)}
+                            onChange={(e) =>
+                              handleInputChange("shiftTo", e.target.value)
+                            }
                           />
                         </div>
                       </div>
@@ -158,14 +195,16 @@ export default function ShiftHandover() {
                         <MessageCircle className="h-5 w-5 mr-2" />
                         Handover Notes
                       </h3>
-                      
+
                       <div className="space-y-2">
                         <Label>Detailed Notes</Label>
                         <Textarea
                           placeholder="Write detailed handover notes, current status, ongoing issues, etc..."
                           rows={6}
                           value={handoverData.handoverText}
-                          onChange={(e) => handleInputChange("handoverText", e.target.value)}
+                          onChange={(e) =>
+                            handleInputChange("handoverText", e.target.value)
+                          }
                         />
                       </div>
                     </div>
@@ -176,7 +215,7 @@ export default function ShiftHandover() {
                         <CheckSquare className="h-5 w-5 mr-2" />
                         Key Points for Next Shift
                       </h3>
-                      
+
                       <div className="space-y-3">
                         {handoverData.points.map((point, index) => (
                           <div key={index} className="flex gap-2">
@@ -184,7 +223,9 @@ export default function ShiftHandover() {
                               <Input
                                 placeholder={`Point ${index + 1}...`}
                                 value={point}
-                                onChange={(e) => handlePointChange(index, e.target.value)}
+                                onChange={(e) =>
+                                  handlePointChange(index, e.target.value)
+                                }
                               />
                             </div>
                             {handoverData.points.length > 1 && (
@@ -200,7 +241,7 @@ export default function ShiftHandover() {
                             )}
                           </div>
                         ))}
-                        
+
                         <Button
                           type="button"
                           variant="outline"
@@ -214,7 +255,11 @@ export default function ShiftHandover() {
 
                     {/* Save Button */}
                     <div className="pt-6">
-                      <Button onClick={saveHandover} className="w-full" size="lg">
+                      <Button
+                        onClick={saveHandover}
+                        className="w-full"
+                        size="lg"
+                      >
                         <Save className="h-4 w-4 mr-2" />
                         Save Shift Handover
                       </Button>
@@ -227,7 +272,9 @@ export default function ShiftHandover() {
               <TabsContent value="history" className="p-6">
                 <div className="space-y-6">
                   <div>
-                    <h2 className="text-xl font-semibold mb-2">Handover History</h2>
+                    <h2 className="text-xl font-semibold mb-2">
+                      Handover History
+                    </h2>
                     <p className="text-gray-600">
                       View previous shift handovers and notes
                     </p>
@@ -239,7 +286,9 @@ export default function ShiftHandover() {
                       <div className="flex justify-between items-start mb-3">
                         <div>
                           <h4 className="font-medium">John Smith</h4>
-                          <p className="text-sm text-gray-600">6:00 AM - 2:00 PM</p>
+                          <p className="text-sm text-gray-600">
+                            6:00 AM - 2:00 PM
+                          </p>
                         </div>
                         <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
                           Yesterday
@@ -247,9 +296,12 @@ export default function ShiftHandover() {
                       </div>
                       <div className="text-sm text-gray-700">
                         <p className="mb-2">
-                          <strong>Notes:</strong> All systems running normally. NEFT-RTGS processing completed for the day.
+                          <strong>Notes:</strong> All systems running normally.
+                          NEFT-RTGS processing completed for the day.
                         </p>
-                        <p><strong>Key Points:</strong></p>
+                        <p>
+                          <strong>Key Points:</strong>
+                        </p>
                         <ul className="list-disc list-inside ml-2">
                           <li>UPI system maintenance scheduled for tonight</li>
                           <li>Monitor server performance closely</li>
@@ -262,7 +314,9 @@ export default function ShiftHandover() {
                       <div className="flex justify-between items-start mb-3">
                         <div>
                           <h4 className="font-medium">Sarah Johnson</h4>
-                          <p className="text-sm text-gray-600">2:00 PM - 10:00 PM</p>
+                          <p className="text-sm text-gray-600">
+                            2:00 PM - 10:00 PM
+                          </p>
                         </div>
                         <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
                           2 Days Ago
@@ -270,9 +324,12 @@ export default function ShiftHandover() {
                       </div>
                       <div className="text-sm text-gray-700">
                         <p className="mb-2">
-                          <strong>Notes:</strong> Resolved critical issue with IMPS gateway. All services restored.
+                          <strong>Notes:</strong> Resolved critical issue with
+                          IMPS gateway. All services restored.
                         </p>
-                        <p><strong>Key Points:</strong></p>
+                        <p>
+                          <strong>Key Points:</strong>
+                        </p>
                         <ul className="list-disc list-inside ml-2">
                           <li>Gateway restart required at 8:00 PM</li>
                           <li>Check transaction volumes hourly</li>
@@ -285,7 +342,9 @@ export default function ShiftHandover() {
                       <div className="flex justify-between items-start mb-3">
                         <div>
                           <h4 className="font-medium">Mike Chen</h4>
-                          <p className="text-sm text-gray-600">10:00 PM - 6:00 AM</p>
+                          <p className="text-sm text-gray-600">
+                            10:00 PM - 6:00 AM
+                          </p>
                         </div>
                         <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
                           3 Days Ago
@@ -293,9 +352,12 @@ export default function ShiftHandover() {
                       </div>
                       <div className="text-sm text-gray-700">
                         <p className="mb-2">
-                          <strong>Notes:</strong> Night shift completed successfully. Backup procedures executed.
+                          <strong>Notes:</strong> Night shift completed
+                          successfully. Backup procedures executed.
                         </p>
-                        <p><strong>Key Points:</strong></p>
+                        <p>
+                          <strong>Key Points:</strong>
+                        </p>
                         <ul className="list-disc list-inside ml-2">
                           <li>Database backup completed at 2:00 AM</li>
                           <li>Security patches applied successfully</li>

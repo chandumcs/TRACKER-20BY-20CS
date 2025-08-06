@@ -1,7 +1,18 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 // Define role types and their permissions
-export type Role = 'Admin' | 'Production Support' | 'UAT Support' | 'Developer' | 'Manager';
+export type Role =
+  | "Admin"
+  | "Production Support"
+  | "UAT Support"
+  | "Developer"
+  | "Manager";
 
 export interface UserRole {
   userId: string;
@@ -33,7 +44,7 @@ const RoleContext = createContext<RoleContextType | undefined>(undefined);
 // Define permissions for each role
 const getRolePermissions = (role: Role): RolePermissions => {
   switch (role) {
-    case 'Admin':
+    case "Admin":
       return {
         canAccessDashboard: true,
         canAccessDailyTracker: true,
@@ -41,9 +52,9 @@ const getRolePermissions = (role: Role): RolePermissions => {
         canAccessAllUsersData: true,
         canAccessOthers: true,
         canManageUsers: true,
-        readOnly: false
+        readOnly: false,
       };
-    case 'Manager':
+    case "Manager":
       return {
         canAccessDashboard: true,
         canAccessDailyTracker: true,
@@ -51,9 +62,9 @@ const getRolePermissions = (role: Role): RolePermissions => {
         canAccessAllUsersData: true,
         canAccessOthers: true,
         canManageUsers: false,
-        readOnly: false
+        readOnly: false,
       };
-    case 'Production Support':
+    case "Production Support":
       return {
         canAccessDashboard: true,
         canAccessDailyTracker: true,
@@ -61,9 +72,9 @@ const getRolePermissions = (role: Role): RolePermissions => {
         canAccessAllUsersData: false,
         canAccessOthers: false,
         canManageUsers: false,
-        readOnly: false
+        readOnly: false,
       };
-    case 'UAT Support':
+    case "UAT Support":
       return {
         canAccessDashboard: true,
         canAccessDailyTracker: true,
@@ -71,9 +82,9 @@ const getRolePermissions = (role: Role): RolePermissions => {
         canAccessAllUsersData: false,
         canAccessOthers: false,
         canManageUsers: false,
-        readOnly: false
+        readOnly: false,
       };
-    case 'Developer':
+    case "Developer":
       return {
         canAccessDashboard: true,
         canAccessDailyTracker: true,
@@ -81,7 +92,7 @@ const getRolePermissions = (role: Role): RolePermissions => {
         canAccessAllUsersData: false,
         canAccessOthers: false,
         canManageUsers: false,
-        readOnly: false
+        readOnly: false,
       };
     default:
       return {
@@ -91,7 +102,7 @@ const getRolePermissions = (role: Role): RolePermissions => {
         canAccessAllUsersData: false,
         canAccessOthers: false,
         canManageUsers: false,
-        readOnly: true
+        readOnly: true,
       };
   }
 };
@@ -101,40 +112,42 @@ export function RoleProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Try to get user role from localStorage
-    const savedUser = localStorage.getItem('currentUserRole');
+    const savedUser = localStorage.getItem("currentUserRole");
     if (savedUser) {
       setCurrentUser(JSON.parse(savedUser));
     } else {
       // Default to Admin role for demo purposes
       const defaultUser: UserRole = {
-        userId: '1',
-        email: localStorage.getItem('userEmail') || 'admin@company.com',
-        name: 'Admin User',
-        role: 'Admin'
+        userId: "1",
+        email: localStorage.getItem("userEmail") || "admin@company.com",
+        name: "Admin User",
+        role: "Admin",
       };
       setCurrentUser(defaultUser);
-      localStorage.setItem('currentUserRole', JSON.stringify(defaultUser));
+      localStorage.setItem("currentUserRole", JSON.stringify(defaultUser));
     }
   }, []);
 
   const setUserRole = (user: UserRole) => {
     setCurrentUser(user);
-    localStorage.setItem('currentUserRole', JSON.stringify(user));
+    localStorage.setItem("currentUserRole", JSON.stringify(user));
   };
 
-  const permissions = currentUser ? getRolePermissions(currentUser.role) : getRolePermissions('Viewer');
+  const permissions = currentUser
+    ? getRolePermissions(currentUser.role)
+    : getRolePermissions("Viewer");
 
   const hasPermission = (page: string): boolean => {
     switch (page.toLowerCase()) {
-      case 'dashboard':
+      case "dashboard":
         return permissions.canAccessDashboard;
-      case 'daily-tracker':
+      case "daily-tracker":
         return permissions.canAccessDailyTracker;
-      case 'shift-handover':
+      case "shift-handover":
         return permissions.canAccessShiftHandover;
-      case 'all-users-data':
+      case "all-users-data":
         return permissions.canAccessAllUsersData;
-      case 'others':
+      case "others":
         return permissions.canAccessOthers;
       default:
         return false;
@@ -146,13 +159,15 @@ export function RoleProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <RoleContext.Provider value={{
-      currentUser,
-      permissions,
-      setUserRole,
-      hasPermission,
-      isReadOnly
-    }}>
+    <RoleContext.Provider
+      value={{
+        currentUser,
+        permissions,
+        setUserRole,
+        hasPermission,
+        isReadOnly,
+      }}
+    >
       {children}
     </RoleContext.Provider>
   );
@@ -161,7 +176,7 @@ export function RoleProvider({ children }: { children: ReactNode }) {
 export function useRole() {
   const context = useContext(RoleContext);
   if (context === undefined) {
-    throw new Error('useRole must be used within a RoleProvider');
+    throw new Error("useRole must be used within a RoleProvider");
   }
   return context;
 }

@@ -122,7 +122,9 @@ export default function Dashboard() {
                 <Shield className="h-4 w-4 text-white" />
                 <div className="text-right">
                   <div className="text-sm text-white/80">Role:</div>
-                  <div className="text-sm font-semibold text-white">{currentUser?.role || 'Unknown'}</div>
+                  <div className="text-sm font-semibold text-white">
+                    {currentUser?.role || "Unknown"}
+                  </div>
                 </div>
               </div>
             </div>
@@ -150,14 +152,18 @@ export default function Dashboard() {
       {/* Main content area */}
       <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         {/* Dynamic grid layout based on permissions */}
-        <div className={`grid gap-6 h-[calc(100vh-12rem)] ${
-          [
-            hasPermission('daily-tracker'),
-            hasPermission('shift-handover'),
-            hasPermission('all-users-data'),
-            hasPermission('others')
-          ].filter(Boolean).length <= 2 ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-2'
-        }`}>
+        <div
+          className={`grid gap-6 h-[calc(100vh-12rem)] ${
+            [
+              hasPermission("daily-tracker"),
+              hasPermission("shift-handover"),
+              hasPermission("all-users-data"),
+              hasPermission("others"),
+            ].filter(Boolean).length <= 2
+              ? "grid-cols-1 lg:grid-cols-2"
+              : "grid-cols-2"
+          }`}
+        >
           {/* Daily Tracker */}
           <div
             className={`rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
@@ -225,10 +231,12 @@ export default function Dashboard() {
                       <strong>Shift Person:</strong> {shiftHandover.name}
                     </p>
                     <p className="text-sm text-white">
-                      <strong>Shift Time:</strong> {shiftHandover.shiftFrom} - {shiftHandover.shiftTo}
+                      <strong>Shift Time:</strong> {shiftHandover.shiftFrom} -{" "}
+                      {shiftHandover.shiftTo}
                     </p>
                     <p className="text-sm text-white">
-                      <strong>Saved:</strong> {shiftHandover.savedTime} on {shiftHandover.savedDate}
+                      <strong>Saved:</strong> {shiftHandover.savedTime} on{" "}
+                      {shiftHandover.savedDate}
                     </p>
                   </div>
                 </div>
@@ -243,7 +251,9 @@ export default function Dashboard() {
                 </div>
               )}
               <div className="mt-4 text-center">
-                <p className="text-sm text-white/80">Click to create new handover</p>
+                <p className="text-sm text-white/80">
+                  Click to create new handover
+                </p>
               </div>
             </div>
           </div>

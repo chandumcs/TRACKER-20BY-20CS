@@ -9,6 +9,7 @@ import { ArrowLeft, ClipboardList, Save, User, Clock, MessageCircle, CheckSquare
 import { useState } from "react";
 
 export default function ShiftHandover() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("handover");
   const [handoverData, setHandoverData] = useState({
     name: "",
@@ -38,9 +39,18 @@ export default function ShiftHandover() {
   };
 
   const saveHandover = () => {
-    // Here you would typically save to backend
-    console.log("Saving handover:", handoverData);
-    alert("Shift handover saved successfully!");
+    // Save handover data to localStorage
+    const handoverWithTimestamp = {
+      ...handoverData,
+      savedAt: new Date().toISOString(),
+      savedDate: new Date().toLocaleDateString(),
+      savedTime: new Date().toLocaleTimeString()
+    };
+
+    localStorage.setItem("currentShiftHandover", JSON.stringify(handoverWithTimestamp));
+
+    // Navigate back to dashboard
+    navigate("/dashboard");
   };
 
   return (

@@ -196,11 +196,33 @@ export default function Dashboard() {
               </h2>
             </div>
             <div className="text-white/90">
-              <p className="mb-2">Manage shift transitions and handovers</p>
-              <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
-                <p className="text-sm text-white">
-                  Next shift: 6:00 PM - 2:00 AM
-                </p>
+              {shiftHandover ? (
+                <div>
+                  <p className="mb-2">Latest shift handover information:</p>
+                  <div className="bg-white/20 backdrop-blur-sm p-3 rounded space-y-2">
+                    <p className="text-sm text-white">
+                      <strong>Shift Person:</strong> {shiftHandover.name}
+                    </p>
+                    <p className="text-sm text-white">
+                      <strong>Shift Time:</strong> {shiftHandover.shiftFrom} - {shiftHandover.shiftTo}
+                    </p>
+                    <p className="text-sm text-white">
+                      <strong>Saved:</strong> {shiftHandover.savedTime} on {shiftHandover.savedDate}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <p className="mb-2">Manage shift transitions and handovers</p>
+                  <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
+                    <p className="text-sm text-white">
+                      No recent handover data available
+                    </p>
+                  </div>
+                </div>
+              )}
+              <div className="mt-4 text-center">
+                <p className="text-sm text-white/80">Click to create new handover</p>
               </div>
             </div>
           </div>

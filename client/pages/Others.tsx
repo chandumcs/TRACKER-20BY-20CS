@@ -519,36 +519,105 @@ export default function Others() {
                           <h4 className="font-medium mb-3">Assign Roles to Users</h4>
                           <div className="space-y-3">
                             {userDirectory.slice(0, 6).map((user) => (
-                              <div key={user.id} className="flex items-center justify-between p-3 border rounded-lg">
-                                <div className="flex items-center space-x-3">
-                                  <div className="h-8 w-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
-                                    {user.name.split(' ').map(n => n[0]).join('')}
+                              <div key={user.id} className="p-3 border rounded-lg">
+                                {changingRoleUserId === user.id ? (
+                                  /* Role Change Interface */
+                                  <div className="space-y-4">
+                                    <div className="flex items-center space-x-3">
+                                      <div className="h-8 w-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                                        {user.name.split(' ').map(n => n[0]).join('')}
+                                      </div>
+                                      <div>
+                                        <p className="font-medium">{user.name}</p>
+                                        <p className="text-sm text-gray-600">{user.position}</p>
+                                      </div>
+                                    </div>
+
+                                    <div className="bg-gray-50 p-4 rounded-lg">
+                                      <h5 className="font-medium mb-3">Select New Role</h5>
+                                      <div className="space-y-3">
+                                        <Select value={selectedRole} onValueChange={setSelectedRole}>
+                                          <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Select a role..." />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            {availableRoles.map((role) => (
+                                              <SelectItem key={role.value} value={role.value}>
+                                                <div className="flex items-center space-x-2">
+                                                  <Badge className={role.color} variant="secondary">
+                                                    {role.label}
+                                                  </Badge>
+                                                </div>
+                                              </SelectItem>
+                                            ))}
+                                          </SelectContent>
+                                        </Select>
+
+                                        {selectedRole && (
+                                          <div className="p-3 bg-blue-50 rounded border">
+                                            <p className="text-sm text-blue-800">
+                                              <strong>Selected Role:</strong> {selectedRole}
+                                            </p>
+                                            <p className="text-xs text-blue-600 mt-1">
+                                              This user will have access to pages according to the {selectedRole} role permissions.
+                                            </p>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
+
+                                    <div className="flex space-x-2">
+                                      <Button
+                                        size="sm"
+                                        onClick={saveRoleChange}
+                                        disabled={!selectedRole}
+                                        className="bg-green-600 hover:bg-green-700"
+                                      >
+                                        Save Role
+                                      </Button>
+                                      <Button
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={cancelRoleChange}
+                                      >
+                                        Cancel
+                                      </Button>
+                                    </div>
                                   </div>
-                                  <div>
-                                    <p className="font-medium">{user.name}</p>
-                                    <p className="text-sm text-gray-600">{user.position}</p>
+                                ) : (
+                                  /* Normal Display */
+                                  <div className="flex items-center justify-between">
+                                    <div className="flex items-center space-x-3">
+                                      <div className="h-8 w-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                                        {user.name.split(' ').map(n => n[0]).join('')}
+                                      </div>
+                                      <div>
+                                        <p className="font-medium">{user.name}</p>
+                                        <p className="text-sm text-gray-600">{user.position}</p>
+                                      </div>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                      <Badge
+                                        className={
+                                          user.id === 1 ? "bg-red-100 text-red-800" :
+                                          user.id === 2 || user.id === 8 ? "bg-blue-100 text-blue-800" :
+                                          user.id === 3 ? "bg-green-100 text-green-800" :
+                                          user.id === 4 ? "bg-purple-100 text-purple-800" :
+                                          "bg-orange-100 text-orange-800"
+                                        }
+                                      >
+                                        {getCurrentUserRole(user.id)}
+                                      </Badge>
+                                      <Button
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={() => handleRoleChange(user.id)}
+                                      >
+                                        Change Role
+                                      </Button>
+                                    </div>
                                   </div>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                  <Badge
-                                    className={
-                                      user.id === 1 ? "bg-red-100 text-red-800" :
-                                      user.id === 2 || user.id === 8 ? "bg-blue-100 text-blue-800" :
-                                      user.id === 3 ? "bg-green-100 text-green-800" :
-                                      user.id === 4 ? "bg-purple-100 text-purple-800" :
-                                      "bg-orange-100 text-orange-800"
-                                    }
-                                  >
-                                    {user.id === 1 ? "Admin" :
-                                     user.id === 2 || user.id === 8 ? "Manager" :
-                                     user.id === 3 ? "Production Support" :
-                                     user.id === 4 ? "UAT Support" :
-                                     "Developer"}
-                                  </Badge>
-                                  <Button size="sm" variant="outline">
-                                    Change Role
-                                  </Button>
-                                </div>
+                                )}
                               </div>
                             ))}
                           </div>

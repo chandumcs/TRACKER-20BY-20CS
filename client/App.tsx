@@ -22,24 +22,61 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/welcome" element={<Welcome />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/daily-tracker" element={<DailyTracker />} />
-          <Route path="/shift-handover" element={<ShiftHandover />} />
-          <Route path="/all-users-data" element={<AllUsersData />} />
-          <Route path="/others" element={<Others />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <RoleProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/welcome" element={<Welcome />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute requiredPage="dashboard">
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/daily-tracker"
+              element={
+                <ProtectedRoute requiredPage="daily-tracker">
+                  <DailyTracker />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/shift-handover"
+              element={
+                <ProtectedRoute requiredPage="shift-handover">
+                  <ShiftHandover />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/all-users-data"
+              element={
+                <ProtectedRoute requiredPage="all-users-data">
+                  <AllUsersData />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/others"
+              element={
+                <ProtectedRoute requiredPage="others">
+                  <Others />
+                </ProtectedRoute>
+              }
+            />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </RoleProvider>
   </QueryClientProvider>
 );
 

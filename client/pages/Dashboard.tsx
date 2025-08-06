@@ -56,6 +56,12 @@ export default function Dashboard() {
     if (lastLogoutTime) {
       setLastLogout(lastLogoutTime);
     }
+
+    // Load shift handover data
+    const savedHandover = localStorage.getItem("currentShiftHandover");
+    if (savedHandover) {
+      setShiftHandover(JSON.parse(savedHandover));
+    }
   }, []);
 
   const handleLogout = () => {

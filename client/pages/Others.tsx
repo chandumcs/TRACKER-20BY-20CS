@@ -370,18 +370,223 @@ export default function Others() {
               <TabsContent value="settings" className="p-6">
                 <div className="space-y-6">
                   <div>
-                    <h2 className="text-xl font-semibold mb-2">System Settings</h2>
-                    <p className="text-gray-600">Configuration and system management options</p>
+                    <h2 className="text-xl font-semibold mb-2">User Role Management</h2>
+                    <p className="text-gray-600">Assign roles and page access permissions to users</p>
                   </div>
 
+                  {/* Role-Based Access Control */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center">
+                        <UserCheck className="h-5 w-5 mr-2" />
+                        Role Assignment
+                      </CardTitle>
+                      <CardDescription>
+                        Assign roles to users to control page access permissions
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-6">
+                        {/* Available Roles */}
+                        <div>
+                          <h4 className="font-medium mb-3">Available Roles & Permissions</h4>
+                          <div className="grid gap-3">
+                            <div className="p-3 border rounded-lg bg-red-50">
+                              <div className="flex justify-between items-start">
+                                <div>
+                                  <h5 className="font-semibold text-red-800">Admin</h5>
+                                  <p className="text-sm text-red-700">Full access to all pages and system settings</p>
+                                </div>
+                                <Badge className="bg-red-100 text-red-800">Full Access</Badge>
+                              </div>
+                              <div className="mt-2">
+                                <p className="text-xs text-red-600">
+                                  Pages: Dashboard, Daily Tracker, Shift Handover, All Users Data, Others, User Management
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="p-3 border rounded-lg bg-blue-50">
+                              <div className="flex justify-between items-start">
+                                <div>
+                                  <h5 className="font-semibold text-blue-800">Manager</h5>
+                                  <p className="text-sm text-blue-700">Access to management and reporting features</p>
+                                </div>
+                                <Badge className="bg-blue-100 text-blue-800">Management</Badge>
+                              </div>
+                              <div className="mt-2">
+                                <p className="text-xs text-blue-600">
+                                  Pages: Dashboard, Daily Tracker, Shift Handover, All Users Data
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="p-3 border rounded-lg bg-green-50">
+                              <div className="flex justify-between items-start">
+                                <div>
+                                  <h5 className="font-semibold text-green-800">Developer</h5>
+                                  <p className="text-sm text-green-700">Access to development and tracking features</p>
+                                </div>
+                                <Badge className="bg-green-100 text-green-800">Development</Badge>
+                              </div>
+                              <div className="mt-2">
+                                <p className="text-xs text-green-600">
+                                  Pages: Dashboard, Daily Tracker
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="p-3 border rounded-lg bg-purple-50">
+                              <div className="flex justify-between items-start">
+                                <div>
+                                  <h5 className="font-semibold text-purple-800">Tester</h5>
+                                  <p className="text-sm text-purple-700">Access to testing and quality assurance features</p>
+                                </div>
+                                <Badge className="bg-purple-100 text-purple-800">Testing</Badge>
+                              </div>
+                              <div className="mt-2">
+                                <p className="text-xs text-purple-600">
+                                  Pages: Dashboard, Daily Tracker
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="p-3 border rounded-lg bg-orange-50">
+                              <div className="flex justify-between items-start">
+                                <div>
+                                  <h5 className="font-semibold text-orange-800">Viewer</h5>
+                                  <p className="text-sm text-orange-700">Read-only access to basic features</p>
+                                </div>
+                                <Badge className="bg-orange-100 text-orange-800">Read Only</Badge>
+                              </div>
+                              <div className="mt-2">
+                                <p className="text-xs text-orange-600">
+                                  Pages: Dashboard (View Only)
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* User Role Assignment */}
+                        <div>
+                          <h4 className="font-medium mb-3">Assign Roles to Users</h4>
+                          <div className="space-y-3">
+                            {userDirectory.slice(0, 6).map((user) => (
+                              <div key={user.id} className="flex items-center justify-between p-3 border rounded-lg">
+                                <div className="flex items-center space-x-3">
+                                  <div className="h-8 w-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                                    {user.name.split(' ').map(n => n[0]).join('')}
+                                  </div>
+                                  <div>
+                                    <p className="font-medium">{user.name}</p>
+                                    <p className="text-sm text-gray-600">{user.position}</p>
+                                  </div>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <Badge
+                                    className={
+                                      user.id === 1 ? "bg-red-100 text-red-800" :
+                                      user.id === 2 || user.id === 8 ? "bg-blue-100 text-blue-800" :
+                                      user.id === 3 || user.id === 5 ? "bg-green-100 text-green-800" :
+                                      user.id === 4 ? "bg-purple-100 text-purple-800" :
+                                      "bg-orange-100 text-orange-800"
+                                    }
+                                  >
+                                    {user.id === 1 ? "Admin" :
+                                     user.id === 2 || user.id === 8 ? "Manager" :
+                                     user.id === 3 || user.id === 5 ? "Developer" :
+                                     user.id === 4 ? "Tester" :
+                                     "Viewer"}
+                                  </Badge>
+                                  <Button size="sm" variant="outline">
+                                    Change Role
+                                  </Button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Page Access Matrix */}
+                        <div>
+                          <h4 className="font-medium mb-3">Page Access Matrix</h4>
+                          <div className="overflow-x-auto">
+                            <table className="w-full text-sm border rounded-lg">
+                              <thead className="bg-gray-50">
+                                <tr>
+                                  <th className="text-left p-3 border-b">Role</th>
+                                  <th className="text-center p-3 border-b">Dashboard</th>
+                                  <th className="text-center p-3 border-b">Daily Tracker</th>
+                                  <th className="text-center p-3 border-b">Shift Handover</th>
+                                  <th className="text-center p-3 border-b">All Users Data</th>
+                                  <th className="text-center p-3 border-b">Others</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr className="border-b">
+                                  <td className="p-3 font-medium">Admin</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">✅</td>
+                                </tr>
+                                <tr className="border-b">
+                                  <td className="p-3 font-medium">Manager</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">❌</td>
+                                </tr>
+                                <tr className="border-b">
+                                  <td className="p-3 font-medium">Developer</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">❌</td>
+                                  <td className="text-center p-3">❌</td>
+                                  <td className="text-center p-3">❌</td>
+                                </tr>
+                                <tr className="border-b">
+                                  <td className="p-3 font-medium">Tester</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">❌</td>
+                                  <td className="text-center p-3">❌</td>
+                                  <td className="text-center p-3">❌</td>
+                                </tr>
+                                <tr>
+                                  <td className="p-3 font-medium">Viewer</td>
+                                  <td className="text-center p-3">👁️</td>
+                                  <td className="text-center p-3">❌</td>
+                                  <td className="text-center p-3">❌</td>
+                                  <td className="text-center p-3">❌</td>
+                                  <td className="text-center p-3">❌</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <p className="text-xs text-gray-500 mt-2">
+                              ✅ = Full Access | 👁️ = View Only | ❌ = No Access
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex space-x-3 pt-4 border-t">
+                          <Button className="flex-1">
+                            Save Role Changes
+                          </Button>
+                          <Button variant="outline">
+                            Reset to Default
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* System Tools */}
                   <div className="grid gap-4">
-                    <Card>
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold mb-2">User Management</h3>
-                        <p className="text-sm text-gray-600 mb-4">Add, edit, or remove user accounts and permissions</p>
-                        <Button variant="outline">Manage Users</Button>
-                      </CardContent>
-                    </Card>
                     <Card>
                       <CardContent className="p-4">
                         <h3 className="font-semibold mb-2">System Reports</h3>

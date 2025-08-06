@@ -44,6 +44,7 @@ export default function Dashboard() {
   const [lastLogin, setLastLogin] = useState("");
   const [lastLogout, setLastLogout] = useState("");
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [shiftHandover, setShiftHandover] = useState<any>(null);
 
   useEffect(() => {
     // Set current login time and get last logout time

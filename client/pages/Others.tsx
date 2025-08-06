@@ -749,12 +749,12 @@ export default function Others() {
                         </div>
 
                         {/* Action Buttons */}
-                        <div className="flex space-x-3 pt-4 border-t">
-                          <Button className="flex-1">
-                            Save Role Changes
-                          </Button>
-                          <Button variant="outline">
-                            Reset to Default
+                        <div className="pt-4 border-t">
+                          <Button
+                            onClick={savePagePermissions}
+                            className="w-full bg-green-600 hover:bg-green-700"
+                          >
+                            Save Page Access Permissions
                           </Button>
                         </div>
                       </div>

@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 // Define role types and their permissions
-export type Role = 'Admin' | 'Manager' | 'Developer' | 'Tester' | 'Viewer';
+export type Role = 'Admin' | 'Production Support' | 'UAT Support' | 'Developer' | 'Manager';
 
 export interface UserRole {
   userId: string;

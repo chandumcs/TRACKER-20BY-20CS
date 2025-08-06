@@ -8,7 +8,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Link, useNavigate } from "react-router-dom";
 import { FormEvent } from "react";
 
@@ -101,7 +107,9 @@ export default function Register() {
                 <SelectContent>
                   <SelectItem value="admin">Admin</SelectItem>
                   <SelectItem value="manager">Manager</SelectItem>
-                  <SelectItem value="production-support">Production Support</SelectItem>
+                  <SelectItem value="production-support">
+                    Production Support
+                  </SelectItem>
                   <SelectItem value="uat-support">UAT Support</SelectItem>
                   <SelectItem value="developer">Developer</SelectItem>
                 </SelectContent>

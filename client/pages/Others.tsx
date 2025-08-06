@@ -488,16 +488,16 @@ export default function Others() {
                                     className={
                                       user.id === 1 ? "bg-red-100 text-red-800" :
                                       user.id === 2 || user.id === 8 ? "bg-blue-100 text-blue-800" :
-                                      user.id === 3 || user.id === 5 ? "bg-green-100 text-green-800" :
+                                      user.id === 3 ? "bg-green-100 text-green-800" :
                                       user.id === 4 ? "bg-purple-100 text-purple-800" :
                                       "bg-orange-100 text-orange-800"
                                     }
                                   >
                                     {user.id === 1 ? "Admin" :
                                      user.id === 2 || user.id === 8 ? "Manager" :
-                                     user.id === 3 || user.id === 5 ? "Developer" :
-                                     user.id === 4 ? "Tester" :
-                                     "Viewer"}
+                                     user.id === 3 ? "Production Support" :
+                                     user.id === 4 ? "UAT Support" :
+                                     "Developer"}
                                   </Badge>
                                   <Button size="sm" variant="outline">
                                     Change Role

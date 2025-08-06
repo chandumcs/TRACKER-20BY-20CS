@@ -66,6 +66,24 @@ export default function Register() {
               />
             </div>
             <div className="space-y-2">
+              <Label htmlFor="userName">User Name</Label>
+              <Input
+                id="userName"
+                type="text"
+                placeholder="Enter your username"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="employeeId">Employee ID</Label>
+              <Input
+                id="employeeId"
+                type="text"
+                placeholder="Enter your employee ID"
+                required
+              />
+            </div>
+            <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -73,6 +91,21 @@ export default function Register() {
                 placeholder="Enter your email"
                 required
               />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="role">Role</Label>
+              <Select required>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select your role..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="admin">Admin</SelectItem>
+                  <SelectItem value="manager">Manager</SelectItem>
+                  <SelectItem value="production-support">Production Support</SelectItem>
+                  <SelectItem value="uat-support">UAT Support</SelectItem>
+                  <SelectItem value="developer">Developer</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>

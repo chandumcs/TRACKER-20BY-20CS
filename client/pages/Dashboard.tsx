@@ -16,7 +16,9 @@ import {
   ClipboardList,
   MoreHorizontal,
   Filter,
+  Shield,
 } from "lucide-react";
+import { useRole } from "@/contexts/RoleContext";
 
 export default function Dashboard() {
   // Add CSS animation keyframes

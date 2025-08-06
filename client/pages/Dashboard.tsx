@@ -71,6 +71,8 @@ export default function Dashboard() {
     // Navigate to specific pages
     if (sectionName === "daily-tracker") {
       navigate("/daily-tracker");
+    } else if (sectionName === "shift-handover") {
+      navigate("/shift-handover");
     }
     // Add other navigation logic here for other sections
   };

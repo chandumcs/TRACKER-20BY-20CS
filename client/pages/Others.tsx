@@ -19,6 +19,8 @@ import { useState } from "react";
 export default function Others() {
   const [activeTab, setActiveTab] = useState("directory");
   const [searchTerm, setSearchTerm] = useState("");
+  const [changingRoleUserId, setChangingRoleUserId] = useState<number | null>(null);
+  const [selectedRole, setSelectedRole] = useState<string>("");
 
   // User directory data with names and positions
   const userDirectory = [

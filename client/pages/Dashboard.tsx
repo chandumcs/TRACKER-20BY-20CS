@@ -80,6 +80,8 @@ export default function Dashboard() {
       navigate("/daily-tracker");
     } else if (sectionName === "shift-handover") {
       navigate("/shift-handover");
+    } else if (sectionName === "users-data") {
+      navigate("/all-users-data");
     }
     // Add other navigation logic here for other sections
   };

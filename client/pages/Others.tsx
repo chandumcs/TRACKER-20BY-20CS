@@ -761,23 +761,6 @@ export default function Others() {
                     </CardContent>
                   </Card>
 
-                  {/* System Tools */}
-                  <div className="grid gap-4">
-                    <Card>
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold mb-2">System Reports</h3>
-                        <p className="text-sm text-gray-600 mb-4">Generate and download system usage reports</p>
-                        <Button variant="outline">Generate Reports</Button>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold mb-2">Backup & Maintenance</h3>
-                        <p className="text-sm text-gray-600 mb-4">System backup and maintenance utilities</p>
-                        <Button variant="outline">System Tools</Button>
-                      </CardContent>
-                    </Card>
-                  </div>
                 </div>
               </TabsContent>
             </Tabs>

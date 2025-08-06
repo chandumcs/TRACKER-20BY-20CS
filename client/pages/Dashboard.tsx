@@ -43,6 +43,7 @@ export default function Dashboard() {
   }
   const navigate = useNavigate();
   const location = useLocation();
+  const { currentUser, hasPermission, isReadOnly } = useRole();
   const [lastLogin, setLastLogin] = useState("");
   const [lastLogout, setLastLogout] = useState("");
   const [activeSection, setActiveSection] = useState<string | null>(null);

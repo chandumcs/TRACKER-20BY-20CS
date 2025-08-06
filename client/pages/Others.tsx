@@ -538,18 +538,18 @@ export default function Others() {
                                   <td className="text-center p-3">✅</td>
                                   <td className="text-center p-3">✅</td>
                                   <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">✅</td>
+                                </tr>
+                                <tr className="border-b">
+                                  <td className="p-3 font-medium">Production Support</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">❌</td>
                                   <td className="text-center p-3">❌</td>
                                 </tr>
                                 <tr className="border-b">
-                                  <td className="p-3 font-medium">Developer</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">✅</td>
-                                  <td className="text-center p-3">❌</td>
-                                  <td className="text-center p-3">❌</td>
-                                  <td className="text-center p-3">❌</td>
-                                </tr>
-                                <tr className="border-b">
-                                  <td className="p-3 font-medium">Tester</td>
+                                  <td className="p-3 font-medium">UAT Support</td>
                                   <td className="text-center p-3">✅</td>
                                   <td className="text-center p-3">✅</td>
                                   <td className="text-center p-3">❌</td>
@@ -557,9 +557,9 @@ export default function Others() {
                                   <td className="text-center p-3">❌</td>
                                 </tr>
                                 <tr>
-                                  <td className="p-3 font-medium">Viewer</td>
-                                  <td className="text-center p-3">👁️</td>
-                                  <td className="text-center p-3">❌</td>
+                                  <td className="p-3 font-medium">Developer</td>
+                                  <td className="text-center p-3">✅</td>
+                                  <td className="text-center p-3">✅</td>
                                   <td className="text-center p-3">❌</td>
                                   <td className="text-center p-3">❌</td>
                                   <td className="text-center p-3">❌</td>

@@ -32,6 +32,7 @@ const App = () => (
           <Route path="/daily-tracker" element={<DailyTracker />} />
           <Route path="/shift-handover" element={<ShiftHandover />} />
           <Route path="/all-users-data" element={<AllUsersData />} />
+          <Route path="/others" element={<Others />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -416,7 +416,7 @@ export default function Others() {
                               </div>
                               <div className="mt-2">
                                 <p className="text-xs text-blue-600">
-                                  Pages: Dashboard, Daily Tracker, Shift Handover, All Users Data
+                                  Pages: Dashboard, Daily Tracker, Shift Handover, All Users Data, Others
                                 </p>
                               </div>
                             </div>
@@ -424,14 +424,14 @@ export default function Others() {
                             <div className="p-3 border rounded-lg bg-green-50">
                               <div className="flex justify-between items-start">
                                 <div>
-                                  <h5 className="font-semibold text-green-800">Developer</h5>
-                                  <p className="text-sm text-green-700">Access to development and tracking features</p>
+                                  <h5 className="font-semibold text-green-800">Production Support</h5>
+                                  <p className="text-sm text-green-700">Access to production operations and monitoring</p>
                                 </div>
-                                <Badge className="bg-green-100 text-green-800">Development</Badge>
+                                <Badge className="bg-green-100 text-green-800">Production</Badge>
                               </div>
                               <div className="mt-2">
                                 <p className="text-xs text-green-600">
-                                  Pages: Dashboard, Daily Tracker
+                                  Pages: Dashboard, Daily Tracker, Shift Handover
                                 </p>
                               </div>
                             </div>
@@ -439,10 +439,10 @@ export default function Others() {
                             <div className="p-3 border rounded-lg bg-purple-50">
                               <div className="flex justify-between items-start">
                                 <div>
-                                  <h5 className="font-semibold text-purple-800">Tester</h5>
-                                  <p className="text-sm text-purple-700">Access to testing and quality assurance features</p>
+                                  <h5 className="font-semibold text-purple-800">UAT Support</h5>
+                                  <p className="text-sm text-purple-700">Access to UAT testing and validation features</p>
                                 </div>
-                                <Badge className="bg-purple-100 text-purple-800">Testing</Badge>
+                                <Badge className="bg-purple-100 text-purple-800">UAT Testing</Badge>
                               </div>
                               <div className="mt-2">
                                 <p className="text-xs text-purple-600">
@@ -454,14 +454,14 @@ export default function Others() {
                             <div className="p-3 border rounded-lg bg-orange-50">
                               <div className="flex justify-between items-start">
                                 <div>
-                                  <h5 className="font-semibold text-orange-800">Viewer</h5>
-                                  <p className="text-sm text-orange-700">Read-only access to basic features</p>
+                                  <h5 className="font-semibold text-orange-800">Developer</h5>
+                                  <p className="text-sm text-orange-700">Access to development and coding features</p>
                                 </div>
-                                <Badge className="bg-orange-100 text-orange-800">Read Only</Badge>
+                                <Badge className="bg-orange-100 text-orange-800">Development</Badge>
                               </div>
                               <div className="mt-2">
                                 <p className="text-xs text-orange-600">
-                                  Pages: Dashboard (View Only)
+                                  Pages: Dashboard, Daily Tracker
                                 </p>
                               </div>
                             </div>

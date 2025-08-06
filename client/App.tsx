@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import DailyTracker from "./pages/DailyTracker";
 import ShiftHandover from "./pages/ShiftHandover";
 import AllUsersData from "./pages/AllUsersData";
+import Others from "./pages/Others";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();

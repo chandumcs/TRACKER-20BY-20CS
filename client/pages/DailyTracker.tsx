@@ -44,6 +44,15 @@ export default function DailyTracker() {
     status: "all",
   });
 
+  // Applied filters state (only applied when user clicks Apply Filters)
+  const [appliedFilters, setAppliedFilters] = useState({
+    dateFrom: new Date().toISOString().split("T")[0],
+    dateTo: new Date().toISOString().split("T")[0],
+    product: "all",
+    issueType: "all",
+    status: "all",
+  });
+
   // Sample tasks data
   const allTasks = [
     {

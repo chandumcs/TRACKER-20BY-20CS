@@ -138,14 +138,20 @@ export default function DailyTracker() {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
+  const applyFilters = () => {
+    setAppliedFilters({ ...filters });
+  };
+
   const clearFilters = () => {
-    setFilters({
+    const defaultFilters = {
       dateFrom: new Date().toISOString().split("T")[0],
       dateTo: new Date().toISOString().split("T")[0],
       product: "all",
       issueType: "all",
       status: "all",
-    });
+    };
+    setFilters(defaultFilters);
+    setAppliedFilters(defaultFilters);
   };
   return (
     <div

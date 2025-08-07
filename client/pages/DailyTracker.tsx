@@ -111,16 +111,16 @@ export default function DailyTracker() {
     },
   ];
 
-  // Filter tasks based on current filters
+  // Filter tasks based on applied filters
   const filteredTasks = allTasks.filter((task) => {
     const matchesProduct =
-      filters.product === "all" || task.product === filters.product;
+      appliedFilters.product === "all" || task.product === appliedFilters.product;
     const matchesIssueType =
-      filters.issueType === "all" || task.issueType === filters.issueType;
+      appliedFilters.issueType === "all" || task.issueType === appliedFilters.issueType;
     const matchesStatus =
-      filters.status === "all" || task.status === filters.status;
+      appliedFilters.status === "all" || task.status === appliedFilters.status;
     const matchesDate =
-      task.date >= filters.dateFrom && task.date <= filters.dateTo;
+      task.date >= appliedFilters.dateFrom && task.date <= appliedFilters.dateTo;
 
     return matchesProduct && matchesIssueType && matchesStatus && matchesDate;
   });

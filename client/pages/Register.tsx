@@ -20,12 +20,68 @@ import { FormEvent, useState } from "react";
 
 export default function Register() {
   const navigate = useNavigate();
+  const [step, setStep] = useState<"registration" | "otp">("registration");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
+    employeeId: "",
+    email: "",
+    role: "",
+    password: "",
+    confirmPassword: ""
+  });
+  const [otp, setOtp] = useState("");
+  const [generatedOtp, setGeneratedOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // Here you would typically handle form validation and API call
-    // For now, just redirect to dashboard
-    navigate("/dashboard");
+    const formDataObj = new FormData(e.target as HTMLFormElement);
+    const data = {
+      firstName: formDataObj.get("firstName") as string,
+      lastName: formDataObj.get("lastName") as string,
+      userName: formDataObj.get("userName") as string,
+      employeeId: formDataObj.get("employeeId") as string,
+      email: formDataObj.get("email") as string,
+      role: formDataObj.get("role") as string,
+      password: formDataObj.get("password") as string,
+      confirmPassword: formDataObj.get("confirmPassword") as string,
+    };
+
+    setFormData(data);
+    sendOtp(data.email);
+  };
+
+  const sendOtp = (email: string) => {
+    // Generate a 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    setGeneratedOtp(otp);
+
+    // Here you would typically send OTP via email API
+    console.log(`OTP sent to ${email}: ${otp}`);
+    alert(`OTP sent to ${email}. For demo purposes, your OTP is: ${otp}`);
+
+    setOtpSent(true);
+    setStep("otp");
+  };
+
+  const handleOtpSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    if (otp === generatedOtp) {
+      // OTP verified successfully
+      alert("Registration successful! Account created.");
+      navigate("/dashboard");
+    } else {
+      alert("Invalid OTP. Please try again.");
+      setOtp("");
+    }
+  };
+
+  const resendOtp = () => {
+    sendOtp(formData.email);
+    setOtp("");
   };
   return (
     <div

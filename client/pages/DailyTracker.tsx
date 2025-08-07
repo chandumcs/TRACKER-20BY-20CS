@@ -297,7 +297,7 @@ export default function DailyTracker() {
                 </div>
 
                 {/* Apply Filters Button */}
-                <Button className="w-full">
+                <Button className="w-full" onClick={applyFilters}>
                   <Filter className="h-4 w-4 mr-2" />
                   Apply Filters
                 </Button>

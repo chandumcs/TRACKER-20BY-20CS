@@ -49,6 +49,12 @@ export default function AllUsersData() {
   const [activeTab, setActiveTab] = useState("users");
   const [pageLoginTime, setPageLoginTime] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [leaveRequests, setLeaveRequests] = useState<any[]>([]);
+  const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false);
+  const [reason, setReason] = useState("");
+  const [leaveType, setLeaveType] = useState("");
+  const { currentUser } = useRole();
 
   // Get signed-in users from localStorage
   const [usersData, setUsersData] = useState<any[]>([]);

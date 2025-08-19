@@ -54,8 +54,8 @@ export default function DailyTracker() {
     status: "all",
   });
 
-  // Tasks data (empty initially)
-  const allTasks: any[] = [];
+  // Tasks data from state
+  const allTasks = tasks;
 
   // Filter tasks based on applied filters
   const filteredTasks = allTasks.filter((task) => {

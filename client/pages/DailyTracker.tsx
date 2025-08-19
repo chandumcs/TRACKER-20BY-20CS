@@ -59,13 +59,16 @@ export default function DailyTracker() {
   // Filter tasks based on applied filters
   const filteredTasks = allTasks.filter((task) => {
     const matchesProduct =
-      appliedFilters.product === "all" || task.product === appliedFilters.product;
+      appliedFilters.product === "all" ||
+      task.product === appliedFilters.product;
     const matchesIssueType =
-      appliedFilters.issueType === "all" || task.issueType === appliedFilters.issueType;
+      appliedFilters.issueType === "all" ||
+      task.issueType === appliedFilters.issueType;
     const matchesStatus =
       appliedFilters.status === "all" || task.status === appliedFilters.status;
     const matchesDate =
-      task.date >= appliedFilters.dateFrom && task.date <= appliedFilters.dateTo;
+      task.date >= appliedFilters.dateFrom &&
+      task.date <= appliedFilters.dateTo;
 
     return matchesProduct && matchesIssueType && matchesStatus && matchesDate;
   });

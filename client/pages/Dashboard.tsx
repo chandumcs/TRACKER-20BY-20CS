@@ -195,9 +195,7 @@ export default function Dashboard() {
               <p className="mb-4">Track your daily activities and progress</p>
               <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
                 <p className="text-sm text-white mb-2">Today's Summary:</p>
-                <p className="text-sm text-white">
-                  No tasks tracked yet
-                </p>
+                <p className="text-sm text-white">No tasks tracked yet</p>
               </div>
               <div className="mt-4 text-center">
                 <p className="text-sm text-white/80">

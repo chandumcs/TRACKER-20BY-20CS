@@ -34,6 +34,25 @@ export default function Register() {
   const [otp, setOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
+  const [emailError, setEmailError] = useState("");
+
+  const validateEmail = (email: string) => {
+    if (!email.endsWith('@olivecrypto.com')) {
+      setEmailError('Please enter organization mail id');
+      return false;
+    }
+    setEmailError('');
+    return true;
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value && !value.endsWith('@olivecrypto.com')) {
+      setEmailError('Please enter organization mail id');
+    } else {
+      setEmailError('');
+    }
+  };
 
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -48,6 +67,10 @@ export default function Register() {
       password: formDataObj.get("password") as string,
       confirmPassword: formDataObj.get("confirmPassword") as string,
     };
+
+    if (!validateEmail(data.email)) {
+      return;
+    }
 
     setFormData(data);
     sendOtp(data.email);
@@ -158,9 +181,14 @@ export default function Register() {
                     name="email"
                     id="email"
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder="Enter your email (e.g., user@olivecrypto.com)"
+                    onChange={handleEmailChange}
+                    className={emailError ? "border-red-500" : ""}
                     required
                   />
+                  {emailError && (
+                    <p className="text-sm text-red-500 mt-1">{emailError}</p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="role">Role</Label>

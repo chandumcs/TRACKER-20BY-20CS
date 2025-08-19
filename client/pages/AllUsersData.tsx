@@ -10,6 +10,23 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -17,13 +34,16 @@ import {
   Clock,
   LogIn,
   LogOut,
-  Calendar,
+  Calendar as CalendarIcon,
   CalendarDays,
   Search,
   Filter,
   Eye,
+  Check,
+  X,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useRole } from "@/contexts/RoleContext";
 
 export default function AllUsersData() {
   const [activeTab, setActiveTab] = useState("users");

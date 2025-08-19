@@ -79,7 +79,65 @@ export default function AllUsersData() {
     // Set page login time when component mounts
     const loginTime = new Date().toLocaleString();
     setPageLoginTime(loginTime);
+
+    // Load leave requests from localStorage
+    const savedRequests = localStorage.getItem('leaveRequests');
+    if (savedRequests) {
+      setLeaveRequests(JSON.parse(savedRequests));
+    }
   }, []);
+
+  const handleLeaveRequest = () => {
+    if (!selectedDate || !reason || !leaveType) {
+      alert("Please select a date, leave type, and provide a reason");
+      return;
+    }
+
+    const newRequest = {
+      id: Date.now(),
+      userId: currentUser?.userId || 'unknown',
+      userName: currentUser?.name || 'Unknown User',
+      email: currentUser?.email || '',
+      date: selectedDate.toISOString().split('T')[0],
+      leaveType,
+      reason,
+      status: 'pending',
+      requestedAt: new Date().toLocaleString(),
+      approvedBy: null,
+      approvedAt: null,
+    };
+
+    const updatedRequests = [...leaveRequests, newRequest];
+    setLeaveRequests(updatedRequests);
+    localStorage.setItem('leaveRequests', JSON.stringify(updatedRequests));
+
+    // Reset form
+    setReason('');
+    setLeaveType('');
+    setIsRequestDialogOpen(false);
+
+    alert('Leave request submitted successfully!');
+  };
+
+  const handleApproveReject = (requestId: number, action: 'approved' | 'rejected', adminReason?: string) => {
+    const updatedRequests = leaveRequests.map(request => {
+      if (request.id === requestId) {
+        return {
+          ...request,
+          status: action,
+          approvedBy: currentUser?.name || 'Admin',
+          approvedAt: new Date().toLocaleString(),
+          adminReason: adminReason || ''
+        };
+      }
+      return request;
+    });
+
+    setLeaveRequests(updatedRequests);
+    localStorage.setItem('leaveRequests', JSON.stringify(updatedRequests));
+
+    alert(`Leave request ${action} successfully!`);
+  };
 
   const getStatusBadge = (status: string) => {
     return status === "Online" ? (

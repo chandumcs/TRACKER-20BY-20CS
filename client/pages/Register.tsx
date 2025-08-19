@@ -29,7 +29,7 @@ export default function Register() {
     email: "",
     role: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
   const [otp, setOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState("");
@@ -37,20 +37,20 @@ export default function Register() {
   const [emailError, setEmailError] = useState("");
 
   const validateEmail = (email: string) => {
-    if (!email.endsWith('@olivecrypto.com')) {
-      setEmailError('Please enter organization mail id');
+    if (!email.endsWith("@olivecrypto.com")) {
+      setEmailError("Please enter organization mail id");
       return false;
     }
-    setEmailError('');
+    setEmailError("");
     return true;
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (value && !value.endsWith('@olivecrypto.com')) {
-      setEmailError('Please enter organization mail id');
+    if (value && !value.endsWith("@olivecrypto.com")) {
+      setEmailError("Please enter organization mail id");
     } else {
-      setEmailError('');
+      setEmailError("");
     }
   };
 
@@ -246,7 +246,9 @@ export default function Register() {
                 <p className="text-sm text-gray-600 mt-2">
                   We've sent a 6-digit verification code to
                 </p>
-                <p className="text-sm font-medium text-blue-600">{formData.email}</p>
+                <p className="text-sm font-medium text-blue-600">
+                  {formData.email}
+                </p>
               </div>
 
               <form onSubmit={handleOtpSubmit} className="space-y-4">
@@ -264,7 +266,11 @@ export default function Register() {
                   />
                 </div>
 
-                <Button className="w-full" type="submit" disabled={otp.length !== 6}>
+                <Button
+                  className="w-full"
+                  type="submit"
+                  disabled={otp.length !== 6}
+                >
                   Verify OTP & Create Account
                 </Button>
               </form>
@@ -274,11 +280,7 @@ export default function Register() {
                   Didn't receive the code?
                 </p>
                 <div className="flex space-x-4 justify-center">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={resendOtp}
-                  >
+                  <Button variant="outline" size="sm" onClick={resendOtp}>
                     Resend OTP
                   </Button>
                   <Button

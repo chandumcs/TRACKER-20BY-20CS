@@ -17,21 +17,21 @@ export default function Index() {
   const [emailError, setEmailError] = useState("");
 
   const validateEmail = (email: string) => {
-    if (!email.endsWith('@olivecrypto.com')) {
-      setEmailError('Please enter organization mail id');
+    if (!email.endsWith("@olivecrypto.com")) {
+      setEmailError("Please enter organization mail id");
       return false;
     }
-    setEmailError('');
+    setEmailError("");
     return true;
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
-    if (value && !value.endsWith('@olivecrypto.com')) {
-      setEmailError('Please enter organization mail id');
+    if (value && !value.endsWith("@olivecrypto.com")) {
+      setEmailError("Please enter organization mail id");
     } else {
-      setEmailError('');
+      setEmailError("");
     }
   };
 

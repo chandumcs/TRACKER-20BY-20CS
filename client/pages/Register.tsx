@@ -20,20 +20,6 @@ import { FormEvent, useState } from "react";
 
 export default function Register() {
   const navigate = useNavigate();
-  const [step, setStep] = useState<"registration" | "otp">("registration");
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    userName: "",
-    employeeId: "",
-    email: "",
-    role: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [otp, setOtp] = useState("");
-  const [generatedOtp, setGeneratedOtp] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
   const [emailError, setEmailError] = useState("");
 
   const validateEmail = (email: string) => {
@@ -72,40 +58,16 @@ export default function Register() {
       return;
     }
 
-    setFormData(data);
-    sendOtp(data.email);
-  };
-
-  const sendOtp = (email: string) => {
-    // Generate a 6-digit OTP
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    setGeneratedOtp(otp);
-
-    // Here you would typically send OTP via email API
-    console.log(`OTP sent to ${email}: ${otp}`);
-    alert(`OTP sent to ${email}. For demo purposes, your OTP is: ${otp}`);
-
-    setOtpSent(true);
-    setStep("otp");
-  };
-
-  const handleOtpSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    if (otp === generatedOtp) {
-      // OTP verified successfully
-      alert("Registration successful! Account created.");
-      navigate("/dashboard");
-    } else {
-      alert("Invalid OTP. Please try again.");
-      setOtp("");
+    if (data.password !== data.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
     }
+
+    // Registration successful
+    alert("Registration successful! Account created.");
+    navigate("/dashboard");
   };
 
-  const resendOtp = () => {
-    sendOtp(formData.email);
-    setOtp("");
-  };
   return (
     <div
       className="min-h-screen flex items-center justify-center px-4"
@@ -131,173 +93,109 @@ export default function Register() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {step === "registration" ? (
-            /* Step 1: Registration Form */
-            <>
-              <form onSubmit={handleFormSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name</Label>
-                  <Input
-                    name="firstName"
-                    id="firstName"
-                    type="text"
-                    placeholder="Enter your first name"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name</Label>
-                  <Input
-                    name="lastName"
-                    id="lastName"
-                    type="text"
-                    placeholder="Enter your last name"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="userName">User Name</Label>
-                  <Input
-                    name="userName"
-                    id="userName"
-                    type="text"
-                    placeholder="Enter your username"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="employeeId">Employee ID</Label>
-                  <Input
-                    name="employeeId"
-                    id="employeeId"
-                    type="text"
-                    placeholder="Enter your employee ID"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    name="email"
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email (e.g., user@olivecrypto.com)"
-                    onChange={handleEmailChange}
-                    className={emailError ? "border-red-500" : ""}
-                    required
-                  />
-                  {emailError && (
-                    <p className="text-sm text-red-500 mt-1">{emailError}</p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="role">Role</Label>
-                  <Select name="role" required>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your role..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="admin">Admin</SelectItem>
-                      <SelectItem value="manager">Manager</SelectItem>
-                      <SelectItem value="production-support">
-                        Production Support
-                      </SelectItem>
-                      <SelectItem value="uat-support">UAT Support</SelectItem>
-                      <SelectItem value="developer">Developer</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    name="password"
-                    id="password"
-                    type="password"
-                    placeholder="Create a password"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
-                  <Input
-                    name="confirmPassword"
-                    id="confirmPassword"
-                    type="password"
-                    placeholder="Confirm your password"
-                    required
-                  />
-                </div>
-                <Button className="w-full" type="submit">
-                  Send OTP to Email
-                </Button>
-              </form>
-              <div className="text-center text-sm text-muted-foreground">
-                Already have an account?{" "}
-                <Link to="/" className="text-primary hover:underline">
-                  Sign in
-                </Link>
-              </div>
-            </>
-          ) : (
-            /* Step 2: OTP Verification */
-            <>
-              <div className="text-center mb-4">
-                <h3 className="text-lg font-semibold">Verify Your Email</h3>
-                <p className="text-sm text-gray-600 mt-2">
-                  We've sent a 6-digit verification code to
-                </p>
-                <p className="text-sm font-medium text-blue-600">
-                  {formData.email}
-                </p>
-              </div>
-
-              <form onSubmit={handleOtpSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="otp">Enter OTP</Label>
-                  <Input
-                    id="otp"
-                    type="text"
-                    placeholder="Enter 6-digit OTP"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    maxLength={6}
-                    className="text-center text-lg tracking-widest"
-                    required
-                  />
-                </div>
-
-                <Button
-                  className="w-full"
-                  type="submit"
-                  disabled={otp.length !== 6}
-                >
-                  Verify OTP & Create Account
-                </Button>
-              </form>
-
-              <div className="text-center space-y-2">
-                <p className="text-sm text-gray-600">
-                  Didn't receive the code?
-                </p>
-                <div className="flex space-x-4 justify-center">
-                  <Button variant="outline" size="sm" onClick={resendOtp}>
-                    Resend OTP
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setStep("registration");
-                      setOtp("");
-                      setOtpSent(false);
-                    }}
-                  >
-                    Change Email
-                  </Button>
-                </div>
-              </div>
-            </>
-          )}
+          <form onSubmit={handleFormSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="firstName">First Name</Label>
+              <Input
+                name="firstName"
+                id="firstName"
+                type="text"
+                placeholder="Enter your first name"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="lastName">Last Name</Label>
+              <Input
+                name="lastName"
+                id="lastName"
+                type="text"
+                placeholder="Enter your last name"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="userName">User Name</Label>
+              <Input
+                name="userName"
+                id="userName"
+                type="text"
+                placeholder="Enter your username"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="employeeId">Employee ID</Label>
+              <Input
+                name="employeeId"
+                id="employeeId"
+                type="text"
+                placeholder="Enter your employee ID"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                name="email"
+                id="email"
+                type="email"
+                placeholder="Enter your email (e.g., user@olivecrypto.com)"
+                onChange={handleEmailChange}
+                className={emailError ? "border-red-500" : ""}
+                required
+              />
+              {emailError && (
+                <p className="text-sm text-red-500 mt-1">{emailError}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="role">Role</Label>
+              <Select name="role" required>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select your role..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="admin">Admin</SelectItem>
+                  <SelectItem value="manager">Manager</SelectItem>
+                  <SelectItem value="production-support">
+                    Production Support
+                  </SelectItem>
+                  <SelectItem value="uat-support">UAT Support</SelectItem>
+                  <SelectItem value="developer">Developer</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                name="password"
+                id="password"
+                type="password"
+                placeholder="Create a password"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                name="confirmPassword"
+                id="confirmPassword"
+                type="password"
+                placeholder="Confirm your password"
+                required
+              />
+            </div>
+            <Button className="w-full" type="submit">
+              Create Account
+            </Button>
+          </form>
+          <div className="text-center text-sm text-muted-foreground">
+            Already have an account?{" "}
+            <Link to="/" className="text-primary hover:underline">
+              Sign in
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>

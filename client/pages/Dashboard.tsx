@@ -288,7 +288,7 @@ export default function Dashboard() {
             <div className="text-white/90">
               <p className="mb-2">View and manage all user information</p>
               <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
-                <p className="text-sm text-white">Total users: 1,245 active</p>
+                <p className="text-sm text-white">No users data yet</p>
               </div>
             </div>
           </div>

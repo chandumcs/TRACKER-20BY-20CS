@@ -105,8 +105,14 @@ export default function Dashboard() {
       <header className="bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 shadow-lg border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Left side - Last Login Time */}
-            <div className="flex items-center">
+            {/* Left side - User Name and Last Login Time */}
+            <div className="flex items-center space-x-6">
+              <div>
+                <span className="text-sm text-white/80">Welcome:</span>
+                <div className="text-lg font-semibold text-white">
+                  {currentUser?.name || "Chandu Mcs"}
+                </div>
+              </div>
               <div>
                 <span className="text-sm text-white/80">Last Login:</span>
                 <div className="text-lg font-semibold text-white">

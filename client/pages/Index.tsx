@@ -43,17 +43,21 @@ export default function Index() {
     }
 
     // Track signed-in user
-    const signedInUsers = JSON.parse(localStorage.getItem('signedInUsers') || '[]');
+    const signedInUsers = JSON.parse(
+      localStorage.getItem("signedInUsers") || "[]",
+    );
     const currentTime = new Date().toLocaleString();
-    const userName = email.split('@')[0]; // Extract name from email before @
+    const userName = email.split("@")[0]; // Extract name from email before @
 
     // Check if user already exists
-    const existingUserIndex = signedInUsers.findIndex((user: any) => user.email === email);
+    const existingUserIndex = signedInUsers.findIndex(
+      (user: any) => user.email === email,
+    );
 
     if (existingUserIndex >= 0) {
       // Update existing user's login time
       signedInUsers[existingUserIndex].lastLogin = currentTime;
-      signedInUsers[existingUserIndex].status = 'Online';
+      signedInUsers[existingUserIndex].status = "Online";
     } else {
       // Add new user
       const newUser = {
@@ -72,8 +76,8 @@ export default function Index() {
       signedInUsers.push(newUser);
     }
 
-    localStorage.setItem('signedInUsers', JSON.stringify(signedInUsers));
-    localStorage.setItem('userEmail', email);
+    localStorage.setItem("signedInUsers", JSON.stringify(signedInUsers));
+    localStorage.setItem("userEmail", email);
 
     // Here you would typically handle authentication
     // For now, just redirect to welcome page with email

@@ -73,13 +73,17 @@ export default function Dashboard() {
 
     // Update user status to offline
     if (userEmail) {
-      const signedInUsers = JSON.parse(localStorage.getItem('signedInUsers') || '[]');
-      const userIndex = signedInUsers.findIndex((user: any) => user.email === userEmail);
+      const signedInUsers = JSON.parse(
+        localStorage.getItem("signedInUsers") || "[]",
+      );
+      const userIndex = signedInUsers.findIndex(
+        (user: any) => user.email === userEmail,
+      );
 
       if (userIndex >= 0) {
         signedInUsers[userIndex].lastLogout = logoutTime;
-        signedInUsers[userIndex].status = 'Offline';
-        localStorage.setItem('signedInUsers', JSON.stringify(signedInUsers));
+        signedInUsers[userIndex].status = "Offline";
+        localStorage.setItem("signedInUsers", JSON.stringify(signedInUsers));
       }
     }
 

@@ -64,18 +64,27 @@ export default function Register() {
     }
 
     // Track registered user
-    const signedInUsers = JSON.parse(localStorage.getItem('signedInUsers') || '[]');
+    const signedInUsers = JSON.parse(
+      localStorage.getItem("signedInUsers") || "[]",
+    );
     const currentTime = new Date().toLocaleString();
 
     const newUser = {
       id: Date.now(),
       name: `${data.firstName} ${data.lastName}`,
       email: data.email,
-      department: data.role === 'admin' ? 'Management' :
-                  data.role === 'developer' ? 'Development' :
-                  data.role === 'production-support' ? 'Production' :
-                  data.role === 'uat-support' ? 'Testing' :
-                  data.role === 'manager' ? 'Management' : 'Unknown',
+      department:
+        data.role === "admin"
+          ? "Management"
+          : data.role === "developer"
+            ? "Development"
+            : data.role === "production-support"
+              ? "Production"
+              : data.role === "uat-support"
+                ? "Testing"
+                : data.role === "manager"
+                  ? "Management"
+                  : "Unknown",
       lastLogin: currentTime,
       lastLogout: "Never",
       status: "Online",
@@ -88,16 +97,21 @@ export default function Register() {
     };
 
     // Check if user already exists (by email)
-    const existingUserIndex = signedInUsers.findIndex((user: any) => user.email === data.email);
+    const existingUserIndex = signedInUsers.findIndex(
+      (user: any) => user.email === data.email,
+    );
     if (existingUserIndex >= 0) {
       // Update existing user with full registration data
-      signedInUsers[existingUserIndex] = { ...signedInUsers[existingUserIndex], ...newUser };
+      signedInUsers[existingUserIndex] = {
+        ...signedInUsers[existingUserIndex],
+        ...newUser,
+      };
     } else {
       signedInUsers.push(newUser);
     }
 
-    localStorage.setItem('signedInUsers', JSON.stringify(signedInUsers));
-    localStorage.setItem('userEmail', data.email);
+    localStorage.setItem("signedInUsers", JSON.stringify(signedInUsers));
+    localStorage.setItem("userEmail", data.email);
 
     // Registration successful
     alert("Registration successful! Account created.");

@@ -109,30 +109,30 @@ export default function DailyTracker() {
 
     const newTask = {
       id: Date.now(),
-      title: formData.get('title') as string,
-      product: formData.get('product') as string,
-      issueType: formData.get('issueType') as string,
-      status: 'pending',
+      title: formData.get("title") as string,
+      product: formData.get("product") as string,
+      issueType: formData.get("issueType") as string,
+      status: "pending",
       time: `Added at ${new Date().toLocaleTimeString()}`,
-      date: new Date().toISOString().split('T')[0],
-      description: formData.get('description') as string,
-      developer: formData.get('developer') as string,
-      uatPerson: formData.get('uatPerson') as string,
-      productionPerson: formData.get('productionPerson') as string,
-      priority: formData.get('priority') as string,
-      reportedDate: formData.get('reportedDate') as string,
-      fixedDate: formData.get('fixedDate') as string,
-      closedDate: formData.get('closedDate') as string,
+      date: new Date().toISOString().split("T")[0],
+      description: formData.get("description") as string,
+      developer: formData.get("developer") as string,
+      uatPerson: formData.get("uatPerson") as string,
+      productionPerson: formData.get("productionPerson") as string,
+      priority: formData.get("priority") as string,
+      reportedDate: formData.get("reportedDate") as string,
+      fixedDate: formData.get("fixedDate") as string,
+      closedDate: formData.get("closedDate") as string,
     };
 
-    setTasks(prev => [...prev, newTask]);
+    setTasks((prev) => [...prev, newTask]);
 
     // Reset form
     (e.target as HTMLFormElement).reset();
 
     // Show success message and switch to track tab
-    alert('Task added successfully!');
-    setActiveTab('track');
+    alert("Task added successfully!");
+    setActiveTab("track");
   };
   return (
     <div
@@ -506,7 +506,11 @@ export default function DailyTracker() {
 
                         <div className="space-y-2">
                           <Label>Task Title</Label>
-                          <Input name="title" placeholder="Enter task title..." required />
+                          <Input
+                            name="title"
+                            placeholder="Enter task title..."
+                            required
+                          />
                         </div>
 
                         <div className="space-y-2">
@@ -527,17 +531,26 @@ export default function DailyTracker() {
                           <div className="grid grid-cols-1 gap-4">
                             <div className="space-y-2">
                               <Label>Developer Name</Label>
-                              <Input name="developer" placeholder="Enter developer name..." />
+                              <Input
+                                name="developer"
+                                placeholder="Enter developer name..."
+                              />
                             </div>
 
                             <div className="space-y-2">
                               <Label>UAT Person</Label>
-                              <Input name="uatPerson" placeholder="Enter UAT person name..." />
+                              <Input
+                                name="uatPerson"
+                                placeholder="Enter UAT person name..."
+                              />
                             </div>
 
                             <div className="space-y-2">
                               <Label>Production Person</Label>
-                              <Input name="productionPerson" placeholder="Enter production person name..." />
+                              <Input
+                                name="productionPerson"
+                                placeholder="Enter production person name..."
+                              />
                             </div>
                           </div>
                         </div>

@@ -111,21 +111,15 @@ export function RoleProvider({ children }: { children: ReactNode }) {
   const [currentUser, setCurrentUser] = useState<UserRole | null>(null);
 
   useEffect(() => {
-    // Try to get user role from localStorage
-    const savedUser = localStorage.getItem("currentUserRole");
-    if (savedUser) {
-      setCurrentUser(JSON.parse(savedUser));
-    } else {
-      // Default to Admin role for demo purposes
-      const defaultUser: UserRole = {
-        userId: "1",
-        email: localStorage.getItem("userEmail") || "admin@company.com",
-        name: "Chandu Mcs",
-        role: "Admin",
-      };
-      setCurrentUser(defaultUser);
-      localStorage.setItem("currentUserRole", JSON.stringify(defaultUser));
-    }
+    // Clear old cached data and set correct user info
+    const defaultUser: UserRole = {
+      userId: "1",
+      email: localStorage.getItem("userEmail") || "chandu@olivecrypto.com",
+      name: "Chandu Mcs",
+      role: "Admin",
+    };
+    setCurrentUser(defaultUser);
+    localStorage.setItem("currentUserRole", JSON.stringify(defaultUser));
   }, []);
 
   const setUserRole = (user: UserRole) => {

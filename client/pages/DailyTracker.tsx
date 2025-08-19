@@ -102,6 +102,38 @@ export default function DailyTracker() {
     setFilters(defaultFilters);
     setAppliedFilters(defaultFilters);
   };
+
+  const handleAddTask = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+
+    const newTask = {
+      id: Date.now(),
+      title: formData.get('title') as string,
+      product: formData.get('product') as string,
+      issueType: formData.get('issueType') as string,
+      status: 'pending',
+      time: `Added at ${new Date().toLocaleTimeString()}`,
+      date: new Date().toISOString().split('T')[0],
+      description: formData.get('description') as string,
+      developer: formData.get('developer') as string,
+      uatPerson: formData.get('uatPerson') as string,
+      productionPerson: formData.get('productionPerson') as string,
+      priority: formData.get('priority') as string,
+      reportedDate: formData.get('reportedDate') as string,
+      fixedDate: formData.get('fixedDate') as string,
+      closedDate: formData.get('closedDate') as string,
+    };
+
+    setTasks(prev => [...prev, newTask]);
+
+    // Reset form
+    (e.target as HTMLFormElement).reset();
+
+    // Show success message and switch to track tab
+    alert('Task added successfully!');
+    setActiveTab('track');
+  };
   return (
     <div
       className="min-h-screen"

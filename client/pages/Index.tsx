@@ -14,9 +14,34 @@ import { FormEvent, useState } from "react";
 export default function Index() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+
+  const validateEmail = (email: string) => {
+    if (!email.endsWith('@olivecrypto.com')) {
+      setEmailError('Please enter organization mail id');
+      return false;
+    }
+    setEmailError('');
+    return true;
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    if (value && !value.endsWith('@olivecrypto.com')) {
+      setEmailError('Please enter organization mail id');
+    } else {
+      setEmailError('');
+    }
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
+    if (!validateEmail(email)) {
+      return;
+    }
+
     // Here you would typically handle authentication
     // For now, just redirect to welcome page with email
     navigate("/welcome", { state: { email } });
@@ -52,11 +77,15 @@ export default function Index() {
               <Input
                 id="email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Enter your email (e.g., user@olivecrypto.com)"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
+                className={emailError ? "border-red-500" : ""}
                 required
               />
+              {emailError && (
+                <p className="text-sm text-red-500 mt-1">{emailError}</p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>

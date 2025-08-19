@@ -30,74 +30,8 @@ export default function AllUsersData() {
   const [pageLoginTime, setPageLoginTime] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Sample user data
-  const usersData = [
-    {
-      id: 1,
-      name: "John Smith",
-      email: "john.smith@company.com",
-      department: "Development",
-      lastLogin: "2025-01-08 09:30:15",
-      lastLogout: "2025-01-07 18:45:30",
-      status: "Online",
-      totalLeaves: 15,
-      usedLeaves: 8,
-      weekOffs: 52,
-      usedWeekOffs: 45,
-    },
-    {
-      id: 2,
-      name: "Sarah Johnson",
-      email: "sarah.johnson@company.com",
-      department: "Testing",
-      lastLogin: "2025-01-08 08:45:22",
-      lastLogout: "2025-01-07 17:30:45",
-      status: "Online",
-      totalLeaves: 18,
-      usedLeaves: 12,
-      weekOffs: 52,
-      usedWeekOffs: 50,
-    },
-    {
-      id: 3,
-      name: "Mike Chen",
-      email: "mike.chen@company.com",
-      department: "Production",
-      lastLogin: "2025-01-07 16:20:10",
-      lastLogout: "2025-01-07 16:25:55",
-      status: "Offline",
-      totalLeaves: 20,
-      usedLeaves: 5,
-      weekOffs: 52,
-      usedWeekOffs: 48,
-    },
-    {
-      id: 4,
-      name: "Emily Davis",
-      email: "emily.davis@company.com",
-      department: "UAT",
-      lastLogin: "2025-01-08 10:15:33",
-      lastLogout: "2025-01-07 19:10:20",
-      status: "Online",
-      totalLeaves: 16,
-      usedLeaves: 10,
-      weekOffs: 52,
-      usedWeekOffs: 47,
-    },
-    {
-      id: 5,
-      name: "David Wilson",
-      email: "david.wilson@company.com",
-      department: "Development",
-      lastLogin: "2025-01-08 07:30:45",
-      lastLogout: "2025-01-07 20:15:10",
-      status: "Online",
-      totalLeaves: 14,
-      usedLeaves: 6,
-      weekOffs: 52,
-      usedWeekOffs: 49,
-    },
-  ];
+  // Users data (empty initially)
+  const usersData: any[] = [];
 
   // Filter users based on search term
   const filteredUsers = usersData.filter(

@@ -196,7 +196,7 @@ export default function Dashboard() {
               <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
                 <p className="text-sm text-white mb-2">Today's Summary:</p>
                 <p className="text-sm text-white">
-                  ✅ 5 completed • ⏳ 3 in progress • ❌ 2 pending
+                  No tasks tracked yet
                 </p>
               </div>
               <div className="mt-4 text-center">

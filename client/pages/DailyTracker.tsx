@@ -34,6 +34,7 @@ import { useState } from "react";
 export default function DailyTracker() {
   const [activeTab, setActiveTab] = useState("track");
   const [editingTask, setEditingTask] = useState<any>(null);
+  const [tasks, setTasks] = useState<any[]>([]);
 
   // Filter state
   const [filters, setFilters] = useState({

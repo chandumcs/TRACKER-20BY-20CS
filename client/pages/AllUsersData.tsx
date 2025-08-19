@@ -30,8 +30,16 @@ export default function AllUsersData() {
   const [pageLoginTime, setPageLoginTime] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Users data (empty initially)
-  const usersData: any[] = [];
+  // Get signed-in users from localStorage
+  const [usersData, setUsersData] = useState<any[]>([]);
+
+  // Load users from localStorage on component mount
+  useEffect(() => {
+    const signedInUsers = localStorage.getItem('signedInUsers');
+    if (signedInUsers) {
+      setUsersData(JSON.parse(signedInUsers));
+    }
+  }, []);
 
   // Filter users based on search term
   const filteredUsers = usersData.filter(

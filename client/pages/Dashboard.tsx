@@ -140,7 +140,7 @@ export default function Dashboard() {
               <Button
                 variant="outline"
                 onClick={handleLogout}
-                className="text-white border-white/50 hover:bg-white/20 hover:text-white"
+                className="text-white border-red-400 bg-red-500/80 hover:bg-red-600 hover:text-white hover:border-red-500"
               >
                 Logout
               </Button>

@@ -49,7 +49,9 @@ export default function AllUsersData() {
   const [activeTab, setActiveTab] = useState("users");
   const [pageLoginTime, setPageLoginTime] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date(),
+  );
   const [leaveRequests, setLeaveRequests] = useState<any[]>([]);
   const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false);
   const [reason, setReason] = useState("");
@@ -81,7 +83,7 @@ export default function AllUsersData() {
     setPageLoginTime(loginTime);
 
     // Load leave requests from localStorage
-    const savedRequests = localStorage.getItem('leaveRequests');
+    const savedRequests = localStorage.getItem("leaveRequests");
     if (savedRequests) {
       setLeaveRequests(JSON.parse(savedRequests));
     }
@@ -95,13 +97,13 @@ export default function AllUsersData() {
 
     const newRequest = {
       id: Date.now(),
-      userId: currentUser?.userId || 'unknown',
-      userName: currentUser?.name || 'Unknown User',
-      email: currentUser?.email || '',
-      date: selectedDate.toISOString().split('T')[0],
+      userId: currentUser?.userId || "unknown",
+      userName: currentUser?.name || "Unknown User",
+      email: currentUser?.email || "",
+      date: selectedDate.toISOString().split("T")[0],
       leaveType,
       reason,
-      status: 'pending',
+      status: "pending",
       requestedAt: new Date().toLocaleString(),
       approvedBy: null,
       approvedAt: null,
@@ -109,32 +111,36 @@ export default function AllUsersData() {
 
     const updatedRequests = [...leaveRequests, newRequest];
     setLeaveRequests(updatedRequests);
-    localStorage.setItem('leaveRequests', JSON.stringify(updatedRequests));
+    localStorage.setItem("leaveRequests", JSON.stringify(updatedRequests));
 
     // Reset form
-    setReason('');
-    setLeaveType('');
+    setReason("");
+    setLeaveType("");
     setIsRequestDialogOpen(false);
 
-    alert('Leave request submitted successfully!');
+    alert("Leave request submitted successfully!");
   };
 
-  const handleApproveReject = (requestId: number, action: 'approved' | 'rejected', adminReason?: string) => {
-    const updatedRequests = leaveRequests.map(request => {
+  const handleApproveReject = (
+    requestId: number,
+    action: "approved" | "rejected",
+    adminReason?: string,
+  ) => {
+    const updatedRequests = leaveRequests.map((request) => {
       if (request.id === requestId) {
         return {
           ...request,
           status: action,
-          approvedBy: currentUser?.name || 'Admin',
+          approvedBy: currentUser?.name || "Admin",
           approvedAt: new Date().toLocaleString(),
-          adminReason: adminReason || ''
+          adminReason: adminReason || "",
         };
       }
       return request;
     });
 
     setLeaveRequests(updatedRequests);
-    localStorage.setItem('leaveRequests', JSON.stringify(updatedRequests));
+    localStorage.setItem("leaveRequests", JSON.stringify(updatedRequests));
 
     alert(`Leave request ${action} successfully!`);
   };

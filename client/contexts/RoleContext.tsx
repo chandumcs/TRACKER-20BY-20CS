@@ -120,7 +120,7 @@ export function RoleProvider({ children }: { children: ReactNode }) {
       const defaultUser: UserRole = {
         userId: "1",
         email: localStorage.getItem("userEmail") || "admin@company.com",
-        name: "Admin User",
+        name: "Chandu Mcs",
         role: "Admin",
       };
       setCurrentUser(defaultUser);

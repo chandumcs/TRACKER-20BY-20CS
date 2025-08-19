@@ -53,63 +53,8 @@ export default function DailyTracker() {
     status: "all",
   });
 
-  // Sample tasks data
-  const allTasks = [
-    {
-      id: 1,
-      title: "NEFT-RTGS - Transaction Processing",
-      product: "neft-rtgs",
-      issueType: "bug",
-      status: "completed",
-      time: "Completed at 10:30 AM",
-      date: "2025-01-08",
-    },
-    {
-      id: 2,
-      title: "UPI - System Monitoring",
-      product: "upi",
-      issueType: "brd",
-      status: "in-progress",
-      time: "Started at 2:15 PM",
-      date: "2025-01-08",
-    },
-    {
-      id: 3,
-      title: "NEFT-RTGS - Settlement Review",
-      product: "neft-rtgs",
-      issueType: "reopened-bug",
-      status: "pending",
-      time: "Due by 5:00 PM",
-      date: "2025-01-08",
-    },
-    {
-      id: 4,
-      title: "IMPS - Performance Testing",
-      product: "imps",
-      issueType: "bug",
-      status: "completed",
-      time: "Completed at 1:45 PM",
-      date: "2025-01-08",
-    },
-    {
-      id: 5,
-      title: "E MANDATE - Authorization Check",
-      product: "e-mandate",
-      issueType: "brd",
-      status: "in-progress",
-      time: "In progress since 3:30 PM",
-      date: "2025-01-08",
-    },
-    {
-      id: 6,
-      title: "UPI - Payment Gateway Issue",
-      product: "upi",
-      issueType: "bug",
-      status: "pending",
-      time: "Reported at 4:00 PM",
-      date: "2025-01-08",
-    },
-  ];
+  // Tasks data (empty initially)
+  const allTasks: any[] = [];
 
   // Filter tasks based on applied filters
   const filteredTasks = allTasks.filter((task) => {

@@ -467,11 +467,11 @@ export default function DailyTracker() {
                         </p>
                       </div>
 
-                      <div className="space-y-4">
+                      <form onSubmit={handleAddTask} className="space-y-4">
                         <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-2">
                             <Label>Product</Label>
-                            <Select>
+                            <Select name="product" required>
                               <SelectTrigger>
                                 <SelectValue placeholder="Select product..." />
                               </SelectTrigger>
@@ -489,7 +489,7 @@ export default function DailyTracker() {
                           </div>
                           <div className="space-y-2">
                             <Label>Issue Type</Label>
-                            <Select>
+                            <Select name="issueType" required>
                               <SelectTrigger>
                                 <SelectValue placeholder="Select type..." />
                               </SelectTrigger>
@@ -506,12 +506,13 @@ export default function DailyTracker() {
 
                         <div className="space-y-2">
                           <Label>Task Title</Label>
-                          <Input placeholder="Enter task title..." />
+                          <Input name="title" placeholder="Enter task title..." required />
                         </div>
 
                         <div className="space-y-2">
                           <Label>Description</Label>
                           <Textarea
+                            name="description"
                             placeholder="Enter task description..."
                             rows={4}
                           />
@@ -526,24 +527,24 @@ export default function DailyTracker() {
                           <div className="grid grid-cols-1 gap-4">
                             <div className="space-y-2">
                               <Label>Developer Name</Label>
-                              <Input placeholder="Enter developer name..." />
+                              <Input name="developer" placeholder="Enter developer name..." />
                             </div>
 
                             <div className="space-y-2">
                               <Label>UAT Person</Label>
-                              <Input placeholder="Enter UAT person name..." />
+                              <Input name="uatPerson" placeholder="Enter UAT person name..." />
                             </div>
 
                             <div className="space-y-2">
                               <Label>Production Person</Label>
-                              <Input placeholder="Enter production person name..." />
+                              <Input name="productionPerson" placeholder="Enter production person name..." />
                             </div>
                           </div>
                         </div>
 
                         <div className="space-y-2">
                           <Label>Priority</Label>
-                          <Select>
+                          <Select name="priority">
                             <SelectTrigger>
                               <SelectValue placeholder="Select priority..." />
                             </SelectTrigger>
@@ -565,6 +566,7 @@ export default function DailyTracker() {
                             <div className="space-y-2">
                               <Label>Reported Date</Label>
                               <Input
+                                name="reportedDate"
                                 type="date"
                                 placeholder="Select reported date..."
                               />
@@ -573,6 +575,7 @@ export default function DailyTracker() {
                             <div className="space-y-2">
                               <Label>Fixed Date</Label>
                               <Input
+                                name="fixedDate"
                                 type="date"
                                 placeholder="Select fixed date..."
                               />
@@ -581,6 +584,7 @@ export default function DailyTracker() {
                             <div className="space-y-2">
                               <Label>Closed Date</Label>
                               <Input
+                                name="closedDate"
                                 type="date"
                                 placeholder="Select closed date..."
                               />
@@ -588,11 +592,11 @@ export default function DailyTracker() {
                           </div>
                         </div>
 
-                        <Button className="w-full">
+                        <Button type="submit" className="w-full">
                           <Plus className="h-4 w-4 mr-2" />
                           Add Task
                         </Button>
-                      </div>
+                      </form>
                     </div>
                   </TabsContent>
 

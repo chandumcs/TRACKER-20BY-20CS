@@ -139,8 +139,14 @@ export default function Index() {
                 id="password"
                 type="password"
                 placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={loginError ? "border-red-500" : ""}
                 required
               />
+              {loginError && (
+                <p className="text-sm text-red-500 mt-1">{loginError}</p>
+              )}
             </div>
             <Button className="w-full" type="submit">
               Sign In

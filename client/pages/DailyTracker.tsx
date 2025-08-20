@@ -31,7 +31,7 @@ import {
   Download,
 } from "lucide-react";
 import { useState, useEffect } from "react";
-import * as XLSX from 'xlsx';
+import * as XLSX from "xlsx";
 
 export default function DailyTracker() {
   const [activeTab, setActiveTab] = useState("track");
@@ -40,7 +40,7 @@ export default function DailyTracker() {
 
   // Load tasks from localStorage on component mount
   useEffect(() => {
-    const savedTasks = localStorage.getItem('dailyTasks');
+    const savedTasks = localStorage.getItem("dailyTasks");
     if (savedTasks) {
       setTasks(JSON.parse(savedTasks));
     }
@@ -139,7 +139,7 @@ export default function DailyTracker() {
     setTasks(updatedTasks);
 
     // Save to localStorage for persistence
-    localStorage.setItem('dailyTasks', JSON.stringify(updatedTasks));
+    localStorage.setItem("dailyTasks", JSON.stringify(updatedTasks));
 
     // Reset form
     (e.target as HTMLFormElement).reset();
@@ -157,64 +157,66 @@ export default function DailyTracker() {
 
     const updatedTask = {
       ...editingTask,
-      title: formData.get('title') as string,
-      product: formData.get('product') as string,
-      issueType: formData.get('issueType') as string,
-      description: formData.get('description') as string,
-      developer: formData.get('developer') as string,
-      uatPerson: formData.get('uatPerson') as string,
-      productionPerson: formData.get('productionPerson') as string,
-      priority: formData.get('priority') as string,
-      reportedDate: formData.get('reportedDate') as string,
-      fixedDate: formData.get('fixedDate') as string,
-      closedDate: formData.get('closedDate') as string,
+      title: formData.get("title") as string,
+      product: formData.get("product") as string,
+      issueType: formData.get("issueType") as string,
+      description: formData.get("description") as string,
+      developer: formData.get("developer") as string,
+      uatPerson: formData.get("uatPerson") as string,
+      productionPerson: formData.get("productionPerson") as string,
+      priority: formData.get("priority") as string,
+      reportedDate: formData.get("reportedDate") as string,
+      fixedDate: formData.get("fixedDate") as string,
+      closedDate: formData.get("closedDate") as string,
       time: `Updated at ${new Date().toLocaleTimeString()}`,
     };
 
-    const updatedTasks = tasks.map(task =>
-      task.id === editingTask.id ? updatedTask : task
+    const updatedTasks = tasks.map((task) =>
+      task.id === editingTask.id ? updatedTask : task,
     );
 
     setTasks(updatedTasks);
-    localStorage.setItem('dailyTasks', JSON.stringify(updatedTasks));
+    localStorage.setItem("dailyTasks", JSON.stringify(updatedTasks));
 
     setEditingTask(null);
-    alert('Task updated successfully!');
-    setActiveTab('track');
+    alert("Task updated successfully!");
+    setActiveTab("track");
   };
 
   const handleDeleteTask = (taskId: number) => {
-    if (confirm('Are you sure you want to delete this task?')) {
-      const updatedTasks = tasks.filter(task => task.id !== taskId);
+    if (confirm("Are you sure you want to delete this task?")) {
+      const updatedTasks = tasks.filter((task) => task.id !== taskId);
       setTasks(updatedTasks);
-      localStorage.setItem('dailyTasks', JSON.stringify(updatedTasks));
-      alert('Task deleted successfully!');
+      localStorage.setItem("dailyTasks", JSON.stringify(updatedTasks));
+      alert("Task deleted successfully!");
     }
   };
 
   const exportToExcel = () => {
     if (filteredTasks.length === 0) {
-      alert('No data to export. Please add tasks or adjust your filters.');
+      alert("No data to export. Please add tasks or adjust your filters.");
       return;
     }
 
     // Prepare data for export
     const exportData = filteredTasks.map((task, index) => ({
-      'S.No': index + 1,
-      'Task Title': task.title,
-      'Product': task.product.toUpperCase().replace('-', ' '),
-      'Issue Type': task.issueType.toUpperCase().replace('-', ' '),
-      'Status': task.status.charAt(0).toUpperCase() + task.status.slice(1).replace('-', ' '),
-      'Priority': task.priority || 'Not Set',
-      'Developer': task.developer || 'Not Assigned',
-      'UAT Person': task.uatPerson || 'Not Assigned',
-      'Production Person': task.productionPerson || 'Not Assigned',
-      'Reported Date': task.reportedDate || 'Not Set',
-      'Fixed Date': task.fixedDate || 'Not Set',
-      'Closed Date': task.closedDate || 'Not Set',
-      'Date': task.date,
-      'Time': task.time,
-      'Description': task.description || 'No description provided'
+      "S.No": index + 1,
+      "Task Title": task.title,
+      Product: task.product.toUpperCase().replace("-", " "),
+      "Issue Type": task.issueType.toUpperCase().replace("-", " "),
+      Status:
+        task.status.charAt(0).toUpperCase() +
+        task.status.slice(1).replace("-", " "),
+      Priority: task.priority || "Not Set",
+      Developer: task.developer || "Not Assigned",
+      "UAT Person": task.uatPerson || "Not Assigned",
+      "Production Person": task.productionPerson || "Not Assigned",
+      "Reported Date": task.reportedDate || "Not Set",
+      "Fixed Date": task.fixedDate || "Not Set",
+      "Closed Date": task.closedDate || "Not Set",
+      Date: task.date,
+      Time: task.time,
+      Description: task.description || "No description provided",
     }));
 
     // Create workbook and worksheet
@@ -223,30 +225,31 @@ export default function DailyTracker() {
 
     // Set column widths for better readability
     const columnWidths = [
-      { wch: 8 },   // S.No
-      { wch: 30 },  // Task Title
-      { wch: 15 },  // Product
-      { wch: 15 },  // Issue Type
-      { wch: 12 },  // Status
-      { wch: 10 },  // Priority
-      { wch: 20 },  // Developer
-      { wch: 20 },  // UAT Person
-      { wch: 20 },  // Production Person
-      { wch: 15 },  // Reported Date
-      { wch: 15 },  // Fixed Date
-      { wch: 15 },  // Closed Date
-      { wch: 12 },  // Date
-      { wch: 20 },  // Time
-      { wch: 40 },  // Description
+      { wch: 8 }, // S.No
+      { wch: 30 }, // Task Title
+      { wch: 15 }, // Product
+      { wch: 15 }, // Issue Type
+      { wch: 12 }, // Status
+      { wch: 10 }, // Priority
+      { wch: 20 }, // Developer
+      { wch: 20 }, // UAT Person
+      { wch: 20 }, // Production Person
+      { wch: 15 }, // Reported Date
+      { wch: 15 }, // Fixed Date
+      { wch: 15 }, // Closed Date
+      { wch: 12 }, // Date
+      { wch: 20 }, // Time
+      { wch: 40 }, // Description
     ];
-    worksheet['!cols'] = columnWidths;
+    worksheet["!cols"] = columnWidths;
 
     // Add worksheet to workbook
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Daily Tasks Report');
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Daily Tasks Report");
 
     // Generate filename with current date and filter info
-    const currentDate = new Date().toISOString().split('T')[0];
-    const filterInfo = appliedFilters.product !== 'all' ? `_${appliedFilters.product}` : '';
+    const currentDate = new Date().toISOString().split("T")[0];
+    const filterInfo =
+      appliedFilters.product !== "all" ? `_${appliedFilters.product}` : "";
     const filename = `DailyTasks_Report_${currentDate}${filterInfo}.xlsx`;
 
     // Export file
@@ -964,7 +967,8 @@ export default function DailyTracker() {
                             Reports & Analytics
                           </h2>
                           <p className="text-gray-600">
-                            View detailed reports and export filtered data to Excel
+                            View detailed reports and export filtered data to
+                            Excel
                           </p>
                         </div>
                         <Button
@@ -978,27 +982,65 @@ export default function DailyTracker() {
 
                       {/* Current Filter Summary */}
                       <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                        <h3 className="font-semibold text-blue-800 mb-2">Current Filter Summary</h3>
+                        <h3 className="font-semibold text-blue-800 mb-2">
+                          Current Filter Summary
+                        </h3>
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
                           <div>
-                            <span className="text-blue-600 font-medium">Date Range:</span>
-                            <p className="text-blue-800">{appliedFilters.dateFrom} to {appliedFilters.dateTo}</p>
+                            <span className="text-blue-600 font-medium">
+                              Date Range:
+                            </span>
+                            <p className="text-blue-800">
+                              {appliedFilters.dateFrom} to{" "}
+                              {appliedFilters.dateTo}
+                            </p>
                           </div>
                           <div>
-                            <span className="text-blue-600 font-medium">Product:</span>
-                            <p className="text-blue-800">{appliedFilters.product === 'all' ? 'All Products' : appliedFilters.product.toUpperCase().replace('-', ' ')}</p>
+                            <span className="text-blue-600 font-medium">
+                              Product:
+                            </span>
+                            <p className="text-blue-800">
+                              {appliedFilters.product === "all"
+                                ? "All Products"
+                                : appliedFilters.product
+                                    .toUpperCase()
+                                    .replace("-", " ")}
+                            </p>
                           </div>
                           <div>
-                            <span className="text-blue-600 font-medium">Issue Type:</span>
-                            <p className="text-blue-800">{appliedFilters.issueType === 'all' ? 'All Types' : appliedFilters.issueType.toUpperCase().replace('-', ' ')}</p>
+                            <span className="text-blue-600 font-medium">
+                              Issue Type:
+                            </span>
+                            <p className="text-blue-800">
+                              {appliedFilters.issueType === "all"
+                                ? "All Types"
+                                : appliedFilters.issueType
+                                    .toUpperCase()
+                                    .replace("-", " ")}
+                            </p>
                           </div>
                           <div>
-                            <span className="text-blue-600 font-medium">Status:</span>
-                            <p className="text-blue-800">{appliedFilters.status === 'all' ? 'All Status' : appliedFilters.status.charAt(0).toUpperCase() + appliedFilters.status.slice(1).replace('-', ' ')}</p>
+                            <span className="text-blue-600 font-medium">
+                              Status:
+                            </span>
+                            <p className="text-blue-800">
+                              {appliedFilters.status === "all"
+                                ? "All Status"
+                                : appliedFilters.status
+                                    .charAt(0)
+                                    .toUpperCase() +
+                                  appliedFilters.status
+                                    .slice(1)
+                                    .replace("-", " ")}
+                            </p>
                           </div>
                           <div>
-                            <span className="text-blue-600 font-medium">Total Tasks:</span>
-                            <p className="text-blue-800 font-bold">{filteredTasks.length} found</p>
+                            <span className="text-blue-600 font-medium">
+                              Total Tasks:
+                            </span>
+                            <p className="text-blue-800 font-bold">
+                              {filteredTasks.length} found
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -1046,28 +1088,43 @@ export default function DailyTracker() {
                           Product Performance (Filtered Data)
                         </h3>
                         <div className="space-y-2">
-                          {['neft-rtgs', 'upi', 'imps', 'e-mandate'].map(product => {
-                            const productTasks = filteredTasks.filter(task => task.product === product);
-                            const completedCount = productTasks.filter(task => task.status === 'completed').length;
-                            return (
-                              <div key={product} className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                                <span className="font-medium">{product.toUpperCase().replace('-', '-')}</span>
-                                <div className="flex items-center gap-4">
-                                  <span className="text-sm text-gray-600">
-                                    {completedCount}/{productTasks.length} completed
+                          {["neft-rtgs", "upi", "imps", "e-mandate"].map(
+                            (product) => {
+                              const productTasks = filteredTasks.filter(
+                                (task) => task.product === product,
+                              );
+                              const completedCount = productTasks.filter(
+                                (task) => task.status === "completed",
+                              ).length;
+                              return (
+                                <div
+                                  key={product}
+                                  className="flex items-center justify-between p-3 bg-gray-50 rounded"
+                                >
+                                  <span className="font-medium">
+                                    {product.toUpperCase().replace("-", "-")}
                                   </span>
-                                  <span className="font-semibold text-blue-600">
-                                    {productTasks.length} total tasks
-                                  </span>
+                                  <div className="flex items-center gap-4">
+                                    <span className="text-sm text-gray-600">
+                                      {completedCount}/{productTasks.length}{" "}
+                                      completed
+                                    </span>
+                                    <span className="font-semibold text-blue-600">
+                                      {productTasks.length} total tasks
+                                    </span>
+                                  </div>
                                 </div>
-                              </div>
-                            );
-                          })}
+                              );
+                            },
+                          )}
                         </div>
 
                         {filteredTasks.length === 0 && (
                           <div className="text-center py-8 text-gray-500">
-                            <p>No data to display. Please add tasks or adjust your filters.</p>
+                            <p>
+                              No data to display. Please add tasks or adjust
+                              your filters.
+                            </p>
                           </div>
                         )}
                       </div>

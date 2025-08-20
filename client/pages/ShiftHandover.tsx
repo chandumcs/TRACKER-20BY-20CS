@@ -36,7 +36,7 @@ export default function ShiftHandover() {
 
   // Load handover history on component mount
   useEffect(() => {
-    const savedHistory = localStorage.getItem('handoverHistory');
+    const savedHistory = localStorage.getItem("handoverHistory");
     if (savedHistory) {
       setHandoverHistory(JSON.parse(savedHistory));
     }
@@ -77,9 +77,11 @@ export default function ShiftHandover() {
     );
 
     // Add to handover history for persistence
-    const handoverHistory = JSON.parse(localStorage.getItem('handoverHistory') || '[]');
+    const handoverHistory = JSON.parse(
+      localStorage.getItem("handoverHistory") || "[]",
+    );
     handoverHistory.push(handoverWithTimestamp);
-    localStorage.setItem('handoverHistory', JSON.stringify(handoverHistory));
+    localStorage.setItem("handoverHistory", JSON.stringify(handoverHistory));
 
     // Navigate back to dashboard
     navigate("/dashboard");

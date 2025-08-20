@@ -35,7 +35,7 @@ export default function Others() {
 
   // Load permissions from localStorage on component mount
   useEffect(() => {
-    const savedPermissions = localStorage.getItem('pagePermissions');
+    const savedPermissions = localStorage.getItem("pagePermissions");
     if (savedPermissions) {
       setPagePermissions(JSON.parse(savedPermissions));
     }
@@ -160,13 +160,13 @@ export default function Others() {
     setPagePermissions(updatedPermissions);
 
     // Auto-save to localStorage
-    localStorage.setItem('pagePermissions', JSON.stringify(updatedPermissions));
+    localStorage.setItem("pagePermissions", JSON.stringify(updatedPermissions));
   };
 
   // Function to save page permissions
   const savePagePermissions = () => {
     // Save to localStorage for persistence
-    localStorage.setItem('pagePermissions', JSON.stringify(pagePermissions));
+    localStorage.setItem("pagePermissions", JSON.stringify(pagePermissions));
     console.log("Saving page permissions:", pagePermissions);
     alert("Page access permissions saved successfully!");
   };

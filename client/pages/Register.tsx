@@ -64,7 +64,9 @@ export default function Register() {
     }
 
     // Store user credentials for login validation
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    const registeredUsers = JSON.parse(
+      localStorage.getItem("registeredUsers") || "[]",
+    );
     const currentTime = new Date().toLocaleString();
 
     const newUser = {
@@ -114,11 +116,15 @@ export default function Register() {
     localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
 
     // Also add to signed-in users since they just registered
-    const signedInUsers = JSON.parse(localStorage.getItem("signedInUsers") || "[]");
+    const signedInUsers = JSON.parse(
+      localStorage.getItem("signedInUsers") || "[]",
+    );
     const signedInUser = { ...newUser };
     delete signedInUser.password; // Don't store password in signed-in users for security
 
-    const existingSignedInIndex = signedInUsers.findIndex((user: any) => user.email === data.email);
+    const existingSignedInIndex = signedInUsers.findIndex(
+      (user: any) => user.email === data.email,
+    );
     if (existingSignedInIndex >= 0) {
       signedInUsers[existingSignedInIndex] = signedInUser;
     } else {

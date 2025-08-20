@@ -958,70 +958,118 @@ export default function DailyTracker() {
                   {/* REPORTS Screen */}
                   <TabsContent value="reports" className="p-6">
                     <div className="space-y-6">
-                      <div>
-                        <h2 className="text-xl font-semibold mb-2">
-                          Reports & Analytics
-                        </h2>
-                        <p className="text-gray-600">
-                          View detailed reports and performance metrics
-                        </p>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4 mb-6">
-                        <div className="bg-blue-50 p-4 rounded-lg">
-                          <h3 className="font-semibold text-blue-800">
-                            Weekly Progress
-                          </h3>
-                          <div className="text-2xl font-bold text-blue-600">
-                            87%
-                          </div>
-                          <p className="text-sm text-blue-700">
-                            Tasks completed this week
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h2 className="text-xl font-semibold mb-2">
+                            Reports & Analytics
+                          </h2>
+                          <p className="text-gray-600">
+                            View detailed reports and export filtered data to Excel
                           </p>
                         </div>
-                        <div className="bg-purple-50 p-4 rounded-lg">
-                          <h3 className="font-semibold text-purple-800">
-                            Average Time
-                          </h3>
-                          <div className="text-2xl font-bold text-purple-600">
-                            2.4h
+                        <Button
+                          onClick={exportToExcel}
+                          className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
+                        >
+                          <Download className="h-4 w-4" />
+                          Export to Excel
+                        </Button>
+                      </div>
+
+                      {/* Current Filter Summary */}
+                      <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <h3 className="font-semibold text-blue-800 mb-2">Current Filter Summary</h3>
+                        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
+                          <div>
+                            <span className="text-blue-600 font-medium">Date Range:</span>
+                            <p className="text-blue-800">{appliedFilters.dateFrom} to {appliedFilters.dateTo}</p>
                           </div>
-                          <p className="text-sm text-purple-700">
-                            Per task completion
+                          <div>
+                            <span className="text-blue-600 font-medium">Product:</span>
+                            <p className="text-blue-800">{appliedFilters.product === 'all' ? 'All Products' : appliedFilters.product.toUpperCase().replace('-', ' ')}</p>
+                          </div>
+                          <div>
+                            <span className="text-blue-600 font-medium">Issue Type:</span>
+                            <p className="text-blue-800">{appliedFilters.issueType === 'all' ? 'All Types' : appliedFilters.issueType.toUpperCase().replace('-', ' ')}</p>
+                          </div>
+                          <div>
+                            <span className="text-blue-600 font-medium">Status:</span>
+                            <p className="text-blue-800">{appliedFilters.status === 'all' ? 'All Status' : appliedFilters.status.charAt(0).toUpperCase() + appliedFilters.status.slice(1).replace('-', ' ')}</p>
+                          </div>
+                          <div>
+                            <span className="text-blue-600 font-medium">Total Tasks:</span>
+                            <p className="text-blue-800 font-bold">{filteredTasks.length} found</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Live Statistics */}
+                      <div className="grid grid-cols-3 gap-4 mb-6">
+                        <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                          <h3 className="font-semibold text-green-800">
+                            Completed Tasks
+                          </h3>
+                          <div className="text-2xl font-bold text-green-600">
+                            {stats.completed}
+                          </div>
+                          <p className="text-sm text-green-700">
+                            From filtered data
+                          </p>
+                        </div>
+                        <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                          <h3 className="font-semibold text-yellow-800">
+                            In Progress
+                          </h3>
+                          <div className="text-2xl font-bold text-yellow-600">
+                            {stats.inProgress}
+                          </div>
+                          <p className="text-sm text-yellow-700">
+                            Active tasks
+                          </p>
+                        </div>
+                        <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                          <h3 className="font-semibold text-red-800">
+                            Pending Tasks
+                          </h3>
+                          <div className="text-2xl font-bold text-red-600">
+                            {stats.pending}
+                          </div>
+                          <p className="text-sm text-red-700">
+                            Awaiting action
                           </p>
                         </div>
                       </div>
 
+                      {/* Product Performance - Based on Filtered Data */}
                       <div className="space-y-4">
                         <h3 className="text-lg font-semibold">
-                          Product Performance
+                          Product Performance (Filtered Data)
                         </h3>
                         <div className="space-y-2">
-                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                            <span>NEFT-RTGS</span>
-                            <span className="font-semibold">
-                              8 tasks completed
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                            <span>UPI</span>
-                            <span className="font-semibold">
-                              12 tasks completed
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                            <span>IMPS</span>
-                            <span className="font-semibold">
-                              6 tasks completed
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                            <span>E MANDATE</span>
-                            <span className="font-semibold">
-                              4 tasks completed
-                            </span>
-                          </div>
+                          {['neft-rtgs', 'upi', 'imps', 'e-mandate'].map(product => {
+                            const productTasks = filteredTasks.filter(task => task.product === product);
+                            const completedCount = productTasks.filter(task => task.status === 'completed').length;
+                            return (
+                              <div key={product} className="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span className="font-medium">{product.toUpperCase().replace('-', '-')}</span>
+                                <div className="flex items-center gap-4">
+                                  <span className="text-sm text-gray-600">
+                                    {completedCount}/{productTasks.length} completed
+                                  </span>
+                                  <span className="font-semibold text-blue-600">
+                                    {productTasks.length} total tasks
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          })}
                         </div>
+
+                        {filteredTasks.length === 0 && (
+                          <div className="text-center py-8 text-gray-500">
+                            <p>No data to display. Please add tasks or adjust your filters.</p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </TabsContent>

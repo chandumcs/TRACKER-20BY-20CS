@@ -146,6 +146,49 @@ export default function DailyTracker() {
     alert("Task added successfully!");
     setActiveTab("track");
   };
+
+  const handleUpdateTask = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingTask) return;
+
+    const formData = new FormData(e.target as HTMLFormElement);
+
+    const updatedTask = {
+      ...editingTask,
+      title: formData.get('title') as string,
+      product: formData.get('product') as string,
+      issueType: formData.get('issueType') as string,
+      description: formData.get('description') as string,
+      developer: formData.get('developer') as string,
+      uatPerson: formData.get('uatPerson') as string,
+      productionPerson: formData.get('productionPerson') as string,
+      priority: formData.get('priority') as string,
+      reportedDate: formData.get('reportedDate') as string,
+      fixedDate: formData.get('fixedDate') as string,
+      closedDate: formData.get('closedDate') as string,
+      time: `Updated at ${new Date().toLocaleTimeString()}`,
+    };
+
+    const updatedTasks = tasks.map(task =>
+      task.id === editingTask.id ? updatedTask : task
+    );
+
+    setTasks(updatedTasks);
+    localStorage.setItem('dailyTasks', JSON.stringify(updatedTasks));
+
+    setEditingTask(null);
+    alert('Task updated successfully!');
+    setActiveTab('track');
+  };
+
+  const handleDeleteTask = (taskId: number) => {
+    if (confirm('Are you sure you want to delete this task?')) {
+      const updatedTasks = tasks.filter(task => task.id !== taskId);
+      setTasks(updatedTasks);
+      localStorage.setItem('dailyTasks', JSON.stringify(updatedTasks));
+      alert('Task deleted successfully!');
+    }
+  };
   return (
     <div
       className="min-h-screen"

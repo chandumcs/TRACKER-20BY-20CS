@@ -27,7 +27,7 @@ import {
   Settings,
   BarChart3,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Others() {
   const [activeTab, setActiveTab] = useState("directory");

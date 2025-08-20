@@ -32,6 +32,14 @@ import { useState, useEffect } from "react";
 export default function Others() {
   const [activeTab, setActiveTab] = useState("directory");
   const [searchTerm, setSearchTerm] = useState("");
+
+  // Load permissions from localStorage on component mount
+  useEffect(() => {
+    const savedPermissions = localStorage.getItem('pagePermissions');
+    if (savedPermissions) {
+      setPagePermissions(JSON.parse(savedPermissions));
+    }
+  }, []);
   const [changingRoleUserId, setChangingRoleUserId] = useState<number | null>(
     null,
   );

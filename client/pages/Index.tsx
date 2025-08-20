@@ -18,6 +18,32 @@ export default function Index() {
   const [emailError, setEmailError] = useState("");
   const [loginError, setLoginError] = useState("");
 
+  useEffect(() => {
+    // Create a demo admin user if no users exist
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    if (registeredUsers.length === 0) {
+      const demoAdmin = {
+        id: 1,
+        name: "Chandu Mcs",
+        userName: "chandu",
+        email: "chandu@olivecrypto.com",
+        password: "admin123",
+        department: "Management",
+        lastLogin: "Never",
+        lastLogout: "Never",
+        status: "Offline",
+        totalLeaves: 20,
+        usedLeaves: 0,
+        weekOffs: 52,
+        usedWeekOffs: 0,
+        employeeId: "EMP001",
+        role: "admin",
+        registeredAt: new Date().toLocaleString(),
+      };
+      localStorage.setItem('registeredUsers', JSON.stringify([demoAdmin]));
+    }
+  }, []);
+
   const validateEmail = (email: string) => {
     if (!email.endsWith("@olivecrypto.com")) {
       setEmailError("Please enter organization mail id");

@@ -150,13 +150,17 @@ export default function Others() {
 
   // Function to update page permission
   const updatePagePermission = (role: string, page: string, access: string) => {
-    setPagePermissions((prev) => ({
-      ...prev,
+    const updatedPermissions = {
+      ...pagePermissions,
       [role]: {
-        ...prev[role as keyof typeof prev],
+        ...pagePermissions[role as keyof typeof pagePermissions],
         [page]: access,
       },
-    }));
+    };
+    setPagePermissions(updatedPermissions);
+
+    // Auto-save to localStorage
+    localStorage.setItem('pagePermissions', JSON.stringify(updatedPermissions));
   };
 
   // Function to save page permissions

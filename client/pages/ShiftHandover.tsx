@@ -56,6 +56,7 @@ export default function ShiftHandover() {
     // Save handover data to localStorage
     const handoverWithTimestamp = {
       ...handoverData,
+      id: Date.now(),
       savedAt: new Date().toISOString(),
       savedDate: new Date().toLocaleDateString(),
       savedTime: new Date().toLocaleTimeString(),
@@ -65,6 +66,11 @@ export default function ShiftHandover() {
       "currentShiftHandover",
       JSON.stringify(handoverWithTimestamp),
     );
+
+    // Add to handover history for persistence
+    const handoverHistory = JSON.parse(localStorage.getItem('handoverHistory') || '[]');
+    handoverHistory.push(handoverWithTimestamp);
+    localStorage.setItem('handoverHistory', JSON.stringify(handoverHistory));
 
     // Navigate back to dashboard
     navigate("/dashboard");

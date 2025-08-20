@@ -32,6 +32,15 @@ export default function ShiftHandover() {
     handoverText: "",
     points: [""],
   });
+  const [handoverHistory, setHandoverHistory] = useState<any[]>([]);
+
+  // Load handover history on component mount
+  useEffect(() => {
+    const savedHistory = localStorage.getItem('handoverHistory');
+    if (savedHistory) {
+      setHandoverHistory(JSON.parse(savedHistory));
+    }
+  }, []);
 
   const handleInputChange = (field: string, value: string) => {
     setHandoverData((prev) => ({ ...prev, [field]: value }));

@@ -14,7 +14,9 @@ import { FormEvent, useState } from "react";
 export default function Index() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [loginError, setLoginError] = useState("");
 
   const validateEmail = (email: string) => {
     if (!email.endsWith("@olivecrypto.com")) {

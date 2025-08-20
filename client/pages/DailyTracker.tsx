@@ -36,6 +36,14 @@ export default function DailyTracker() {
   const [editingTask, setEditingTask] = useState<any>(null);
   const [tasks, setTasks] = useState<any[]>([]);
 
+  // Load tasks from localStorage on component mount
+  useEffect(() => {
+    const savedTasks = localStorage.getItem('dailyTasks');
+    if (savedTasks) {
+      setTasks(JSON.parse(savedTasks));
+    }
+  }, []);
+
   // Filter state
   const [filters, setFilters] = useState({
     dateFrom: new Date().toISOString().split("T")[0],

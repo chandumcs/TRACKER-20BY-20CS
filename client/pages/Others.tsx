@@ -161,7 +161,8 @@ export default function Others() {
 
   // Function to save page permissions
   const savePagePermissions = () => {
-    // Here you would typically save to backend
+    // Save to localStorage for persistence
+    localStorage.setItem('pagePermissions', JSON.stringify(pagePermissions));
     console.log("Saving page permissions:", pagePermissions);
     alert("Page access permissions saved successfully!");
   };

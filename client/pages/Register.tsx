@@ -63,16 +63,16 @@ export default function Register() {
       return;
     }
 
-    // Track registered user
-    const signedInUsers = JSON.parse(
-      localStorage.getItem("signedInUsers") || "[]",
-    );
+    // Store user credentials for login validation
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
     const currentTime = new Date().toLocaleString();
 
     const newUser = {
       id: Date.now(),
       name: `${data.firstName} ${data.lastName}`,
+      userName: data.userName,
       email: data.email,
+      password: data.password, // Store password for validation
       department:
         data.role === "admin"
           ? "Management"
@@ -94,20 +94,35 @@ export default function Register() {
       usedWeekOffs: 0,
       employeeId: data.employeeId,
       role: data.role,
+      registeredAt: currentTime,
     };
 
     // Check if user already exists (by email)
-    const existingUserIndex = signedInUsers.findIndex(
+    const existingUserIndex = registeredUsers.findIndex(
       (user: any) => user.email === data.email,
     );
     if (existingUserIndex >= 0) {
       // Update existing user with full registration data
-      signedInUsers[existingUserIndex] = {
-        ...signedInUsers[existingUserIndex],
+      registeredUsers[existingUserIndex] = {
+        ...registeredUsers[existingUserIndex],
         ...newUser,
       };
     } else {
-      signedInUsers.push(newUser);
+      registeredUsers.push(newUser);
+    }
+
+    localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
+
+    // Also add to signed-in users since they just registered
+    const signedInUsers = JSON.parse(localStorage.getItem("signedInUsers") || "[]");
+    const signedInUser = { ...newUser };
+    delete signedInUser.password; // Don't store password in signed-in users for security
+
+    const existingSignedInIndex = signedInUsers.findIndex((user: any) => user.email === data.email);
+    if (existingSignedInIndex >= 0) {
+      signedInUsers[existingSignedInIndex] = signedInUser;
+    } else {
+      signedInUsers.push(signedInUser);
     }
 
     localStorage.setItem("signedInUsers", JSON.stringify(signedInUsers));

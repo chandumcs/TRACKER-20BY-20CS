@@ -133,7 +133,11 @@ export default function DailyTracker() {
       closedDate: formData.get("closedDate") as string,
     };
 
-    setTasks((prev) => [...prev, newTask]);
+    const updatedTasks = [...tasks, newTask];
+    setTasks(updatedTasks);
+
+    // Save to localStorage for persistence
+    localStorage.setItem('dailyTasks', JSON.stringify(updatedTasks));
 
     // Reset form
     (e.target as HTMLFormElement).reset();

@@ -191,6 +191,69 @@ export default function DailyTracker() {
       alert('Task deleted successfully!');
     }
   };
+
+  const exportToExcel = () => {
+    if (filteredTasks.length === 0) {
+      alert('No data to export. Please add tasks or adjust your filters.');
+      return;
+    }
+
+    // Prepare data for export
+    const exportData = filteredTasks.map((task, index) => ({
+      'S.No': index + 1,
+      'Task Title': task.title,
+      'Product': task.product.toUpperCase().replace('-', ' '),
+      'Issue Type': task.issueType.toUpperCase().replace('-', ' '),
+      'Status': task.status.charAt(0).toUpperCase() + task.status.slice(1).replace('-', ' '),
+      'Priority': task.priority || 'Not Set',
+      'Developer': task.developer || 'Not Assigned',
+      'UAT Person': task.uatPerson || 'Not Assigned',
+      'Production Person': task.productionPerson || 'Not Assigned',
+      'Reported Date': task.reportedDate || 'Not Set',
+      'Fixed Date': task.fixedDate || 'Not Set',
+      'Closed Date': task.closedDate || 'Not Set',
+      'Date': task.date,
+      'Time': task.time,
+      'Description': task.description || 'No description provided'
+    }));
+
+    // Create workbook and worksheet
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+
+    // Set column widths for better readability
+    const columnWidths = [
+      { wch: 8 },   // S.No
+      { wch: 30 },  // Task Title
+      { wch: 15 },  // Product
+      { wch: 15 },  // Issue Type
+      { wch: 12 },  // Status
+      { wch: 10 },  // Priority
+      { wch: 20 },  // Developer
+      { wch: 20 },  // UAT Person
+      { wch: 20 },  // Production Person
+      { wch: 15 },  // Reported Date
+      { wch: 15 },  // Fixed Date
+      { wch: 15 },  // Closed Date
+      { wch: 12 },  // Date
+      { wch: 20 },  // Time
+      { wch: 40 },  // Description
+    ];
+    worksheet['!cols'] = columnWidths;
+
+    // Add worksheet to workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Daily Tasks Report');
+
+    // Generate filename with current date and filter info
+    const currentDate = new Date().toISOString().split('T')[0];
+    const filterInfo = appliedFilters.product !== 'all' ? `_${appliedFilters.product}` : '';
+    const filename = `DailyTasks_Report_${currentDate}${filterInfo}.xlsx`;
+
+    // Export file
+    XLSX.writeFile(workbook, filename);
+
+    alert(`Report exported successfully as "${filename}"`);
+  };
   return (
     <div
       className="min-h-screen"

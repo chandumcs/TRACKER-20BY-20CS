@@ -29,7 +29,7 @@ import {
   Edit,
   BarChart3,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function DailyTracker() {
   const [activeTab, setActiveTab] = useState("track");

@@ -5,10 +5,12 @@
 ### Option 1: Standard Node.js Server Deployment
 
 1. **Download and transfer your built application:**
+
    - Download the project files ([Download Project](#project-download))
    - Upload to your server
 
 2. **On your server, install Node.js (v18+) and run:**
+
    ```bash
    npm ci --only=production
    npm run build
@@ -16,6 +18,7 @@
    ```
 
 3. **Set environment variables on your server:**
+
    ```bash
    export DB_HOST=192.168.14.123
    export DB_PORT=1521
@@ -62,6 +65,7 @@ CMD ["npm", "start"]
 ```
 
 Then build and run:
+
 ```bash
 docker build -t your-app .
 docker run -p 8080:8080 \
@@ -77,27 +81,31 @@ docker run -p 8080:8080 \
 ### Option 3: PM2 Process Manager (Recommended)
 
 1. **Install PM2 globally:**
+
    ```bash
    npm install -g pm2
    ```
 
 2. **Create ecosystem file:**
+
    ```javascript
    // ecosystem.config.js
    module.exports = {
-     apps: [{
-       name: 'fusion-app',
-       script: 'dist/server/node-build.mjs',
-       instances: 1,
-       env: {
-         NODE_ENV: 'production',
-         DB_HOST: '192.168.14.123',
-         DB_PORT: '1521',
-         DB_USERNAME: 'Test2012',
-         DB_PASSWORD: 'test#1234',
-         DB_SID: 'crypto'
-       }
-     }]
+     apps: [
+       {
+         name: "fusion-app",
+         script: "dist/server/node-build.mjs",
+         instances: 1,
+         env: {
+           NODE_ENV: "production",
+           DB_HOST: "192.168.14.123",
+           DB_PORT: "1521",
+           DB_USERNAME: "Test2012",
+           DB_PASSWORD: "test#1234",
+           DB_SID: "crypto",
+         },
+       },
+     ],
    };
    ```
 
@@ -113,12 +121,12 @@ docker run -p 8080:8080 \
 ✅ **Database Access**: Direct connection to your Oracle database at 192.168.14.123  
 ✅ **Full Control**: Manage your own server environment  
 ✅ **No Network Issues**: No cloud-to-office connectivity problems  
-✅ **Oracle Client**: Install Oracle Instant Client properly  
+✅ **Oracle Client**: Install Oracle Instant Client properly
 
 ## Next Steps
 
 1. Choose your deployment method above
-2. [Download Project](#project-download) 
+2. [Download Project](#project-download)
 3. Transfer files to your server
 4. Follow the installation steps
 5. Your app will connect directly to Oracle database!
@@ -126,6 +134,7 @@ docker run -p 8080:8080 \
 ## Default Port
 
 The application runs on port **8080** by default. Access at:
+
 - `http://your-server-ip:8080`
 
 ## Troubleshooting

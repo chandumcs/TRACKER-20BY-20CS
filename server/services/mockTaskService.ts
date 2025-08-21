@@ -25,10 +25,12 @@ let nextTaskId = 1;
 
 export class MockTaskService {
   // Create new task
-  static async createTask(taskData: Task): Promise<number> {
+  static async createTask(taskData: Task, userId: number): Promise<number> {
     const newTask = {
       ...taskData,
       id: nextTaskId++,
+      createdBy: userId,
+      status: taskData.status || "pending",
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -37,52 +39,86 @@ export class MockTaskService {
     return newTask.id;
   }
 
-  // Get all tasks
-  static async getTasks(): Promise<Task[]> {
-    return tasks.map(task => ({ ...task }));
+  // Get all tasks with optional filtering
+  static async getTasks(filters?: {
+    dateFrom?: string;
+    dateTo?: string;
+    product?: string;
+    issueType?: string;
+    status?: string;
+  }): Promise<Task[]> {
+    let filteredTasks = [...tasks];
+
+    if (filters?.dateFrom) {
+      filteredTasks = filteredTasks.filter(task =>
+        task.taskDate && task.taskDate >= filters.dateFrom!
+      );
+    }
+
+    if (filters?.dateTo) {
+      filteredTasks = filteredTasks.filter(task =>
+        task.taskDate && task.taskDate <= filters.dateTo!
+      );
+    }
+
+    if (filters?.product && filters.product !== "all") {
+      filteredTasks = filteredTasks.filter(task => task.product === filters.product);
+    }
+
+    if (filters?.issueType && filters.issueType !== "all") {
+      filteredTasks = filteredTasks.filter(task => task.issueType === filters.issueType);
+    }
+
+    if (filters?.status && filters.status !== "all") {
+      filteredTasks = filteredTasks.filter(task => task.status === filters.status);
+    }
+
+    return filteredTasks.map(task => ({ ...task }));
   }
 
   // Get task by ID
-  static async getTaskById(id: number): Promise<Task | null> {
-    const task = tasks.find(t => t.id === id);
+  static async getTaskById(taskId: number): Promise<Task | null> {
+    const task = tasks.find(t => t.id === taskId);
     return task ? { ...task } : null;
   }
 
   // Update task
-  static async updateTask(id: number, updates: Partial<Task>): Promise<boolean> {
-    const taskIndex = tasks.findIndex(t => t.id === id);
+  static async updateTask(taskId: number, taskData: Partial<Task>): Promise<void> {
+    const taskIndex = tasks.findIndex(t => t.id === taskId);
     if (taskIndex !== -1) {
       tasks[taskIndex] = {
         ...tasks[taskIndex],
-        ...updates,
+        ...taskData,
         updatedAt: new Date()
       };
-      return true;
     }
-    return false;
   }
 
   // Delete task
-  static async deleteTask(id: number): Promise<boolean> {
-    const taskIndex = tasks.findIndex(t => t.id === id);
+  static async deleteTask(taskId: number): Promise<void> {
+    const taskIndex = tasks.findIndex(t => t.id === taskId);
     if (taskIndex !== -1) {
       tasks.splice(taskIndex, 1);
-      return true;
     }
-    return false;
   }
 
   // Initialize with some sample tasks
   static initializeDefaultTasks() {
     if (tasks.length === 0) {
+      const today = new Date().toISOString().split('T')[0];
+
       tasks.push({
         id: nextTaskId++,
         title: "Setup Project",
         description: "Initialize the project structure and dependencies",
+        product: "Internal",
+        issueType: "Enhancement",
         status: "completed",
         priority: "high",
-        assignedTo: "admin@example.com",
-        createdBy: "admin@example.com",
+        developer: "admin@example.com",
+        taskDate: today,
+        timeInfo: "2h",
+        createdBy: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       });
@@ -91,10 +127,14 @@ export class MockTaskService {
         id: nextTaskId++,
         title: "Database Configuration",
         description: "Configure Oracle database connection",
+        product: "Core System",
+        issueType: "Bug",
         status: "in-progress",
         priority: "medium",
-        assignedTo: "admin@example.com",
-        createdBy: "admin@example.com",
+        developer: "admin@example.com",
+        taskDate: today,
+        timeInfo: "4h",
+        createdBy: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       });

@@ -1,280 +1,312 @@
-// Utility to migrate data from localStorage to Oracle database
+/**
+ * Data Migration Utility
+ * Migrates existing localStorage data to Oracle database
+ */
 
-const API_BASE = "/api";
-
-export class DataMigration {
-  // Migrate users from localStorage to database
-  static async migrateUsers() {
-    try {
-      // Get registered users from localStorage
-      const registeredUsers = JSON.parse(
-        localStorage.getItem("registeredUsers") || "[]",
-      );
-
-      if (registeredUsers.length === 0) {
-        console.log("No users to migrate");
-        return { success: true, message: "No users to migrate" };
-      }
-
-      let migratedCount = 0;
-      const errors: string[] = [];
-
-      for (const user of registeredUsers) {
-        try {
-          // Split name into firstName and lastName
-          const nameParts = user.name.split(" ");
-          const firstName = nameParts[0] || "";
-          const lastName = nameParts.slice(1).join(" ") || "";
-
-          const registrationData = {
-            firstName,
-            lastName,
-            userName: user.userName || user.name.toLowerCase().replace(" ", ""),
-            employeeId: user.employeeId || "",
-            email: user.email,
-            role: user.role,
-            password: user.password,
-          };
-
-          const response = await fetch(`${API_BASE}/users/register`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(registrationData),
-          });
-
-          if (response.ok) {
-            migratedCount++;
-            console.log(`✅ Migrated user: ${user.email}`);
-          } else {
-            const error = await response.text();
-            errors.push(`Failed to migrate ${user.email}: ${error}`);
-          }
-        } catch (error) {
-          errors.push(
-            `Error migrating ${user.email}: ${(error as Error).message}`,
-          );
-        }
-      }
-
-      return {
-        success: true,
-        migratedCount,
-        errors,
-        message: `Migrated ${migratedCount} users successfully`,
-      };
-    } catch (error) {
-      console.error("User migration error:", error);
-      return {
-        success: false,
-        message: `Migration failed: ${(error as Error).message}`,
-      };
-    }
-  }
-
-  // Migrate tasks from localStorage to database
-  static async migrateTasks() {
-    try {
-      // Get tasks from localStorage
-      const dailyTasks = JSON.parse(localStorage.getItem("dailyTasks") || "[]");
-
-      if (dailyTasks.length === 0) {
-        console.log("No tasks to migrate");
-        return { success: true, message: "No tasks to migrate" };
-      }
-
-      let migratedCount = 0;
-      const errors: string[] = [];
-
-      for (const task of dailyTasks) {
-        try {
-          const taskData = {
-            title: task.title,
-            description: task.description || "",
-            product: task.product,
-            issueType: task.issueType,
-            priority: task.priority || "medium",
-            developer: task.developer || "",
-            uatPerson: task.uatPerson || "",
-            productionPerson: task.productionPerson || "",
-            reportedDate: task.reportedDate || null,
-            fixedDate: task.fixedDate || null,
-            closedDate: task.closedDate || null,
-            userEmail: "system@olivecrypto.com", // System migration
-          };
-
-          const response = await fetch(`${API_BASE}/tasks`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(taskData),
-          });
-
-          if (response.ok) {
-            migratedCount++;
-            console.log(`✅ Migrated task: ${task.title}`);
-          } else {
-            const error = await response.text();
-            errors.push(`Failed to migrate task "${task.title}": ${error}`);
-          }
-        } catch (error) {
-          errors.push(
-            `Error migrating task "${task.title}": ${(error as Error).message}`,
-          );
-        }
-      }
-
-      return {
-        success: true,
-        migratedCount,
-        errors,
-        message: `Migrated ${migratedCount} tasks successfully`,
-      };
-    } catch (error) {
-      console.error("Task migration error:", error);
-      return {
-        success: false,
-        message: `Migration failed: ${(error as Error).message}`,
-      };
-    }
-  }
-
-  // Run complete migration
-  static async migrateAllData() {
-    console.log(
-      "🔄 Starting data migration from localStorage to Oracle database...",
-    );
-
-    const results = {
-      users: await this.migrateUsers(),
-      tasks: await this.migrateTasks(),
-    };
-
-    console.log("📊 Migration Results:", results);
-
-    return results;
-  }
-
-  // Clear localStorage after successful migration
-  static clearLocalStorageData() {
-    const keysToRemove = [
-      "registeredUsers",
-      "signedInUsers",
-      "dailyTasks",
-      "handoverHistory",
-      "leaveRequests",
-      "pagePermissions",
-    ];
-
-    keysToRemove.forEach((key) => {
-      localStorage.removeItem(key);
-      console.log(`🗑️ Cleared localStorage key: ${key}`);
-    });
-
-    console.log("✅ localStorage data cleared");
-  }
+interface LocalStorageUser {
+  id: number;
+  name: string;
+  userName: string;
+  email: string;
+  password: string;
+  department: string;
+  lastLogin: string;
+  lastLogout: string;
+  status: string;
+  totalLeaves: number;
+  usedLeaves: number;
+  weekOffs: number;
+  usedWeekOffs: number;
+  employeeId: string;
+  role: string;
+  registeredAt: string;
 }
 
-// Utility functions for API calls
-export class DatabaseAPI {
-  static async getUsers() {
+interface LocalStorageTask {
+  id: number;
+  title: string;
+  product: string;
+  issueType: string;
+  description?: string;
+  developer?: string;
+  uatPerson?: string;
+  productionPerson?: string;
+  priority?: string;
+  reportedDate?: string;
+  fixedDate?: string;
+  closedDate?: string;
+  date: string;
+  time: string;
+  status: string;
+  userEmail: string;
+}
+
+export class DataMigration {
+  private static migrationLog: string[] = [];
+
+  /**
+   * Migrate all localStorage data to Oracle database
+   */
+  static async migrateAllData(): Promise<{ success: boolean; log: string[] }> {
+    this.migrationLog = [];
+    this.log("🚀 Starting data migration from localStorage to Oracle database...");
+
     try {
-      const response = await fetch(`${API_BASE}/users/signed-in`);
-      if (response.ok) {
-        return await response.json();
+      // Check database connectivity
+      const healthCheck = await this.checkDatabaseHealth();
+      if (!healthCheck) {
+        throw new Error("Database not available");
       }
-      throw new Error("Failed to fetch users");
+
+      // Migrate users
+      await this.migrateUsers();
+
+      // Migrate tasks
+      await this.migrateTasks();
+
+      this.log("✅ Data migration completed successfully!");
+      return { success: true, log: [...this.migrationLog] };
     } catch (error) {
-      console.error("Error fetching users:", error);
-      throw error;
+      this.log(`❌ Migration failed: ${error.message}`);
+      return { success: false, log: [...this.migrationLog] };
     }
   }
 
-  static async getTasks(filters?: any) {
+  /**
+   * Check if Oracle database is available
+   */
+  private static async checkDatabaseHealth(): Promise<boolean> {
     try {
-      const queryParams = new URLSearchParams();
-      if (filters) {
-        Object.keys(filters).forEach((key) => {
-          if (filters[key] && filters[key] !== "all") {
-            queryParams.append(key, filters[key]);
-          }
+      const response = await fetch("/api/health");
+      const result = await response.json();
+      
+      if (result.database === "connected") {
+        this.log("✅ Oracle database connection verified");
+        return true;
+      } else {
+        this.log(`⚠️ Database status: ${result.database}`);
+        return false;
+      }
+    } catch (error) {
+      this.log(`❌ Database health check failed: ${error.message}`);
+      return false;
+    }
+  }
+
+  /**
+   * Migrate users from localStorage to Oracle database
+   */
+  private static async migrateUsers(): Promise<void> {
+    this.log("👥 Starting user migration...");
+    
+    const usersJson = localStorage.getItem("registeredUsers");
+    if (!usersJson) {
+      this.log("ℹ️ No users found in localStorage");
+      return;
+    }
+
+    const users: LocalStorageUser[] = JSON.parse(usersJson);
+    this.log(`📊 Found ${users.length} users in localStorage`);
+
+    let successCount = 0;
+    let errorCount = 0;
+
+    for (const user of users) {
+      try {
+        // Check if user already exists in database
+        const existingUserResponse = await fetch(`/api/users/${user.email}`);
+        const existingUserResult = await existingUserResponse.json();
+
+        if (existingUserResult.success && existingUserResult.user) {
+          this.log(`⏭️ User ${user.email} already exists in database, skipping...`);
+          continue;
+        }
+
+        // Register user in database
+        const registrationData = {
+          firstName: user.name.split(" ")[0] || user.name,
+          lastName: user.name.split(" ").slice(1).join(" ") || "",
+          userName: user.userName,
+          employeeId: user.employeeId,
+          email: user.email,
+          role: user.role,
+          password: user.password
+        };
+
+        const response = await fetch("/api/users/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(registrationData),
         });
-      }
 
-      const url = `${API_BASE}/tasks${queryParams.toString() ? "?" + queryParams.toString() : ""}`;
-      const response = await fetch(url);
+        const result = await response.json();
 
-      if (response.ok) {
-        return await response.json();
+        if (result.success) {
+          this.log(`✅ Successfully migrated user: ${user.email}`);
+          successCount++;
+        } else {
+          this.log(`❌ Failed to migrate user ${user.email}: ${result.message}`);
+          errorCount++;
+        }
+      } catch (error) {
+        this.log(`❌ Error migrating user ${user.email}: ${error.message}`);
+        errorCount++;
       }
-      throw new Error("Failed to fetch tasks");
+    }
+
+    this.log(`📈 User migration summary: ${successCount} successful, ${errorCount} failed`);
+  }
+
+  /**
+   * Migrate tasks from localStorage to Oracle database
+   */
+  private static async migrateTasks(): Promise<void> {
+    this.log("📋 Starting task migration...");
+    
+    const tasksJson = localStorage.getItem("dailyTasks");
+    if (!tasksJson) {
+      this.log("ℹ️ No tasks found in localStorage");
+      return;
+    }
+
+    const tasks: LocalStorageTask[] = JSON.parse(tasksJson);
+    this.log(`📊 Found ${tasks.length} tasks in localStorage`);
+
+    let successCount = 0;
+    let errorCount = 0;
+
+    for (const task of tasks) {
+      try {
+        const taskData = {
+          title: task.title,
+          product: task.product,
+          issueType: task.issueType,
+          description: task.description || "",
+          developer: task.developer || "",
+          uatPerson: task.uatPerson || "",
+          productionPerson: task.productionPerson || "",
+          priority: task.priority || "",
+          reportedDate: task.reportedDate || "",
+          fixedDate: task.fixedDate || "",
+          closedDate: task.closedDate || "",
+          taskDate: task.date,
+          timeInfo: task.time,
+          status: task.status,
+          userEmail: task.userEmail
+        };
+
+        const response = await fetch("/api/tasks", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(taskData),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          this.log(`✅ Successfully migrated task: ${task.title}`);
+          successCount++;
+        } else {
+          this.log(`❌ Failed to migrate task ${task.title}: ${result.message}`);
+          errorCount++;
+        }
+      } catch (error) {
+        this.log(`❌ Error migrating task ${task.title}: ${error.message}`);
+        errorCount++;
+      }
+    }
+
+    this.log(`📈 Task migration summary: ${successCount} successful, ${errorCount} failed`);
+  }
+
+  /**
+   * Backup localStorage data before migration
+   */
+  static backupLocalStorageData(): string {
+    const backup = {
+      users: localStorage.getItem("registeredUsers"),
+      tasks: localStorage.getItem("dailyTasks"),
+      signedInUsers: localStorage.getItem("signedInUsers"),
+      leaveRequests: localStorage.getItem("leaveRequests"),
+      currentUser: localStorage.getItem("currentUser"),
+      userEmail: localStorage.getItem("userEmail"),
+      timestamp: new Date().toISOString()
+    };
+
+    const backupString = JSON.stringify(backup, null, 2);
+    this.log("💾 LocalStorage data backup created");
+    return backupString;
+  }
+
+  /**
+   * Restore localStorage data from backup
+   */
+  static restoreLocalStorageData(backupString: string): boolean {
+    try {
+      const backup = JSON.parse(backupString);
+      
+      Object.keys(backup).forEach(key => {
+        if (key !== "timestamp" && backup[key]) {
+          localStorage.setItem(key, backup[key]);
+        }
+      });
+
+      this.log("🔄 LocalStorage data restored from backup");
+      return true;
     } catch (error) {
-      console.error("Error fetching tasks:", error);
-      throw error;
+      this.log(`❌ Failed to restore backup: ${error.message}`);
+      return false;
     }
   }
 
-  static async createTask(taskData: any) {
-    try {
-      const response = await fetch(`${API_BASE}/tasks`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(taskData),
-      });
+  /**
+   * Clear localStorage data after successful migration
+   */
+  static clearLocalStorageData(): void {
+    const keysToRemove = [
+      "registeredUsers",
+      "dailyTasks",
+      "signedInUsers",
+      "leaveRequests"
+    ];
 
-      if (response.ok) {
-        return await response.json();
-      }
-      throw new Error("Failed to create task");
-    } catch (error) {
-      console.error("Error creating task:", error);
-      throw error;
-    }
+    keysToRemove.forEach(key => {
+      localStorage.removeItem(key);
+    });
+
+    this.log("🗑️ LocalStorage migration data cleared");
   }
 
-  static async loginUser(email: string, password: string) {
-    try {
-      const response = await fetch(`${API_BASE}/users/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+  /**
+   * Get migration status
+   */
+  static async getMigrationStatus(): Promise<{
+    localStorageHasData: boolean;
+    databaseAvailable: boolean;
+    recommendMigration: boolean;
+  }> {
+    const localStorageHasData = !!(
+      localStorage.getItem("registeredUsers") || 
+      localStorage.getItem("dailyTasks")
+    );
 
-      if (response.ok) {
-        return await response.json();
-      }
-      const error = await response.json();
-      throw new Error(error.message || "Login failed");
-    } catch (error) {
-      console.error("Error logging in:", error);
-      throw error;
-    }
+    const databaseAvailable = await this.checkDatabaseHealth();
+
+    return {
+      localStorageHasData,
+      databaseAvailable,
+      recommendMigration: localStorageHasData && databaseAvailable
+    };
   }
 
-  static async registerUser(userData: any) {
-    try {
-      const response = await fetch(`${API_BASE}/users/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (response.ok) {
-        return await response.json();
-      }
-      const error = await response.json();
-      throw new Error(error.message || "Registration failed");
-    } catch (error) {
-      console.error("Error registering user:", error);
-      throw error;
-    }
+  private static log(message: string): void {
+    const timestamp = new Date().toLocaleTimeString();
+    const logMessage = `[${timestamp}] ${message}`;
+    this.migrationLog.push(logMessage);
+    console.log(logMessage);
   }
 }

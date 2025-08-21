@@ -40,7 +40,7 @@ export default function Register() {
     }
   };
 
-  const handleFormSubmit = async (e: FormEvent) => {
+  const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
     const formDataObj = new FormData(e.target as HTMLFormElement);
     const data = {

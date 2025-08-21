@@ -184,6 +184,7 @@ export default function Dashboard() {
               hasPermission("daily-tracker"),
               hasPermission("shift-handover"),
               hasPermission("all-users-data"),
+              hasPermission("data-migration"),
               hasPermission("others"),
             ].filter(Boolean).length <= 2
               ? "grid-cols-1 lg:grid-cols-2"

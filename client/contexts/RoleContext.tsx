@@ -26,6 +26,7 @@ export interface RolePermissions {
   canAccessDailyTracker: boolean;
   canAccessShiftHandover: boolean;
   canAccessAllUsersData: boolean;
+  canAccessDataMigration: boolean;
   canAccessOthers: boolean;
   canManageUsers: boolean;
   readOnly?: boolean;

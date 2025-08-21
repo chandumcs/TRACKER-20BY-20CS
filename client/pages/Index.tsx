@@ -114,7 +114,14 @@ export default function Index() {
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
+              minHeight: "800px",
+              maxWidth: "867px",
               marginRight: "-2px",
+              borderStyle: "hidden",
+              borderWidth: "1px",
+              width: "100%",
+              height: "auto",
+              flexGrow: "0",
             }}
           >
             <Card className="w-full max-w-md">

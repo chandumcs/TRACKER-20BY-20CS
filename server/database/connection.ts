@@ -1,4 +1,4 @@
-import oracledb from 'oracledb';
+import oracledb from "oracledb";
 
 // Database configuration
 const dbConfig = {
@@ -19,9 +19,9 @@ export async function initializeOracleClient() {
   try {
     // Auto-detect Oracle Instant Client location
     oracledb.initOracleClient();
-    console.log('Oracle client initialized successfully');
+    console.log("Oracle client initialized successfully");
   } catch (err: any) {
-    console.warn('Oracle client initialization warning:', err.message);
+    console.warn("Oracle client initialization warning:", err.message);
     // Continue even if client initialization has issues
   }
 }
@@ -31,12 +31,12 @@ export async function createPool() {
   try {
     if (!pool) {
       pool = await oracledb.createPool(dbConfig);
-      console.log('Oracle Database connection pool created successfully');
+      console.log("Oracle Database connection pool created successfully");
       console.log(`Connected to: ${dbConfig.connectString}`);
     }
     return pool;
   } catch (err: any) {
-    console.error('Error creating Oracle DB pool:', err);
+    console.error("Error creating Oracle DB pool:", err);
     throw err;
   }
 }
@@ -49,7 +49,7 @@ export async function getConnection() {
     }
     return await pool!.getConnection();
   } catch (err: any) {
-    console.error('Error getting Oracle DB connection:', err);
+    console.error("Error getting Oracle DB connection:", err);
     throw err;
   }
 }
@@ -59,18 +59,18 @@ export async function testConnection() {
   let connection;
   try {
     connection = await getConnection();
-    const result = await connection.execute('SELECT SYSDATE FROM DUAL');
-    console.log('Database connection test successful:', result.rows);
+    const result = await connection.execute("SELECT SYSDATE FROM DUAL");
+    console.log("Database connection test successful:", result.rows);
     return true;
   } catch (err: any) {
-    console.error('Database connection test failed:', err);
+    console.error("Database connection test failed:", err);
     return false;
   } finally {
     if (connection) {
       try {
         await connection.close();
       } catch (err) {
-        console.error('Error closing connection:', err);
+        console.error("Error closing connection:", err);
       }
     }
   }
@@ -82,22 +82,22 @@ export async function closePool() {
     if (pool) {
       await pool.close();
       pool = null;
-      console.log('Oracle Database pool closed');
+      console.log("Oracle Database pool closed");
     }
   } catch (err: any) {
-    console.error('Error closing Oracle DB pool:', err);
+    console.error("Error closing Oracle DB pool:", err);
   }
 }
 
 // Graceful shutdown handler
-process.on('SIGINT', async () => {
-  console.log('Shutting down gracefully...');
+process.on("SIGINT", async () => {
+  console.log("Shutting down gracefully...");
   await closePool();
   process.exit(0);
 });
 
-process.on('SIGTERM', async () => {
-  console.log('Shutting down gracefully...');
+process.on("SIGTERM", async () => {
+  console.log("Shutting down gracefully...");
   await closePool();
   process.exit(0);
 });

@@ -1,12 +1,12 @@
-import { getConnection } from './connection.js';
+import { getConnection } from "./connection.js";
 
 export async function createTables() {
   let connection;
-  
+
   try {
     connection = await getConnection();
-    
-    console.log('Creating database tables...');
+
+    console.log("Creating database tables...");
 
     // Users table for authentication and profiles
     await connection.execute(`
@@ -31,7 +31,7 @@ export async function createTables() {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log('✓ Users table created');
+    console.log("✓ Users table created");
 
     // Daily tasks table
     await connection.execute(`
@@ -56,7 +56,7 @@ export async function createTables() {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log('✓ Daily tasks table created');
+    console.log("✓ Daily tasks table created");
 
     // Shift handovers table
     await connection.execute(`
@@ -72,7 +72,7 @@ export async function createTables() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log('✓ Shift handovers table created');
+    console.log("✓ Shift handovers table created");
 
     // Handover points table (one-to-many relationship)
     await connection.execute(`
@@ -84,7 +84,7 @@ export async function createTables() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log('✓ Handover points table created');
+    console.log("✓ Handover points table created");
 
     // Leave requests table
     await connection.execute(`
@@ -105,7 +105,7 @@ export async function createTables() {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log('✓ Leave requests table created');
+    console.log("✓ Leave requests table created");
 
     // Role permissions table
     await connection.execute(`
@@ -119,7 +119,7 @@ export async function createTables() {
         UNIQUE(role, page)
       )
     `);
-    console.log('✓ Role permissions table created');
+    console.log("✓ Role permissions table created");
 
     // User sessions table
     await connection.execute(`
@@ -135,28 +135,37 @@ export async function createTables() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log('✓ User sessions table created');
+    console.log("✓ User sessions table created");
 
     // Create indexes for better performance
-    await connection.execute('CREATE INDEX idx_users_email ON users(email)');
-    await connection.execute('CREATE INDEX idx_tasks_date ON daily_tasks(task_date)');
-    await connection.execute('CREATE INDEX idx_tasks_status ON daily_tasks(status)');
-    await connection.execute('CREATE INDEX idx_leave_user ON leave_requests(user_id)');
-    await connection.execute('CREATE INDEX idx_leave_date ON leave_requests(leave_date)');
-    await connection.execute('CREATE INDEX idx_handover_date ON shift_handovers(handover_date)');
-    
-    console.log('✓ Database indexes created');
+    await connection.execute("CREATE INDEX idx_users_email ON users(email)");
+    await connection.execute(
+      "CREATE INDEX idx_tasks_date ON daily_tasks(task_date)",
+    );
+    await connection.execute(
+      "CREATE INDEX idx_tasks_status ON daily_tasks(status)",
+    );
+    await connection.execute(
+      "CREATE INDEX idx_leave_user ON leave_requests(user_id)",
+    );
+    await connection.execute(
+      "CREATE INDEX idx_leave_date ON leave_requests(leave_date)",
+    );
+    await connection.execute(
+      "CREATE INDEX idx_handover_date ON shift_handovers(handover_date)",
+    );
+
+    console.log("✓ Database indexes created");
 
     // Insert default role permissions
     await insertDefaultPermissions(connection);
 
-    console.log('🎉 Database schema created successfully!');
-    
+    console.log("🎉 Database schema created successfully!");
   } catch (err: any) {
     if (err.errorNum === 955) {
-      console.log('⚠️  Tables already exist, skipping creation');
+      console.log("⚠️  Tables already exist, skipping creation");
     } else {
-      console.error('Error creating database schema:', err);
+      console.error("Error creating database schema:", err);
       throw err;
     }
   } finally {
@@ -164,7 +173,7 @@ export async function createTables() {
       try {
         await connection.close();
       } catch (err) {
-        console.error('Error closing connection:', err);
+        console.error("Error closing connection:", err);
       }
     }
   }
@@ -173,74 +182,75 @@ export async function createTables() {
 async function insertDefaultPermissions(connection: any) {
   const defaultPermissions = [
     // Admin permissions
-    { role: 'Admin', page: 'dashboard', access: 'full' },
-    { role: 'Admin', page: 'daily-tracker', access: 'full' },
-    { role: 'Admin', page: 'shift-handover', access: 'full' },
-    { role: 'Admin', page: 'all-users-data', access: 'full' },
-    { role: 'Admin', page: 'others', access: 'full' },
-    
+    { role: "Admin", page: "dashboard", access: "full" },
+    { role: "Admin", page: "daily-tracker", access: "full" },
+    { role: "Admin", page: "shift-handover", access: "full" },
+    { role: "Admin", page: "all-users-data", access: "full" },
+    { role: "Admin", page: "others", access: "full" },
+
     // Manager permissions
-    { role: 'Manager', page: 'dashboard', access: 'full' },
-    { role: 'Manager', page: 'daily-tracker', access: 'full' },
-    { role: 'Manager', page: 'shift-handover', access: 'full' },
-    { role: 'Manager', page: 'all-users-data', access: 'read' },
-    { role: 'Manager', page: 'others', access: 'read' },
-    
+    { role: "Manager", page: "dashboard", access: "full" },
+    { role: "Manager", page: "daily-tracker", access: "full" },
+    { role: "Manager", page: "shift-handover", access: "full" },
+    { role: "Manager", page: "all-users-data", access: "read" },
+    { role: "Manager", page: "others", access: "read" },
+
     // Production Support permissions
-    { role: 'Production Support', page: 'dashboard', access: 'full' },
-    { role: 'Production Support', page: 'daily-tracker', access: 'full' },
-    { role: 'Production Support', page: 'shift-handover', access: 'full' },
-    { role: 'Production Support', page: 'all-users-data', access: 'none' },
-    { role: 'Production Support', page: 'others', access: 'none' },
-    
+    { role: "Production Support", page: "dashboard", access: "full" },
+    { role: "Production Support", page: "daily-tracker", access: "full" },
+    { role: "Production Support", page: "shift-handover", access: "full" },
+    { role: "Production Support", page: "all-users-data", access: "none" },
+    { role: "Production Support", page: "others", access: "none" },
+
     // UAT Support permissions
-    { role: 'UAT Support', page: 'dashboard', access: 'full' },
-    { role: 'UAT Support', page: 'daily-tracker', access: 'full' },
-    { role: 'UAT Support', page: 'shift-handover', access: 'none' },
-    { role: 'UAT Support', page: 'all-users-data', access: 'none' },
-    { role: 'UAT Support', page: 'others', access: 'none' },
-    
+    { role: "UAT Support", page: "dashboard", access: "full" },
+    { role: "UAT Support", page: "daily-tracker", access: "full" },
+    { role: "UAT Support", page: "shift-handover", access: "none" },
+    { role: "UAT Support", page: "all-users-data", access: "none" },
+    { role: "UAT Support", page: "others", access: "none" },
+
     // Developer permissions
-    { role: 'Developer', page: 'dashboard', access: 'full' },
-    { role: 'Developer', page: 'daily-tracker', access: 'full' },
-    { role: 'Developer', page: 'shift-handover', access: 'none' },
-    { role: 'Developer', page: 'all-users-data', access: 'none' },
-    { role: 'Developer', page: 'others', access: 'none' },
+    { role: "Developer", page: "dashboard", access: "full" },
+    { role: "Developer", page: "daily-tracker", access: "full" },
+    { role: "Developer", page: "shift-handover", access: "none" },
+    { role: "Developer", page: "all-users-data", access: "none" },
+    { role: "Developer", page: "others", access: "none" },
   ];
 
   for (const perm of defaultPermissions) {
     try {
       await connection.execute(
         `INSERT INTO role_permissions (role, page, access_level) VALUES (:role, :page, :access)`,
-        perm
+        perm,
       );
     } catch (err: any) {
-      if (err.errorNum !== 1) { // Ignore unique constraint violations
-        console.error('Error inserting permission:', err);
+      if (err.errorNum !== 1) {
+        // Ignore unique constraint violations
+        console.error("Error inserting permission:", err);
       }
     }
   }
-  
+
   await connection.commit();
-  console.log('✓ Default permissions inserted');
+  console.log("✓ Default permissions inserted");
 }
 
 export async function dropTables() {
   let connection;
-  
+
   try {
     connection = await getConnection();
-    
-    console.log('Dropping database tables...');
+
+    console.log("Dropping database tables...");
 
     const tables = [
-      'user_sessions',
-      'role_permissions', 
-      'leave_requests',
-      'handover_points',
-      'shift_handovers',
-      'daily_tasks',
-      'users'
+      "user_sessions",
+      "role_permissions",
+      "leave_requests",
+      "handover_points",
+      "shift_handovers",
+      "daily_tasks",
+      "users",
     ];
 
     for (const table of tables) {
@@ -256,17 +266,16 @@ export async function dropTables() {
       }
     }
 
-    console.log('🗑️  Database tables dropped successfully!');
-    
+    console.log("🗑️  Database tables dropped successfully!");
   } catch (err: any) {
-    console.error('Error dropping database tables:', err);
+    console.error("Error dropping database tables:", err);
     throw err;
   } finally {
     if (connection) {
       try {
         await connection.close();
       } catch (err) {
-        console.error('Error closing connection:', err);
+        console.error("Error closing connection:", err);
       }
     }
   }

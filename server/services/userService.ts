@@ -1,4 +1,4 @@
-import { getConnection } from '../database/connection.js';
+import { getConnection } from "../database/connection.js";
 
 export interface User {
   id?: number;
@@ -36,13 +36,12 @@ export interface SignedInUser {
 }
 
 export class UserService {
-  
   // Register new user
   static async registerUser(userData: User): Promise<number> {
     let connection;
     try {
       connection = await getConnection();
-      
+
       const result = await connection.execute(
         `INSERT INTO users (
           name, username, email, password, employee_id, role, department,
@@ -65,43 +64,45 @@ export class UserService {
           usedLeaves: userData.usedLeaves || 0,
           weekOffs: userData.weekOffs || 52,
           usedWeekOffs: userData.usedWeekOffs || 0,
-          status: 'Online',
-          id: { type: 'NUMBER', dir: 'OUT' }
-        }
+          status: "Online",
+          id: { type: "NUMBER", dir: "OUT" },
+        },
       );
-      
+
       await connection.commit();
       return (result.outBinds as any).id[0];
-      
     } catch (err: any) {
-      console.error('Error registering user:', err);
+      console.error("Error registering user:", err);
       throw err;
     } finally {
       if (connection) {
         try {
           await connection.close();
         } catch (err) {
-          console.error('Error closing connection:', err);
+          console.error("Error closing connection:", err);
         }
       }
     }
   }
 
   // Authenticate user
-  static async authenticateUser(email: string, password: string): Promise<User | null> {
+  static async authenticateUser(
+    email: string,
+    password: string,
+  ): Promise<User | null> {
     let connection;
     try {
       connection = await getConnection();
-      
+
       const result = await connection.execute(
         `SELECT id, name, username, email, employee_id, role, department,
                 total_leaves, used_leaves, week_offs, used_week_offs, status,
                 last_login, last_logout, registered_at
          FROM users 
          WHERE email = :email AND password = :password`,
-        { email, password }
+        { email, password },
       );
-      
+
       if (result.rows && result.rows.length > 0) {
         const row = result.rows[0] as any[];
         return {
@@ -120,52 +121,53 @@ export class UserService {
           lastLogin: row[12],
           lastLogout: row[13],
           registeredAt: row[14],
-          password: '' // Don't return password
+          password: "", // Don't return password
         };
       }
-      
+
       return null;
-      
     } catch (err: any) {
-      console.error('Error authenticating user:', err);
+      console.error("Error authenticating user:", err);
       throw err;
     } finally {
       if (connection) {
         try {
           await connection.close();
         } catch (err) {
-          console.error('Error closing connection:', err);
+          console.error("Error closing connection:", err);
         }
       }
     }
   }
 
   // Update user login status
-  static async updateUserLoginStatus(email: string, status: 'Online' | 'Offline'): Promise<void> {
+  static async updateUserLoginStatus(
+    email: string,
+    status: "Online" | "Offline",
+  ): Promise<void> {
     let connection;
     try {
       connection = await getConnection();
-      
-      const timeField = status === 'Online' ? 'last_login' : 'last_logout';
-      
+
+      const timeField = status === "Online" ? "last_login" : "last_logout";
+
       await connection.execute(
         `UPDATE users 
          SET status = :status, ${timeField} = CURRENT_TIMESTAMP, updated_at = CURRENT_TIMESTAMP
          WHERE email = :email`,
-        { status, email }
+        { status, email },
       );
-      
+
       await connection.commit();
-      
     } catch (err: any) {
-      console.error('Error updating user login status:', err);
+      console.error("Error updating user login status:", err);
       throw err;
     } finally {
       if (connection) {
         try {
           await connection.close();
         } catch (err) {
-          console.error('Error closing connection:', err);
+          console.error("Error closing connection:", err);
         }
       }
     }
@@ -176,7 +178,7 @@ export class UserService {
     let connection;
     try {
       connection = await getConnection();
-      
+
       const result = await connection.execute(
         `SELECT id, name, email, department, 
                 TO_CHAR(last_login, 'YYYY-MM-DD HH24:MI:SS') as last_login,
@@ -185,38 +187,37 @@ export class UserService {
                 employee_id, role
          FROM users 
          WHERE last_login IS NOT NULL
-         ORDER BY last_login DESC`
+         ORDER BY last_login DESC`,
       );
-      
+
       if (result.rows) {
         return result.rows.map((row: any[]) => ({
           id: row[0],
           name: row[1],
           email: row[2],
           department: row[3],
-          lastLogin: row[4] || 'Never',
-          lastLogout: row[5] || 'Never',
+          lastLogin: row[4] || "Never",
+          lastLogout: row[5] || "Never",
           status: row[6],
           totalLeaves: row[7],
           usedLeaves: row[8],
           weekOffs: row[9],
           usedWeekOffs: row[10],
           employeeId: row[11],
-          role: row[12]
+          role: row[12],
         }));
       }
-      
+
       return [];
-      
     } catch (err: any) {
-      console.error('Error getting signed-in users:', err);
+      console.error("Error getting signed-in users:", err);
       throw err;
     } finally {
       if (connection) {
         try {
           await connection.close();
         } catch (err) {
-          console.error('Error closing connection:', err);
+          console.error("Error closing connection:", err);
         }
       }
     }
@@ -227,16 +228,16 @@ export class UserService {
     let connection;
     try {
       connection = await getConnection();
-      
+
       const result = await connection.execute(
         `SELECT id, name, username, email, employee_id, role, department,
                 total_leaves, used_leaves, week_offs, used_week_offs, status,
                 last_login, last_logout, registered_at
          FROM users 
          WHERE email = :email`,
-        { email }
+        { email },
       );
-      
+
       if (result.rows && result.rows.length > 0) {
         const row = result.rows[0] as any[];
         return {
@@ -255,21 +256,20 @@ export class UserService {
           lastLogin: row[12],
           lastLogout: row[13],
           registeredAt: row[14],
-          password: '' // Don't return password
+          password: "", // Don't return password
         };
       }
-      
+
       return null;
-      
     } catch (err: any) {
-      console.error('Error getting user by email:', err);
+      console.error("Error getting user by email:", err);
       throw err;
     } finally {
       if (connection) {
         try {
           await connection.close();
         } catch (err) {
-          console.error('Error closing connection:', err);
+          console.error("Error closing connection:", err);
         }
       }
     }

@@ -74,33 +74,32 @@ export default function Index() {
 
     try {
       // Use database API for authentication
-      const response = await fetch('/api/users/login', {
-        method: 'POST',
+      const response = await fetch("/api/users/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
 
       const result = await response.json();
 
       if (!result.success) {
-        setLoginError(result.message || 'Invalid email or password');
+        setLoginError(result.message || "Invalid email or password");
         return;
       }
 
-      setLoginError(''); // Clear any previous errors
+      setLoginError(""); // Clear any previous errors
 
       // Store user data for session management
-      localStorage.setItem('userEmail', email);
-      localStorage.setItem('currentUser', JSON.stringify(result.user));
+      localStorage.setItem("userEmail", email);
+      localStorage.setItem("currentUser", JSON.stringify(result.user));
 
       // Successful login - redirect to dashboard
       navigate("/dashboard");
-
     } catch (error) {
-      console.error('Login error:', error);
-      setLoginError('Connection error. Please try again.');
+      console.error("Login error:", error);
+      setLoginError("Connection error. Please try again.");
     }
   };
   return (

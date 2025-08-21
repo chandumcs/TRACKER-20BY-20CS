@@ -1,4 +1,4 @@
-import { getConnection } from '../database/connection.js';
+import { getConnection } from "../database/connection.js";
 
 export interface Task {
   id?: number;
@@ -22,13 +22,12 @@ export interface Task {
 }
 
 export class TaskService {
-  
   // Create new task
   static async createTask(taskData: Task, userId: number): Promise<number> {
     let connection;
     try {
       connection = await getConnection();
-      
+
       const result = await connection.execute(
         `INSERT INTO daily_tasks (
           title, description, product, issue_type, status, priority,
@@ -46,7 +45,7 @@ export class TaskService {
           description: taskData.description,
           product: taskData.product,
           issueType: taskData.issueType,
-          status: taskData.status || 'pending',
+          status: taskData.status || "pending",
           priority: taskData.priority,
           developer: taskData.developer,
           uatPerson: taskData.uatPerson,
@@ -57,22 +56,21 @@ export class TaskService {
           taskDate: taskData.taskDate,
           timeInfo: taskData.timeInfo,
           createdBy: userId,
-          id: { type: 'NUMBER', dir: 'OUT' }
-        }
+          id: { type: "NUMBER", dir: "OUT" },
+        },
       );
-      
+
       await connection.commit();
       return (result.outBinds as any).id[0];
-      
     } catch (err: any) {
-      console.error('Error creating task:', err);
+      console.error("Error creating task:", err);
       throw err;
     } finally {
       if (connection) {
         try {
           await connection.close();
         } catch (err) {
-          console.error('Error closing connection:', err);
+          console.error("Error closing connection:", err);
         }
       }
     }
@@ -89,35 +87,35 @@ export class TaskService {
     let connection;
     try {
       connection = await getConnection();
-      
-      let whereClause = ' WHERE 1=1';
+
+      let whereClause = " WHERE 1=1";
       const binds: any = {};
-      
+
       if (filters?.dateFrom) {
-        whereClause += ' AND task_date >= TO_DATE(:dateFrom, \'YYYY-MM-DD\')';
+        whereClause += " AND task_date >= TO_DATE(:dateFrom, 'YYYY-MM-DD')";
         binds.dateFrom = filters.dateFrom;
       }
-      
+
       if (filters?.dateTo) {
-        whereClause += ' AND task_date <= TO_DATE(:dateTo, \'YYYY-MM-DD\')';
+        whereClause += " AND task_date <= TO_DATE(:dateTo, 'YYYY-MM-DD')";
         binds.dateTo = filters.dateTo;
       }
-      
-      if (filters?.product && filters.product !== 'all') {
-        whereClause += ' AND product = :product';
+
+      if (filters?.product && filters.product !== "all") {
+        whereClause += " AND product = :product";
         binds.product = filters.product;
       }
-      
-      if (filters?.issueType && filters.issueType !== 'all') {
-        whereClause += ' AND issue_type = :issueType';
+
+      if (filters?.issueType && filters.issueType !== "all") {
+        whereClause += " AND issue_type = :issueType";
         binds.issueType = filters.issueType;
       }
-      
-      if (filters?.status && filters.status !== 'all') {
-        whereClause += ' AND status = :status';
+
+      if (filters?.status && filters.status !== "all") {
+        whereClause += " AND status = :status";
         binds.status = filters.status;
       }
-      
+
       const result = await connection.execute(
         `SELECT id, title, description, product, issue_type, status, priority,
                 developer, uat_person, production_person,
@@ -130,9 +128,9 @@ export class TaskService {
                 TO_CHAR(updated_at, 'YYYY-MM-DD HH24:MI:SS') as updated_at
          FROM daily_tasks${whereClause}
          ORDER BY created_at DESC`,
-        binds
+        binds,
       );
-      
+
       if (result.rows) {
         return result.rows.map((row: any[]) => ({
           id: row[0],
@@ -152,120 +150,122 @@ export class TaskService {
           timeInfo: row[14],
           createdBy: row[15],
           createdAt: new Date(row[16]),
-          updatedAt: new Date(row[17])
+          updatedAt: new Date(row[17]),
         }));
       }
-      
+
       return [];
-      
     } catch (err: any) {
-      console.error('Error getting tasks:', err);
+      console.error("Error getting tasks:", err);
       throw err;
     } finally {
       if (connection) {
         try {
           await connection.close();
         } catch (err) {
-          console.error('Error closing connection:', err);
+          console.error("Error closing connection:", err);
         }
       }
     }
   }
 
   // Update task
-  static async updateTask(taskId: number, taskData: Partial<Task>): Promise<void> {
+  static async updateTask(
+    taskId: number,
+    taskData: Partial<Task>,
+  ): Promise<void> {
     let connection;
     try {
       connection = await getConnection();
-      
+
       const setClauses = [];
       const binds: any = { id: taskId };
-      
+
       if (taskData.title !== undefined) {
-        setClauses.push('title = :title');
+        setClauses.push("title = :title");
         binds.title = taskData.title;
       }
-      
+
       if (taskData.description !== undefined) {
-        setClauses.push('description = :description');
+        setClauses.push("description = :description");
         binds.description = taskData.description;
       }
-      
+
       if (taskData.product !== undefined) {
-        setClauses.push('product = :product');
+        setClauses.push("product = :product");
         binds.product = taskData.product;
       }
-      
+
       if (taskData.issueType !== undefined) {
-        setClauses.push('issue_type = :issueType');
+        setClauses.push("issue_type = :issueType");
         binds.issueType = taskData.issueType;
       }
-      
+
       if (taskData.status !== undefined) {
-        setClauses.push('status = :status');
+        setClauses.push("status = :status");
         binds.status = taskData.status;
       }
-      
+
       if (taskData.priority !== undefined) {
-        setClauses.push('priority = :priority');
+        setClauses.push("priority = :priority");
         binds.priority = taskData.priority;
       }
-      
+
       if (taskData.developer !== undefined) {
-        setClauses.push('developer = :developer');
+        setClauses.push("developer = :developer");
         binds.developer = taskData.developer;
       }
-      
+
       if (taskData.uatPerson !== undefined) {
-        setClauses.push('uat_person = :uatPerson');
+        setClauses.push("uat_person = :uatPerson");
         binds.uatPerson = taskData.uatPerson;
       }
-      
+
       if (taskData.productionPerson !== undefined) {
-        setClauses.push('production_person = :productionPerson');
+        setClauses.push("production_person = :productionPerson");
         binds.productionPerson = taskData.productionPerson;
       }
-      
+
       if (taskData.reportedDate !== undefined) {
-        setClauses.push('reported_date = TO_DATE(:reportedDate, \'YYYY-MM-DD\')');
+        setClauses.push("reported_date = TO_DATE(:reportedDate, 'YYYY-MM-DD')");
         binds.reportedDate = taskData.reportedDate;
       }
-      
+
       if (taskData.fixedDate !== undefined) {
-        setClauses.push('fixed_date = TO_DATE(:fixedDate, \'YYYY-MM-DD\')');
+        setClauses.push("fixed_date = TO_DATE(:fixedDate, 'YYYY-MM-DD')");
         binds.fixedDate = taskData.fixedDate;
       }
-      
+
       if (taskData.closedDate !== undefined) {
-        setClauses.push('closed_date = TO_DATE(:closedDate, \'YYYY-MM-DD\')');
+        setClauses.push("closed_date = TO_DATE(:closedDate, 'YYYY-MM-DD')");
         binds.closedDate = taskData.closedDate;
       }
-      
+
       if (taskData.timeInfo !== undefined) {
-        setClauses.push('time_info = :timeInfo');
+        setClauses.push("time_info = :timeInfo");
         binds.timeInfo = taskData.timeInfo;
       }
-      
-      setClauses.push('updated_at = CURRENT_TIMESTAMP');
-      
-      if (setClauses.length > 1) { // More than just updated_at
+
+      setClauses.push("updated_at = CURRENT_TIMESTAMP");
+
+      if (setClauses.length > 1) {
+        // More than just updated_at
         await connection.execute(
-          `UPDATE daily_tasks SET ${setClauses.join(', ')} WHERE id = :id`,
-          binds
+          `UPDATE daily_tasks SET ${setClauses.join(", ")} WHERE id = :id`,
+          binds,
         );
-        
+
         await connection.commit();
       }
-      
     } catch (err: any) {
-      console.error('Error updating task:', err);
+      console.error("Error updating task:", err);
       throw err;
     } finally {
       if (connection) {
         try {
           await connection.close();
         } catch (err) {
-          console.error('Error closing connection:', err);
+          console.error("Error closing connection:", err);
         }
       }
     }
@@ -276,23 +276,21 @@ export class TaskService {
     let connection;
     try {
       connection = await getConnection();
-      
-      await connection.execute(
-        'DELETE FROM daily_tasks WHERE id = :id',
-        { id: taskId }
-      );
-      
+
+      await connection.execute("DELETE FROM daily_tasks WHERE id = :id", {
+        id: taskId,
+      });
+
       await connection.commit();
-      
     } catch (err: any) {
-      console.error('Error deleting task:', err);
+      console.error("Error deleting task:", err);
       throw err;
     } finally {
       if (connection) {
         try {
           await connection.close();
         } catch (err) {
-          console.error('Error closing connection:', err);
+          console.error("Error closing connection:", err);
         }
       }
     }
@@ -303,7 +301,7 @@ export class TaskService {
     let connection;
     try {
       connection = await getConnection();
-      
+
       const result = await connection.execute(
         `SELECT id, title, description, product, issue_type, status, priority,
                 developer, uat_person, production_person,
@@ -316,9 +314,9 @@ export class TaskService {
                 TO_CHAR(updated_at, 'YYYY-MM-DD HH24:MI:SS') as updated_at
          FROM daily_tasks 
          WHERE id = :id`,
-        { id: taskId }
+        { id: taskId },
       );
-      
+
       if (result.rows && result.rows.length > 0) {
         const row = result.rows[0] as any[];
         return {
@@ -339,21 +337,20 @@ export class TaskService {
           timeInfo: row[14],
           createdBy: row[15],
           createdAt: new Date(row[16]),
-          updatedAt: new Date(row[17])
+          updatedAt: new Date(row[17]),
         };
       }
-      
+
       return null;
-      
     } catch (err: any) {
-      console.error('Error getting task by ID:', err);
+      console.error("Error getting task by ID:", err);
       throw err;
     } finally {
       if (connection) {
         try {
           await connection.close();
         } catch (err) {
-          console.error('Error closing connection:', err);
+          console.error("Error closing connection:", err);
         }
       }
     }

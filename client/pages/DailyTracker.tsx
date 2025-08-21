@@ -45,13 +45,13 @@ export default function DailyTracker() {
 
   const loadTasks = async () => {
     try {
-      const response = await fetch('/api/tasks');
+      const response = await fetch("/api/tasks");
       const result = await response.json();
 
       if (result.success) {
         setTasks(result.tasks);
       } else {
-        console.error('Failed to load tasks:', result.message);
+        console.error("Failed to load tasks:", result.message);
         // Fallback to localStorage if database fails
         const savedTasks = localStorage.getItem("dailyTasks");
         if (savedTasks) {
@@ -59,7 +59,7 @@ export default function DailyTracker() {
         }
       }
     } catch (error) {
-      console.error('Error loading tasks:', error);
+      console.error("Error loading tasks:", error);
       // Fallback to localStorage if database fails
       const savedTasks = localStorage.getItem("dailyTasks");
       if (savedTasks) {

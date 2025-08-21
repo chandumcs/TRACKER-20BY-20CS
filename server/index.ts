@@ -1,10 +1,26 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import { initializeOracleClient, createPool, testConnection } from "./database/connection.js";
+import {
+  initializeOracleClient,
+  createPool,
+  testConnection,
+} from "./database/connection.js";
 import { createTables } from "./database/schema.js";
-import { registerUser, loginUser, logoutUser, getSignedInUsers, getUserByEmail } from "./routes/users.js";
-import { createTask, getTasks, updateTask, deleteTask, getTaskById } from "./routes/tasks.js";
+import {
+  registerUser,
+  loginUser,
+  logoutUser,
+  getSignedInUsers,
+  getUserByEmail,
+} from "./routes/users.js";
+import {
+  createTask,
+  getTasks,
+  updateTask,
+  deleteTask,
+  getTaskById,
+} from "./routes/tasks.js";
 
 export function createServer() {
   const app = express();
@@ -30,14 +46,14 @@ export function createServer() {
       res.json({
         status: "ok",
         database: dbConnected ? "connected" : "disconnected",
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     } catch (error) {
       res.status(500).json({
         status: "error",
         database: "error",
         error: (error as Error).message,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     }
   });
@@ -80,10 +96,11 @@ async function initializeDatabase() {
     await createTables();
 
     console.log("✅ Database initialization completed successfully!");
-
   } catch (error) {
     console.error("❌ Database initialization failed:", error);
-    console.error("📋 Please check your Oracle database credentials and connectivity");
+    console.error(
+      "📋 Please check your Oracle database credentials and connectivity",
+    );
     // Don't exit process, let the app run without database
   }
 }

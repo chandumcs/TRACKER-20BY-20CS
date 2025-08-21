@@ -65,18 +65,18 @@ export default function Register() {
 
     try {
       // Use database API for registration
-      const response = await fetch('/api/users/register', {
-        method: 'POST',
+      const response = await fetch("/api/users/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
 
       const result = await response.json();
 
       if (!result.success) {
-        alert(result.message || 'Registration failed. Please try again.');
+        alert(result.message || "Registration failed. Please try again.");
         return;
       }
 
@@ -84,26 +84,25 @@ export default function Register() {
       localStorage.setItem("userEmail", data.email);
 
       // Get user data from login after registration
-      const loginResponse = await fetch('/api/users/login', {
-        method: 'POST',
+      const loginResponse = await fetch("/api/users/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: data.email, password: data.password })
+        body: JSON.stringify({ email: data.email, password: data.password }),
       });
 
       const loginResult = await loginResponse.json();
       if (loginResult.success) {
-        localStorage.setItem('currentUser', JSON.stringify(loginResult.user));
+        localStorage.setItem("currentUser", JSON.stringify(loginResult.user));
       }
 
       // Registration successful
       alert("Registration successful! Account created.");
       navigate("/dashboard");
-
     } catch (error) {
-      console.error('Registration error:', error);
-      alert('Connection error. Please try again.');
+      console.error("Registration error:", error);
+      alert("Connection error. Please try again.");
       return;
     }
   };

@@ -38,35 +38,13 @@ export default function DailyTracker() {
   const [editingTask, setEditingTask] = useState<any>(null);
   const [tasks, setTasks] = useState<any[]>([]);
 
-  // Load tasks from database on component mount
+  // Load tasks from localStorage on component mount
   useEffect(() => {
-    loadTasks();
-  }, []);
-
-  const loadTasks = async () => {
-    try {
-      const response = await fetch("/api/tasks");
-      const result = await response.json();
-
-      if (result.success) {
-        setTasks(result.tasks);
-      } else {
-        console.error("Failed to load tasks:", result.message);
-        // Fallback to localStorage if database fails
-        const savedTasks = localStorage.getItem("dailyTasks");
-        if (savedTasks) {
-          setTasks(JSON.parse(savedTasks));
-        }
-      }
-    } catch (error) {
-      console.error("Error loading tasks:", error);
-      // Fallback to localStorage if database fails
-      const savedTasks = localStorage.getItem("dailyTasks");
-      if (savedTasks) {
-        setTasks(JSON.parse(savedTasks));
-      }
+    const savedTasks = localStorage.getItem("dailyTasks");
+    if (savedTasks) {
+      setTasks(JSON.parse(savedTasks));
     }
-  };
+  }, []);
 
   // Filter state
   const [filters, setFilters] = useState({

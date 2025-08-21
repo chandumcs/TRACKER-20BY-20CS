@@ -40,8 +40,25 @@ export interface SignedInUser {
 }
 
 export class UserService {
+  // Check database availability and initialize mock if needed
+  static async checkDatabaseAvailability(): Promise<void> {
+    try {
+      const connection = await getConnection();
+      await connection.close();
+      isDatabaseAvailable = true;
+    } catch (error) {
+      console.warn("Database not available, using mock service");
+      isDatabaseAvailable = false;
+      MockUserService.initializeDefaultUsers();
+    }
+  }
+
   // Register new user
   static async registerUser(userData: User): Promise<number> {
+    if (!isDatabaseAvailable) {
+      return MockUserService.registerUser(userData);
+    }
+
     let connection;
     try {
       connection = await getConnection();

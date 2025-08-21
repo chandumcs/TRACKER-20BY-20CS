@@ -184,14 +184,13 @@ export default function DailyTracker() {
     }
   };
 
-  const handleUpdateTask = (e: React.FormEvent) => {
+  const handleUpdateTask = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingTask) return;
 
     const formData = new FormData(e.target as HTMLFormElement);
 
-    const updatedTask = {
-      ...editingTask,
+    const updateData = {
       title: formData.get("title") as string,
       product: formData.get("product") as string,
       issueType: formData.get("issueType") as string,
@@ -203,27 +202,55 @@ export default function DailyTracker() {
       reportedDate: formData.get("reportedDate") as string,
       fixedDate: formData.get("fixedDate") as string,
       closedDate: formData.get("closedDate") as string,
-      time: `Updated at ${new Date().toLocaleTimeString()}`,
     };
 
-    const updatedTasks = tasks.map((task) =>
-      task.id === editingTask.id ? updatedTask : task,
-    );
+    try {
+      const response = await fetch(`/api/tasks/${editingTask.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateData),
+      });
 
-    setTasks(updatedTasks);
-    localStorage.setItem("dailyTasks", JSON.stringify(updatedTasks));
+      const result = await response.json();
 
-    setEditingTask(null);
-    alert("Task updated successfully!");
-    setActiveTab("track");
+      if (result.success) {
+        // Reload tasks from database
+        await loadTasks();
+
+        setEditingTask(null);
+        alert("Task updated successfully!");
+        setActiveTab("track");
+      } else {
+        alert(result.message || "Failed to update task. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error updating task:", error);
+      alert("Connection error. Please try again.");
+    }
   };
 
-  const handleDeleteTask = (taskId: number) => {
+  const handleDeleteTask = async (taskId: number) => {
     if (confirm("Are you sure you want to delete this task?")) {
-      const updatedTasks = tasks.filter((task) => task.id !== taskId);
-      setTasks(updatedTasks);
-      localStorage.setItem("dailyTasks", JSON.stringify(updatedTasks));
-      alert("Task deleted successfully!");
+      try {
+        const response = await fetch(`/api/tasks/${taskId}`, {
+          method: "DELETE",
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Reload tasks from database
+          await loadTasks();
+          alert("Task deleted successfully!");
+        } else {
+          alert(result.message || "Failed to delete task. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error deleting task:", error);
+        alert("Connection error. Please try again.");
+      }
     }
   };
 

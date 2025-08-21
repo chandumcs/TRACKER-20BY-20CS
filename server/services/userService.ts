@@ -1,4 +1,8 @@
 import { getConnection } from "../database/connection.js";
+import { MockUserService } from "./mockUserService.js";
+
+// Flag to track if database is available
+let isDatabaseAvailable = true;
 
 export interface User {
   id?: number;
@@ -36,8 +40,25 @@ export interface SignedInUser {
 }
 
 export class UserService {
+  // Check database availability and initialize mock if needed
+  static async checkDatabaseAvailability(): Promise<void> {
+    try {
+      const connection = await getConnection();
+      await connection.close();
+      isDatabaseAvailable = true;
+    } catch (error) {
+      console.warn("Database not available, using mock service");
+      isDatabaseAvailable = false;
+      MockUserService.initializeDefaultUsers();
+    }
+  }
+
   // Register new user
   static async registerUser(userData: User): Promise<number> {
+    if (!isDatabaseAvailable) {
+      return MockUserService.registerUser(userData);
+    }
+
     let connection;
     try {
       connection = await getConnection();
@@ -73,7 +94,10 @@ export class UserService {
       return (result.outBinds as any).id[0];
     } catch (err: any) {
       console.error("Error registering user:", err);
-      throw err;
+      console.warn("Falling back to mock service");
+      isDatabaseAvailable = false;
+      MockUserService.initializeDefaultUsers();
+      return MockUserService.registerUser(userData);
     } finally {
       if (connection) {
         try {
@@ -90,6 +114,10 @@ export class UserService {
     email: string,
     password: string,
   ): Promise<User | null> {
+    if (!isDatabaseAvailable) {
+      return MockUserService.authenticateUser(email, password);
+    }
+
     let connection;
     try {
       connection = await getConnection();
@@ -128,7 +156,10 @@ export class UserService {
       return null;
     } catch (err: any) {
       console.error("Error authenticating user:", err);
-      throw err;
+      console.warn("Falling back to mock service");
+      isDatabaseAvailable = false;
+      MockUserService.initializeDefaultUsers();
+      return MockUserService.authenticateUser(email, password);
     } finally {
       if (connection) {
         try {
@@ -145,6 +176,10 @@ export class UserService {
     email: string,
     status: "Online" | "Offline",
   ): Promise<void> {
+    if (!isDatabaseAvailable) {
+      return MockUserService.updateUserLoginStatus(email, status);
+    }
+
     let connection;
     try {
       connection = await getConnection();
@@ -161,7 +196,10 @@ export class UserService {
       await connection.commit();
     } catch (err: any) {
       console.error("Error updating user login status:", err);
-      throw err;
+      console.warn("Falling back to mock service");
+      isDatabaseAvailable = false;
+      MockUserService.initializeDefaultUsers();
+      return MockUserService.updateUserLoginStatus(email, status);
     } finally {
       if (connection) {
         try {
@@ -175,6 +213,10 @@ export class UserService {
 
   // Get all signed-in users (for All Users Data page)
   static async getSignedInUsers(): Promise<SignedInUser[]> {
+    if (!isDatabaseAvailable) {
+      return MockUserService.getSignedInUsers();
+    }
+
     let connection;
     try {
       connection = await getConnection();
@@ -211,7 +253,10 @@ export class UserService {
       return [];
     } catch (err: any) {
       console.error("Error getting signed-in users:", err);
-      throw err;
+      console.warn("Falling back to mock service");
+      isDatabaseAvailable = false;
+      MockUserService.initializeDefaultUsers();
+      return MockUserService.getSignedInUsers();
     } finally {
       if (connection) {
         try {
@@ -225,6 +270,10 @@ export class UserService {
 
   // Get user by email
   static async getUserByEmail(email: string): Promise<User | null> {
+    if (!isDatabaseAvailable) {
+      return MockUserService.getUserByEmail(email);
+    }
+
     let connection;
     try {
       connection = await getConnection();
@@ -263,7 +312,10 @@ export class UserService {
       return null;
     } catch (err: any) {
       console.error("Error getting user by email:", err);
-      throw err;
+      console.warn("Falling back to mock service");
+      isDatabaseAvailable = false;
+      MockUserService.initializeDefaultUsers();
+      return MockUserService.getUserByEmail(email);
     } finally {
       if (connection) {
         try {

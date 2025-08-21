@@ -58,16 +58,42 @@ export default function AllUsersData() {
   const [leaveType, setLeaveType] = useState("");
   const { currentUser } = useRole();
 
-  // Get signed-in users from localStorage
+  // Get signed-in users from database API
   const [usersData, setUsersData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Load users from localStorage on component mount
+  // Load users from database API on component mount
   useEffect(() => {
-    const signedInUsers = localStorage.getItem("signedInUsers");
-    if (signedInUsers) {
-      setUsersData(JSON.parse(signedInUsers));
-    }
+    loadUsersFromDatabase();
   }, []);
+
+  const loadUsersFromDatabase = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/users/signed-in");
+      const result = await response.json();
+
+      if (result.success) {
+        setUsersData(result.users);
+      } else {
+        console.error("Failed to load users from database:", result.message);
+        // Fallback to localStorage if database fails
+        const signedInUsers = localStorage.getItem("signedInUsers");
+        if (signedInUsers) {
+          setUsersData(JSON.parse(signedInUsers));
+        }
+      }
+    } catch (error) {
+      console.error("Error loading users from database:", error);
+      // Fallback to localStorage if database fails
+      const signedInUsers = localStorage.getItem("signedInUsers");
+      if (signedInUsers) {
+        setUsersData(JSON.parse(signedInUsers));
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Filter users based on search term
   const filteredUsers = usersData.filter(
@@ -246,59 +272,66 @@ export default function AllUsersData() {
 
                   {/* Users List */}
                   <div className="space-y-4">
-                    {filteredUsers.map((user) => (
-                      <Card
-                        key={user.id}
-                        className="hover:shadow-md transition-shadow"
-                      >
-                        <CardContent className="p-4">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-4">
-                              <div className="h-10 w-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
-                                {user.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
+                    {loading ? (
+                      <div className="text-center py-8">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+                        <p className="mt-2 text-gray-600">Loading users...</p>
+                      </div>
+                    ) : (
+                      filteredUsers.map((user) => (
+                        <Card
+                          key={user.id}
+                          className="hover:shadow-md transition-shadow"
+                        >
+                          <CardContent className="p-4">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-4">
+                                <div className="h-10 w-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                  {user.name
+                                    .split(" ")
+                                    .map((n) => n[0])
+                                    .join("")}
+                                </div>
+                                <div>
+                                  <h3 className="font-semibold">{user.name}</h3>
+                                  <p className="text-sm text-gray-600">
+                                    {user.email}
+                                  </p>
+                                  <p className="text-sm text-gray-500">
+                                    {user.department}
+                                  </p>
+                                </div>
                               </div>
-                              <div>
-                                <h3 className="font-semibold">{user.name}</h3>
-                                <p className="text-sm text-gray-600">
-                                  {user.email}
-                                </p>
-                                <p className="text-sm text-gray-500">
-                                  {user.department}
-                                </p>
+                              <div className="flex items-center space-x-6">
+                                <div className="text-center">
+                                  <div className="flex items-center text-sm text-gray-600 mb-1">
+                                    <LogIn className="h-4 w-4 mr-1" />
+                                    Last Login
+                                  </div>
+                                  <p className="text-sm font-medium">
+                                    {user.lastLogin}
+                                  </p>
+                                </div>
+                                <div className="text-center">
+                                  <div className="flex items-center text-sm text-gray-600 mb-1">
+                                    <LogOut className="h-4 w-4 mr-1" />
+                                    Last Logout
+                                  </div>
+                                  <p className="text-sm font-medium">
+                                    {user.lastLogout}
+                                  </p>
+                                </div>
+                                <div className="text-center">
+                                  {getStatusBadge(user.status)}
+                                </div>
                               </div>
                             </div>
-                            <div className="flex items-center space-x-6">
-                              <div className="text-center">
-                                <div className="flex items-center text-sm text-gray-600 mb-1">
-                                  <LogIn className="h-4 w-4 mr-1" />
-                                  Last Login
-                                </div>
-                                <p className="text-sm font-medium">
-                                  {user.lastLogin}
-                                </p>
-                              </div>
-                              <div className="text-center">
-                                <div className="flex items-center text-sm text-gray-600 mb-1">
-                                  <LogOut className="h-4 w-4 mr-1" />
-                                  Last Logout
-                                </div>
-                                <p className="text-sm font-medium">
-                                  {user.lastLogout}
-                                </p>
-                              </div>
-                              <div className="text-center">
-                                {getStatusBadge(user.status)}
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
+                          </CardContent>
+                        </Card>
+                      ))
+                    )}
 
-                    {filteredUsers.length === 0 && (
+                    {!loading && filteredUsers.length === 0 && (
                       <div className="text-center py-8 text-gray-500">
                         <Users className="h-12 w-12 mx-auto mb-4 text-gray-300" />
                         <p>No users found matching your search.</p>

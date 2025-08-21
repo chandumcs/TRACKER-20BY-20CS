@@ -16,6 +16,7 @@ import {
   ClipboardList,
   MoreHorizontal,
   Filter,
+  Database,
   Shield,
 } from "lucide-react";
 import { useRole } from "@/contexts/RoleContext";
@@ -103,6 +104,8 @@ export default function Dashboard() {
       navigate("/shift-handover");
     } else if (sectionName === "users-data") {
       navigate("/all-users-data");
+    } else if (sectionName === "data-migration") {
+      navigate("/data-migration");
     } else if (sectionName === "others") {
       navigate("/others");
     }
@@ -182,6 +185,7 @@ export default function Dashboard() {
               hasPermission("daily-tracker"),
               hasPermission("shift-handover"),
               hasPermission("all-users-data"),
+              hasPermission("data-migration"),
               hasPermission("others"),
             ].filter(Boolean).length <= 2
               ? "grid-cols-1 lg:grid-cols-2"
@@ -305,6 +309,37 @@ export default function Dashboard() {
               <p className="mb-2">View and manage all user information</p>
               <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
                 <p className="text-sm text-white">No users data yet</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Data Migration */}
+          <div
+            className={`rounded-lg shadow-md p-6 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
+              activeSection === "data-migration"
+                ? "transform scale-105 shadow-2xl -translate-y-2"
+                : ""
+            }`}
+            style={{
+              backgroundImage:
+                "linear-gradient(-45deg, #8B5CF6, #7C3AED, #6D28D9, #5B21B6)",
+              backgroundSize: "400% 400%",
+              animation: "gradient 6s ease infinite",
+            }}
+            onClick={() => handleSectionClick("data-migration")}
+          >
+            <div className="flex items-center mb-4">
+              <Database className="h-6 w-6 text-white mr-3" />
+              <h2 className="text-xl font-semibold text-white">
+                Data Migration
+              </h2>
+            </div>
+            <div className="text-white/90">
+              <p className="mb-2">Migrate localStorage to Oracle database</p>
+              <div className="bg-white/20 backdrop-blur-sm p-3 rounded">
+                <p className="text-sm text-white">
+                  Sync local data with Oracle DB
+                </p>
               </div>
             </div>
           </div>

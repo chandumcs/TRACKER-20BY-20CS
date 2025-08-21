@@ -16,6 +16,7 @@ import DailyTracker from "./pages/DailyTracker";
 import ShiftHandover from "./pages/ShiftHandover";
 import AllUsersData from "./pages/AllUsersData";
 import Others from "./pages/Others";
+import DataMigration from "./pages/DataMigration";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -68,6 +69,14 @@ const App = () => (
               element={
                 <ProtectedRoute requiredPage="others">
                   <Others />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/data-migration"
+              element={
+                <ProtectedRoute requiredPage="data-migration">
+                  <DataMigration />
                 </ProtectedRoute>
               }
             />

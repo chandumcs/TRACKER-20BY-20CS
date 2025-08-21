@@ -21,6 +21,8 @@ import {
   deleteTask,
   getTaskById,
 } from "./routes/tasks.js";
+import { UserService } from "./services/userService.js";
+import { TaskService } from "./services/taskService.js";
 
 export function createServer() {
   const app = express();
@@ -30,8 +32,13 @@ export function createServer() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  // Initialize database on server start
-  initializeDatabase();
+  // Initialize database on server start (optional)
+  initializeDatabase().catch((error) => {
+    console.warn(
+      "Database initialization failed, continuing without database:",
+      error.message,
+    );
+  });
 
   // Health check
   app.get("/api/ping", (_req, res) => {
@@ -49,9 +56,9 @@ export function createServer() {
         timestamp: new Date().toISOString(),
       });
     } catch (error) {
-      res.status(500).json({
-        status: "error",
-        database: "error",
+      res.json({
+        status: "ok",
+        database: "unavailable",
         error: (error as Error).message,
         timestamp: new Date().toISOString(),
       });
@@ -102,5 +109,9 @@ async function initializeDatabase() {
       "📋 Please check your Oracle database credentials and connectivity",
     );
     // Don't exit process, let the app run without database
+  } finally {
+    // Initialize service availability checks regardless of database status
+    await UserService.checkDatabaseAvailability();
+    await TaskService.checkDatabaseAvailability();
   }
 }

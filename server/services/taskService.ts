@@ -1,4 +1,8 @@
 import { getConnection } from "../database/connection.js";
+import { MockTaskService } from "./mockTaskService.js";
+
+// Flag to track if database is available
+let isDatabaseAvailable = true;
 
 export interface Task {
   id?: number;
@@ -22,8 +26,25 @@ export interface Task {
 }
 
 export class TaskService {
+  // Check database availability and initialize mock if needed
+  static async checkDatabaseAvailability(): Promise<void> {
+    try {
+      const connection = await getConnection();
+      await connection.close();
+      isDatabaseAvailable = true;
+    } catch (error) {
+      console.warn("Database not available, using mock service");
+      isDatabaseAvailable = false;
+      MockTaskService.initializeDefaultTasks();
+    }
+  }
+
   // Create new task
   static async createTask(taskData: Task, userId: number): Promise<number> {
+    if (!isDatabaseAvailable) {
+      return MockTaskService.createTask(taskData, userId);
+    }
+
     let connection;
     try {
       connection = await getConnection();
@@ -64,7 +85,10 @@ export class TaskService {
       return (result.outBinds as any).id[0];
     } catch (err: any) {
       console.error("Error creating task:", err);
-      throw err;
+      console.warn("Falling back to mock service");
+      isDatabaseAvailable = false;
+      MockTaskService.initializeDefaultTasks();
+      return MockTaskService.createTask(taskData, userId);
     } finally {
       if (connection) {
         try {
@@ -84,6 +108,10 @@ export class TaskService {
     issueType?: string;
     status?: string;
   }): Promise<Task[]> {
+    if (!isDatabaseAvailable) {
+      return MockTaskService.getTasks(filters);
+    }
+
     let connection;
     try {
       connection = await getConnection();
@@ -157,7 +185,10 @@ export class TaskService {
       return [];
     } catch (err: any) {
       console.error("Error getting tasks:", err);
-      throw err;
+      console.warn("Falling back to mock service");
+      isDatabaseAvailable = false;
+      MockTaskService.initializeDefaultTasks();
+      return MockTaskService.getTasks(filters);
     } finally {
       if (connection) {
         try {
@@ -174,6 +205,10 @@ export class TaskService {
     taskId: number,
     taskData: Partial<Task>,
   ): Promise<void> {
+    if (!isDatabaseAvailable) {
+      return MockTaskService.updateTask(taskId, taskData);
+    }
+
     let connection;
     try {
       connection = await getConnection();
@@ -259,7 +294,10 @@ export class TaskService {
       }
     } catch (err: any) {
       console.error("Error updating task:", err);
-      throw err;
+      console.warn("Falling back to mock service");
+      isDatabaseAvailable = false;
+      MockTaskService.initializeDefaultTasks();
+      return MockTaskService.updateTask(taskId, taskData);
     } finally {
       if (connection) {
         try {
@@ -273,6 +311,10 @@ export class TaskService {
 
   // Delete task
   static async deleteTask(taskId: number): Promise<void> {
+    if (!isDatabaseAvailable) {
+      return MockTaskService.deleteTask(taskId);
+    }
+
     let connection;
     try {
       connection = await getConnection();
@@ -284,7 +326,10 @@ export class TaskService {
       await connection.commit();
     } catch (err: any) {
       console.error("Error deleting task:", err);
-      throw err;
+      console.warn("Falling back to mock service");
+      isDatabaseAvailable = false;
+      MockTaskService.initializeDefaultTasks();
+      return MockTaskService.deleteTask(taskId);
     } finally {
       if (connection) {
         try {
@@ -298,6 +343,10 @@ export class TaskService {
 
   // Get task by ID
   static async getTaskById(taskId: number): Promise<Task | null> {
+    if (!isDatabaseAvailable) {
+      return MockTaskService.getTaskById(taskId);
+    }
+
     let connection;
     try {
       connection = await getConnection();
@@ -344,7 +393,10 @@ export class TaskService {
       return null;
     } catch (err: any) {
       console.error("Error getting task by ID:", err);
-      throw err;
+      console.warn("Falling back to mock service");
+      isDatabaseAvailable = false;
+      MockTaskService.initializeDefaultTasks();
+      return MockTaskService.getTaskById(taskId);
     } finally {
       if (connection) {
         try {

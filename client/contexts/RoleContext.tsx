@@ -26,6 +26,7 @@ export interface RolePermissions {
   canAccessDailyTracker: boolean;
   canAccessShiftHandover: boolean;
   canAccessAllUsersData: boolean;
+  canAccessDataMigration: boolean;
   canAccessOthers: boolean;
   canManageUsers: boolean;
   readOnly?: boolean;
@@ -50,6 +51,7 @@ const getRolePermissions = (role: Role): RolePermissions => {
         canAccessDailyTracker: true,
         canAccessShiftHandover: true,
         canAccessAllUsersData: true,
+        canAccessDataMigration: true,
         canAccessOthers: true,
         canManageUsers: true,
         readOnly: false,
@@ -60,6 +62,7 @@ const getRolePermissions = (role: Role): RolePermissions => {
         canAccessDailyTracker: true,
         canAccessShiftHandover: true,
         canAccessAllUsersData: true,
+        canAccessDataMigration: false,
         canAccessOthers: true,
         canManageUsers: false,
         readOnly: false,
@@ -70,6 +73,7 @@ const getRolePermissions = (role: Role): RolePermissions => {
         canAccessDailyTracker: true,
         canAccessShiftHandover: true,
         canAccessAllUsersData: false,
+        canAccessDataMigration: false,
         canAccessOthers: false,
         canManageUsers: false,
         readOnly: false,
@@ -80,6 +84,7 @@ const getRolePermissions = (role: Role): RolePermissions => {
         canAccessDailyTracker: true,
         canAccessShiftHandover: false,
         canAccessAllUsersData: false,
+        canAccessDataMigration: false,
         canAccessOthers: false,
         canManageUsers: false,
         readOnly: false,
@@ -90,6 +95,7 @@ const getRolePermissions = (role: Role): RolePermissions => {
         canAccessDailyTracker: true,
         canAccessShiftHandover: false,
         canAccessAllUsersData: false,
+        canAccessDataMigration: false,
         canAccessOthers: false,
         canManageUsers: false,
         readOnly: false,
@@ -100,6 +106,7 @@ const getRolePermissions = (role: Role): RolePermissions => {
         canAccessDailyTracker: false,
         canAccessShiftHandover: false,
         canAccessAllUsersData: false,
+        canAccessDataMigration: false,
         canAccessOthers: false,
         canManageUsers: false,
         readOnly: true,
@@ -141,6 +148,8 @@ export function RoleProvider({ children }: { children: ReactNode }) {
         return permissions.canAccessShiftHandover;
       case "all-users-data":
         return permissions.canAccessAllUsersData;
+      case "data-migration":
+        return permissions.canAccessDataMigration;
       case "others":
         return permissions.canAccessOthers;
       default:

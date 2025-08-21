@@ -104,7 +104,7 @@ export default function Index() {
   };
   return (
     <div>
-      <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+      <div className="flex gap-5 max-md:flex-col max-md:gap-0 justify-center items-center">
         <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
           <div
             className="min-h-screen flex items-center justify-center px-4"
@@ -114,6 +114,7 @@ export default function Index() {
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
+              marginRight: "-2px",
             }}
           >
             <Card className="w-full max-w-md">

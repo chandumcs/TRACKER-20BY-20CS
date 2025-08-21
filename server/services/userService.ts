@@ -1,4 +1,8 @@
 import { getConnection } from "../database/connection.js";
+import { MockUserService } from "./mockUserService.js";
+
+// Flag to track if database is available
+let isDatabaseAvailable = true;
 
 export interface User {
   id?: number;

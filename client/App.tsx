@@ -72,6 +72,14 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/data-migration"
+              element={
+                <ProtectedRoute requiredPage="data-migration">
+                  <DataMigration />
+                </ProtectedRoute>
+              }
+            />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

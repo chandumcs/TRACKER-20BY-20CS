@@ -58,16 +58,42 @@ export default function AllUsersData() {
   const [leaveType, setLeaveType] = useState("");
   const { currentUser } = useRole();
 
-  // Get signed-in users from localStorage
+  // Get signed-in users from database API
   const [usersData, setUsersData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Load users from localStorage on component mount
+  // Load users from database API on component mount
   useEffect(() => {
-    const signedInUsers = localStorage.getItem("signedInUsers");
-    if (signedInUsers) {
-      setUsersData(JSON.parse(signedInUsers));
-    }
+    loadUsersFromDatabase();
   }, []);
+
+  const loadUsersFromDatabase = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/users/signed-in");
+      const result = await response.json();
+
+      if (result.success) {
+        setUsersData(result.users);
+      } else {
+        console.error("Failed to load users from database:", result.message);
+        // Fallback to localStorage if database fails
+        const signedInUsers = localStorage.getItem("signedInUsers");
+        if (signedInUsers) {
+          setUsersData(JSON.parse(signedInUsers));
+        }
+      }
+    } catch (error) {
+      console.error("Error loading users from database:", error);
+      // Fallback to localStorage if database fails
+      const signedInUsers = localStorage.getItem("signedInUsers");
+      if (signedInUsers) {
+        setUsersData(JSON.parse(signedInUsers));
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Filter users based on search term
   const filteredUsers = usersData.filter(

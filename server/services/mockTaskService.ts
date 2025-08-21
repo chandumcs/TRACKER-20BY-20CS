@@ -3,13 +3,21 @@ export interface Task {
   id?: number;
   title: string;
   description?: string;
-  status: string;
-  priority: string;
-  assignedTo: string;
-  createdBy: string;
+  product: string;
+  issueType: string;
+  status?: string;
+  priority?: string;
+  developer?: string;
+  uatPerson?: string;
+  productionPerson?: string;
+  reportedDate?: string;
+  fixedDate?: string;
+  closedDate?: string;
+  taskDate?: string;
+  timeInfo?: string;
+  createdBy?: number;
   createdAt?: Date;
   updatedAt?: Date;
-  dueDate?: Date;
 }
 
 let tasks: (Task & { id: number })[] = [];

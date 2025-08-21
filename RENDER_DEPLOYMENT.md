@@ -44,11 +44,13 @@ The application uses a smart build system that:
 ## How It Works
 
 ### Development Mode
+
 - Full Oracle database integration with `oracledb` package
 - Real-time fallback to mock services if DB is unavailable
 - Hot reload and development features
 
 ### Production Mode (Render)
+
 - Oracle dependencies are externalized during build
 - Application runs with mock services by default
 - Automatically switches to real DB if connection becomes available
@@ -73,6 +75,7 @@ If you encounter `Cannot find package 'oracledb'` errors:
 ## Features Available Without Oracle DB
 
 ✅ **Full Application Functionality**
+
 - User registration and authentication
 - Daily task tracking and management
 - User data management
@@ -80,6 +83,7 @@ If you encounter `Cannot find package 'oracledb'` errors:
 - Role-based access control
 
 ✅ **Production Ready**
+
 - Automatic fallback system
 - Error handling and logging
 - Session management

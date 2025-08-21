@@ -135,18 +135,14 @@ export default function DailyTracker() {
     setAppliedFilters(defaultFilters);
   };
 
-  const handleAddTask = (e: React.FormEvent) => {
+  const handleAddTask = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
 
-    const newTask = {
-      id: Date.now(),
+    const taskData = {
       title: formData.get("title") as string,
       product: formData.get("product") as string,
       issueType: formData.get("issueType") as string,
-      status: "pending",
-      time: `Added at ${new Date().toLocaleTimeString()}`,
-      date: new Date().toISOString().split("T")[0],
       description: formData.get("description") as string,
       developer: formData.get("developer") as string,
       uatPerson: formData.get("uatPerson") as string,
@@ -155,20 +151,37 @@ export default function DailyTracker() {
       reportedDate: formData.get("reportedDate") as string,
       fixedDate: formData.get("fixedDate") as string,
       closedDate: formData.get("closedDate") as string,
+      userEmail: localStorage.getItem("userEmail") || "system@olivecrypto.com",
     };
 
-    const updatedTasks = [...tasks, newTask];
-    setTasks(updatedTasks);
+    try {
+      const response = await fetch("/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(taskData),
+      });
 
-    // Save to localStorage for persistence
-    localStorage.setItem("dailyTasks", JSON.stringify(updatedTasks));
+      const result = await response.json();
 
-    // Reset form
-    (e.target as HTMLFormElement).reset();
+      if (result.success) {
+        // Reload tasks from database to get the latest data
+        await loadTasks();
 
-    // Show success message and switch to track tab
-    alert("Task added successfully!");
-    setActiveTab("track");
+        // Reset form
+        (e.target as HTMLFormElement).reset();
+
+        // Show success message and switch to track tab
+        alert("Task added successfully!");
+        setActiveTab("track");
+      } else {
+        alert(result.message || "Failed to add task. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error adding task:", error);
+      alert("Connection error. Please try again.");
+    }
   };
 
   const handleUpdateTask = (e: React.FormEvent) => {

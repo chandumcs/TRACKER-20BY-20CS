@@ -106,5 +106,9 @@ async function initializeDatabase() {
       "📋 Please check your Oracle database credentials and connectivity",
     );
     // Don't exit process, let the app run without database
+  } finally {
+    // Initialize service availability checks regardless of database status
+    await UserService.checkDatabaseAvailability();
+    await TaskService.checkDatabaseAvailability();
   }
 }

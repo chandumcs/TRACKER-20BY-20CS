@@ -148,6 +148,8 @@ export function RoleProvider({ children }: { children: ReactNode }) {
         return permissions.canAccessShiftHandover;
       case "all-users-data":
         return permissions.canAccessAllUsersData;
+      case "data-migration":
+        return permissions.canAccessDataMigration;
       case "others":
         return permissions.canAccessOthers;
       default:

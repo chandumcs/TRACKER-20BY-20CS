@@ -329,7 +329,7 @@ export default function Dashboard() {
             onClick={() => handleSectionClick("data-migration")}
           >
             <div className="flex items-center mb-4">
-              <Filter className="h-6 w-6 text-white mr-3" />
+              <Database className="h-6 w-6 text-white mr-3" />
               <h2 className="text-xl font-semibold text-white">
                 Data Migration
               </h2>

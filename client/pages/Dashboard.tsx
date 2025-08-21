@@ -16,6 +16,7 @@ import {
   ClipboardList,
   MoreHorizontal,
   Filter,
+  Database,
   Shield,
 } from "lucide-react";
 import { useRole } from "@/contexts/RoleContext";

@@ -27,7 +27,9 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter basename={import.meta.env.PROD ? "/TRACKER-20BY-20CS" : ""}>
+        <BrowserRouter
+          basename={import.meta.env.PROD ? "/TRACKER-20BY-20CS" : ""}
+        >
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/register" element={<Register />} />

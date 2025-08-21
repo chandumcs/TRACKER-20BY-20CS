@@ -103,6 +103,8 @@ export default function Dashboard() {
       navigate("/shift-handover");
     } else if (sectionName === "users-data") {
       navigate("/all-users-data");
+    } else if (sectionName === "data-migration") {
+      navigate("/data-migration");
     } else if (sectionName === "others") {
       navigate("/others");
     }

@@ -73,27 +73,35 @@ export default function Index() {
     }
 
     // Validate credentials against stored users
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-    const user = registeredUsers.find((u: any) => u.email === email && u.password === password);
+    const registeredUsers = JSON.parse(
+      localStorage.getItem("registeredUsers") || "[]",
+    );
+    const user = registeredUsers.find(
+      (u: any) => u.email === email && u.password === password,
+    );
 
     if (!user) {
-      setLoginError('Invalid email or password');
+      setLoginError("Invalid email or password");
       return;
     }
 
-    setLoginError(''); // Clear any previous errors
+    setLoginError(""); // Clear any previous errors
 
     // Track signed-in user
-    const signedInUsers = JSON.parse(localStorage.getItem('signedInUsers') || '[]');
+    const signedInUsers = JSON.parse(
+      localStorage.getItem("signedInUsers") || "[]",
+    );
     const currentTime = new Date().toLocaleString();
 
     // Check if user already exists in signed-in users
-    const existingUserIndex = signedInUsers.findIndex((signedUser: any) => signedUser.email === email);
+    const existingUserIndex = signedInUsers.findIndex(
+      (signedUser: any) => signedUser.email === email,
+    );
 
     if (existingUserIndex >= 0) {
       // Update existing user's login time
       signedInUsers[existingUserIndex].lastLogin = currentTime;
-      signedInUsers[existingUserIndex].status = 'Online';
+      signedInUsers[existingUserIndex].status = "Online";
     } else {
       // Add user to signed-in users with their registration data
       const signedInUser = {
@@ -114,8 +122,8 @@ export default function Index() {
       signedInUsers.push(signedInUser);
     }
 
-    localStorage.setItem('signedInUsers', JSON.stringify(signedInUsers));
-    localStorage.setItem('userEmail', email);
+    localStorage.setItem("signedInUsers", JSON.stringify(signedInUsers));
+    localStorage.setItem("userEmail", email);
 
     // Successful login - redirect to dashboard
     navigate("/dashboard");

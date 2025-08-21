@@ -277,57 +277,59 @@ export default function AllUsersData() {
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
                         <p className="mt-2 text-gray-600">Loading users...</p>
                       </div>
-                    ) : filteredUsers.map((user) => (
-                      <Card
-                        key={user.id}
-                        className="hover:shadow-md transition-shadow"
-                      >
-                        <CardContent className="p-4">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-4">
-                              <div className="h-10 w-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
-                                {user.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
+                    ) : (
+                      filteredUsers.map((user) => (
+                        <Card
+                          key={user.id}
+                          className="hover:shadow-md transition-shadow"
+                        >
+                          <CardContent className="p-4">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-4">
+                                <div className="h-10 w-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                  {user.name
+                                    .split(" ")
+                                    .map((n) => n[0])
+                                    .join("")}
+                                </div>
+                                <div>
+                                  <h3 className="font-semibold">{user.name}</h3>
+                                  <p className="text-sm text-gray-600">
+                                    {user.email}
+                                  </p>
+                                  <p className="text-sm text-gray-500">
+                                    {user.department}
+                                  </p>
+                                </div>
                               </div>
-                              <div>
-                                <h3 className="font-semibold">{user.name}</h3>
-                                <p className="text-sm text-gray-600">
-                                  {user.email}
-                                </p>
-                                <p className="text-sm text-gray-500">
-                                  {user.department}
-                                </p>
+                              <div className="flex items-center space-x-6">
+                                <div className="text-center">
+                                  <div className="flex items-center text-sm text-gray-600 mb-1">
+                                    <LogIn className="h-4 w-4 mr-1" />
+                                    Last Login
+                                  </div>
+                                  <p className="text-sm font-medium">
+                                    {user.lastLogin}
+                                  </p>
+                                </div>
+                                <div className="text-center">
+                                  <div className="flex items-center text-sm text-gray-600 mb-1">
+                                    <LogOut className="h-4 w-4 mr-1" />
+                                    Last Logout
+                                  </div>
+                                  <p className="text-sm font-medium">
+                                    {user.lastLogout}
+                                  </p>
+                                </div>
+                                <div className="text-center">
+                                  {getStatusBadge(user.status)}
+                                </div>
                               </div>
                             </div>
-                            <div className="flex items-center space-x-6">
-                              <div className="text-center">
-                                <div className="flex items-center text-sm text-gray-600 mb-1">
-                                  <LogIn className="h-4 w-4 mr-1" />
-                                  Last Login
-                                </div>
-                                <p className="text-sm font-medium">
-                                  {user.lastLogin}
-                                </p>
-                              </div>
-                              <div className="text-center">
-                                <div className="flex items-center text-sm text-gray-600 mb-1">
-                                  <LogOut className="h-4 w-4 mr-1" />
-                                  Last Logout
-                                </div>
-                                <p className="text-sm font-medium">
-                                  {user.lastLogout}
-                                </p>
-                              </div>
-                              <div className="text-center">
-                                {getStatusBadge(user.status)}
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
+                          </CardContent>
+                        </Card>
+                      ))
+                    )}
 
                     {!loading && filteredUsers.length === 0 && (
                       <div className="text-center py-8 text-gray-500">

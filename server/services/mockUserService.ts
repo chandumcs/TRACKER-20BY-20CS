@@ -8,7 +8,7 @@ export class MockUserService {
   // Register new user
   static async registerUser(userData: User): Promise<number> {
     // Check if user already exists
-    const existingUser = users.find(u => u.email === userData.email);
+    const existingUser = users.find((u) => u.email === userData.email);
     if (existingUser) {
       throw new Error("User already exists with this email");
     }
@@ -18,7 +18,7 @@ export class MockUserService {
       id: nextUserId++,
       registeredAt: new Date(),
       lastLogin: new Date(),
-      status: "Online"
+      status: "Online",
     };
 
     users.push(newUser);
@@ -26,8 +26,13 @@ export class MockUserService {
   }
 
   // Authenticate user
-  static async authenticateUser(email: string, password: string): Promise<User | null> {
-    const user = users.find(u => u.email === email && u.password === password);
+  static async authenticateUser(
+    email: string,
+    password: string,
+  ): Promise<User | null> {
+    const user = users.find(
+      (u) => u.email === email && u.password === password,
+    );
     if (user) {
       // Update last login
       user.lastLogin = new Date();
@@ -38,8 +43,11 @@ export class MockUserService {
   }
 
   // Update user login status
-  static async updateUserLoginStatus(email: string, status: "Online" | "Offline"): Promise<void> {
-    const user = users.find(u => u.email === email);
+  static async updateUserLoginStatus(
+    email: string,
+    status: "Online" | "Offline",
+  ): Promise<void> {
+    const user = users.find((u) => u.email === email);
     if (user) {
       user.status = status;
       if (status === "Online") {
@@ -53,8 +61,8 @@ export class MockUserService {
   // Get all signed-in users
   static async getSignedInUsers(): Promise<SignedInUser[]> {
     return users
-      .filter(user => user.lastLogin)
-      .map(user => ({
+      .filter((user) => user.lastLogin)
+      .map((user) => ({
         id: user.id!,
         name: user.name,
         email: user.email,
@@ -67,13 +75,13 @@ export class MockUserService {
         weekOffs: user.weekOffs || 52,
         usedWeekOffs: user.usedWeekOffs || 0,
         employeeId: user.employeeId || "",
-        role: user.role
+        role: user.role,
       }));
   }
 
   // Get user by email
   static async getUserByEmail(email: string): Promise<User | null> {
-    const user = users.find(u => u.email === email);
+    const user = users.find((u) => u.email === email);
     if (user) {
       return { ...user, password: "" }; // Don't return password
     }
@@ -97,7 +105,7 @@ export class MockUserService {
         weekOffs: 52,
         usedWeekOffs: 0,
         status: "Offline",
-        registeredAt: new Date()
+        registeredAt: new Date(),
       });
     }
   }

@@ -49,7 +49,9 @@ export class DataMigration {
    */
   static async migrateAllData(): Promise<{ success: boolean; log: string[] }> {
     this.migrationLog = [];
-    this.log("🚀 Starting data migration from localStorage to Oracle database...");
+    this.log(
+      "🚀 Starting data migration from localStorage to Oracle database...",
+    );
 
     try {
       // Check database connectivity
@@ -79,7 +81,7 @@ export class DataMigration {
     try {
       const response = await fetch("/api/health");
       const result = await response.json();
-      
+
       if (result.database === "connected") {
         this.log("✅ Oracle database connection verified");
         return true;
@@ -98,7 +100,7 @@ export class DataMigration {
    */
   private static async migrateUsers(): Promise<void> {
     this.log("👥 Starting user migration...");
-    
+
     const usersJson = localStorage.getItem("registeredUsers");
     if (!usersJson) {
       this.log("ℹ️ No users found in localStorage");
@@ -118,7 +120,9 @@ export class DataMigration {
         const existingUserResult = await existingUserResponse.json();
 
         if (existingUserResult.success && existingUserResult.user) {
-          this.log(`⏭️ User ${user.email} already exists in database, skipping...`);
+          this.log(
+            `⏭️ User ${user.email} already exists in database, skipping...`,
+          );
           continue;
         }
 
@@ -130,7 +134,7 @@ export class DataMigration {
           employeeId: user.employeeId,
           email: user.email,
           role: user.role,
-          password: user.password
+          password: user.password,
         };
 
         const response = await fetch("/api/users/register", {
@@ -147,7 +151,9 @@ export class DataMigration {
           this.log(`✅ Successfully migrated user: ${user.email}`);
           successCount++;
         } else {
-          this.log(`❌ Failed to migrate user ${user.email}: ${result.message}`);
+          this.log(
+            `❌ Failed to migrate user ${user.email}: ${result.message}`,
+          );
           errorCount++;
         }
       } catch (error) {
@@ -156,7 +162,9 @@ export class DataMigration {
       }
     }
 
-    this.log(`📈 User migration summary: ${successCount} successful, ${errorCount} failed`);
+    this.log(
+      `📈 User migration summary: ${successCount} successful, ${errorCount} failed`,
+    );
   }
 
   /**
@@ -164,7 +172,7 @@ export class DataMigration {
    */
   private static async migrateTasks(): Promise<void> {
     this.log("📋 Starting task migration...");
-    
+
     const tasksJson = localStorage.getItem("dailyTasks");
     if (!tasksJson) {
       this.log("ℹ️ No tasks found in localStorage");
@@ -194,7 +202,7 @@ export class DataMigration {
           taskDate: task.date,
           timeInfo: task.time,
           status: task.status,
-          userEmail: task.userEmail
+          userEmail: task.userEmail,
         };
 
         const response = await fetch("/api/tasks", {
@@ -211,7 +219,9 @@ export class DataMigration {
           this.log(`✅ Successfully migrated task: ${task.title}`);
           successCount++;
         } else {
-          this.log(`❌ Failed to migrate task ${task.title}: ${result.message}`);
+          this.log(
+            `❌ Failed to migrate task ${task.title}: ${result.message}`,
+          );
           errorCount++;
         }
       } catch (error) {
@@ -220,7 +230,9 @@ export class DataMigration {
       }
     }
 
-    this.log(`📈 Task migration summary: ${successCount} successful, ${errorCount} failed`);
+    this.log(
+      `📈 Task migration summary: ${successCount} successful, ${errorCount} failed`,
+    );
   }
 
   /**
@@ -234,7 +246,7 @@ export class DataMigration {
       leaveRequests: localStorage.getItem("leaveRequests"),
       currentUser: localStorage.getItem("currentUser"),
       userEmail: localStorage.getItem("userEmail"),
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     const backupString = JSON.stringify(backup, null, 2);
@@ -248,8 +260,8 @@ export class DataMigration {
   static restoreLocalStorageData(backupString: string): boolean {
     try {
       const backup = JSON.parse(backupString);
-      
-      Object.keys(backup).forEach(key => {
+
+      Object.keys(backup).forEach((key) => {
         if (key !== "timestamp" && backup[key]) {
           localStorage.setItem(key, backup[key]);
         }
@@ -271,10 +283,10 @@ export class DataMigration {
       "registeredUsers",
       "dailyTasks",
       "signedInUsers",
-      "leaveRequests"
+      "leaveRequests",
     ];
 
-    keysToRemove.forEach(key => {
+    keysToRemove.forEach((key) => {
       localStorage.removeItem(key);
     });
 
@@ -290,7 +302,7 @@ export class DataMigration {
     recommendMigration: boolean;
   }> {
     const localStorageHasData = !!(
-      localStorage.getItem("registeredUsers") || 
+      localStorage.getItem("registeredUsers") ||
       localStorage.getItem("dailyTasks")
     );
 
@@ -299,7 +311,7 @@ export class DataMigration {
     return {
       localStorageHasData,
       databaseAvailable,
-      recommendMigration: localStorageHasData && databaseAvailable
+      recommendMigration: localStorageHasData && databaseAvailable,
     };
   }
 

@@ -56,13 +56,13 @@ export default function DataMigrationPage() {
   const createBackup = () => {
     const backupData = DataMigration.backupLocalStorageData();
     setBackup(backupData);
-    
+
     // Download backup file
     const blob = new Blob([backupData], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `localStorage-backup-${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `localStorage-backup-${new Date().toISOString().split("T")[0]}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -77,7 +77,11 @@ export default function DataMigrationPage() {
       return;
     }
 
-    if (!confirm("Are you sure you want to start the migration? This will move all localStorage data to the Oracle database.")) {
+    if (
+      !confirm(
+        "Are you sure you want to start the migration? This will move all localStorage data to the Oracle database.",
+      )
+    ) {
       return;
     }
 
@@ -91,10 +95,16 @@ export default function DataMigrationPage() {
       setMigrationComplete(result.success);
 
       if (result.success) {
-        alert("Migration completed successfully! You can now use the application with Oracle database.");
-        
+        alert(
+          "Migration completed successfully! You can now use the application with Oracle database.",
+        );
+
         // Optionally clear localStorage after successful migration
-        if (confirm("Migration successful! Would you like to clear the old localStorage data?")) {
+        if (
+          confirm(
+            "Migration successful! Would you like to clear the old localStorage data?",
+          )
+        ) {
           DataMigration.clearLocalStorageData();
           await checkMigrationStatus(); // Refresh status
         }
@@ -103,7 +113,10 @@ export default function DataMigrationPage() {
       }
     } catch (error) {
       console.error("Migration error:", error);
-      setMigrationLog(prev => [...prev, `❌ Migration error: ${error.message}`]);
+      setMigrationLog((prev) => [
+        ...prev,
+        `❌ Migration error: ${error.message}`,
+      ]);
       alert("Migration failed due to an error. Please check the logs.");
     } finally {
       setIsMigrating(false);
@@ -192,19 +205,31 @@ export default function DataMigrationPage() {
                         <HardDrive className="h-5 w-5 text-blue-600" />
                         <span className="font-medium">LocalStorage Data</span>
                       </div>
-                      {getStatusBadge(migrationStatus.localStorageHasData, "Available")}
+                      {getStatusBadge(
+                        migrationStatus.localStorageHasData,
+                        "Available",
+                      )}
                     </div>
                     <div className="flex items-center justify-between p-4 border rounded-lg">
                       <div className="flex items-center space-x-3">
                         <Database className="h-5 w-5 text-green-600" />
                         <span className="font-medium">Oracle Database</span>
                       </div>
-                      {getStatusBadge(migrationStatus.databaseAvailable, "Connected")}
+                      {getStatusBadge(
+                        migrationStatus.databaseAvailable,
+                        "Connected",
+                      )}
                     </div>
                   </div>
 
                   {/* Migration Recommendation */}
-                  <Alert className={migrationStatus.recommendMigration ? "border-green-500" : "border-yellow-500"}>
+                  <Alert
+                    className={
+                      migrationStatus.recommendMigration
+                        ? "border-green-500"
+                        : "border-yellow-500"
+                    }
+                  >
                     {migrationStatus.recommendMigration ? (
                       <CheckCircle className="h-4 w-4" />
                     ) : (
@@ -213,11 +238,13 @@ export default function DataMigrationPage() {
                     <AlertDescription>
                       {migrationStatus.recommendMigration
                         ? "✅ Migration is recommended! Both localStorage data and Oracle database are available."
-                        : migrationStatus.localStorageHasData && !migrationStatus.databaseAvailable
-                        ? "⚠️ LocalStorage data found but Oracle database is not available. Please check database connection."
-                        : !migrationStatus.localStorageHasData && migrationStatus.databaseAvailable
-                        ? "ℹ️ Oracle database is available but no localStorage data found to migrate."
-                        : "❌ No migration needed. No localStorage data found and database is not available."}
+                        : migrationStatus.localStorageHasData &&
+                            !migrationStatus.databaseAvailable
+                          ? "⚠️ LocalStorage data found but Oracle database is not available. Please check database connection."
+                          : !migrationStatus.localStorageHasData &&
+                              migrationStatus.databaseAvailable
+                            ? "ℹ️ Oracle database is available but no localStorage data found to migrate."
+                            : "❌ No migration needed. No localStorage data found and database is not available."}
                     </AlertDescription>
                   </Alert>
 
@@ -250,7 +277,9 @@ export default function DataMigrationPage() {
             <CardContent>
               <div className="space-y-4">
                 <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <h4 className="font-semibold text-blue-800 mb-2">Migration Process:</h4>
+                  <h4 className="font-semibold text-blue-800 mb-2">
+                    Migration Process:
+                  </h4>
                   <ul className="text-sm text-blue-700 space-y-1">
                     <li>1. Check database connectivity</li>
                     <li>2. Migrate user accounts from localStorage</li>
@@ -281,7 +310,8 @@ export default function DataMigrationPage() {
 
                 {!migrationStatus.recommendMigration && (
                   <p className="text-sm text-gray-600 text-center">
-                    Migration is disabled. Please ensure both localStorage data and Oracle database are available.
+                    Migration is disabled. Please ensure both localStorage data
+                    and Oracle database are available.
                   </p>
                 )}
               </div>

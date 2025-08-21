@@ -33,8 +33,11 @@ export function createServer() {
   app.use(express.urlencoded({ extended: true }));
 
   // Initialize database on server start (optional)
-  initializeDatabase().catch(error => {
-    console.warn('Database initialization failed, continuing without database:', error.message);
+  initializeDatabase().catch((error) => {
+    console.warn(
+      "Database initialization failed, continuing without database:",
+      error.message,
+    );
   });
 
   // Health check

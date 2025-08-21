@@ -32,7 +32,7 @@ export class MockTaskService {
       createdBy: userId,
       status: taskData.status || "pending",
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     tasks.push(newTask);
@@ -50,53 +50,62 @@ export class MockTaskService {
     let filteredTasks = [...tasks];
 
     if (filters?.dateFrom) {
-      filteredTasks = filteredTasks.filter(task =>
-        task.taskDate && task.taskDate >= filters.dateFrom!
+      filteredTasks = filteredTasks.filter(
+        (task) => task.taskDate && task.taskDate >= filters.dateFrom!,
       );
     }
 
     if (filters?.dateTo) {
-      filteredTasks = filteredTasks.filter(task =>
-        task.taskDate && task.taskDate <= filters.dateTo!
+      filteredTasks = filteredTasks.filter(
+        (task) => task.taskDate && task.taskDate <= filters.dateTo!,
       );
     }
 
     if (filters?.product && filters.product !== "all") {
-      filteredTasks = filteredTasks.filter(task => task.product === filters.product);
+      filteredTasks = filteredTasks.filter(
+        (task) => task.product === filters.product,
+      );
     }
 
     if (filters?.issueType && filters.issueType !== "all") {
-      filteredTasks = filteredTasks.filter(task => task.issueType === filters.issueType);
+      filteredTasks = filteredTasks.filter(
+        (task) => task.issueType === filters.issueType,
+      );
     }
 
     if (filters?.status && filters.status !== "all") {
-      filteredTasks = filteredTasks.filter(task => task.status === filters.status);
+      filteredTasks = filteredTasks.filter(
+        (task) => task.status === filters.status,
+      );
     }
 
-    return filteredTasks.map(task => ({ ...task }));
+    return filteredTasks.map((task) => ({ ...task }));
   }
 
   // Get task by ID
   static async getTaskById(taskId: number): Promise<Task | null> {
-    const task = tasks.find(t => t.id === taskId);
+    const task = tasks.find((t) => t.id === taskId);
     return task ? { ...task } : null;
   }
 
   // Update task
-  static async updateTask(taskId: number, taskData: Partial<Task>): Promise<void> {
-    const taskIndex = tasks.findIndex(t => t.id === taskId);
+  static async updateTask(
+    taskId: number,
+    taskData: Partial<Task>,
+  ): Promise<void> {
+    const taskIndex = tasks.findIndex((t) => t.id === taskId);
     if (taskIndex !== -1) {
       tasks[taskIndex] = {
         ...tasks[taskIndex],
         ...taskData,
-        updatedAt: new Date()
+        updatedAt: new Date(),
       };
     }
   }
 
   // Delete task
   static async deleteTask(taskId: number): Promise<void> {
-    const taskIndex = tasks.findIndex(t => t.id === taskId);
+    const taskIndex = tasks.findIndex((t) => t.id === taskId);
     if (taskIndex !== -1) {
       tasks.splice(taskIndex, 1);
     }
@@ -105,7 +114,7 @@ export class MockTaskService {
   // Initialize with some sample tasks
   static initializeDefaultTasks() {
     if (tasks.length === 0) {
-      const today = new Date().toISOString().split('T')[0];
+      const today = new Date().toISOString().split("T")[0];
 
       tasks.push({
         id: nextTaskId++,
@@ -120,7 +129,7 @@ export class MockTaskService {
         timeInfo: "2h",
         createdBy: 1,
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       });
 
       tasks.push({
@@ -136,7 +145,7 @@ export class MockTaskService {
         timeInfo: "4h",
         createdBy: 1,
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       });
     }
   }

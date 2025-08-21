@@ -9,6 +9,7 @@ export async function createTask(req: Request, res: Response) {
       description,
       product,
       issueType,
+      status,
       priority,
       developer,
       uatPerson,
@@ -16,6 +17,8 @@ export async function createTask(req: Request, res: Response) {
       reportedDate,
       fixedDate,
       closedDate,
+      taskDate,
+      timeInfo,
       userEmail,
     } = req.body;
 
@@ -35,7 +38,7 @@ export async function createTask(req: Request, res: Response) {
       description,
       product,
       issueType,
-      status: "pending",
+      status: status || "pending",
       priority,
       developer,
       uatPerson,
@@ -43,8 +46,8 @@ export async function createTask(req: Request, res: Response) {
       reportedDate: reportedDate || null,
       fixedDate: fixedDate || null,
       closedDate: closedDate || null,
-      taskDate: new Date().toISOString().split("T")[0],
-      timeInfo: `Added at ${new Date().toLocaleTimeString()}`,
+      taskDate: taskDate || new Date().toISOString().split("T")[0],
+      timeInfo: timeInfo || `Added at ${new Date().toLocaleTimeString()}`,
     };
 
     const taskId = await TaskService.createTask(taskData, userId);

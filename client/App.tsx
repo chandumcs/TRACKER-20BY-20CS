@@ -16,6 +16,7 @@ import DailyTracker from "./pages/DailyTracker";
 import ShiftHandover from "./pages/ShiftHandover";
 import AllUsersData from "./pages/AllUsersData";
 import Others from "./pages/Others";
+import DataMigration from "./pages/DataMigration";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();

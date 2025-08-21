@@ -63,48 +63,61 @@ export default function Register() {
       return;
     }
 
-    try {
-      // Use database API for registration
-      const response = await fetch("/api/users/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+    // Store user credentials for login validation
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    const currentTime = new Date().toLocaleString();
 
-      const result = await response.json();
+    const newUser = {
+      id: Date.now(),
+      name: `${data.firstName} ${data.lastName}`,
+      userName: data.userName,
+      email: data.email,
+      password: data.password,
+      department: data.role === "admin" ? "Management" :
+                  data.role === "developer" ? "Development" :
+                  data.role === "production-support" ? "Production" :
+                  data.role === "uat-support" ? "Testing" :
+                  data.role === "manager" ? "Management" : "Unknown",
+      lastLogin: currentTime,
+      lastLogout: "Never",
+      status: "Online",
+      totalLeaves: 20,
+      usedLeaves: 0,
+      weekOffs: 52,
+      usedWeekOffs: 0,
+      employeeId: data.employeeId,
+      role: data.role,
+      registeredAt: currentTime,
+    };
 
-      if (!result.success) {
-        alert(result.message || "Registration failed. Please try again.");
-        return;
-      }
-
-      // Store user session data
-      localStorage.setItem("userEmail", data.email);
-
-      // Get user data from login after registration
-      const loginResponse = await fetch("/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: data.email, password: data.password }),
-      });
-
-      const loginResult = await loginResponse.json();
-      if (loginResult.success) {
-        localStorage.setItem("currentUser", JSON.stringify(loginResult.user));
-      }
-
-      // Registration successful
-      alert("Registration successful! Account created.");
-      navigate("/dashboard");
-    } catch (error) {
-      console.error("Registration error:", error);
-      alert("Connection error. Please try again.");
-      return;
+    // Check if user already exists (by email)
+    const existingUserIndex = registeredUsers.findIndex((user: any) => user.email === data.email);
+    if (existingUserIndex >= 0) {
+      registeredUsers[existingUserIndex] = { ...registeredUsers[existingUserIndex], ...newUser };
+    } else {
+      registeredUsers.push(newUser);
     }
+
+    localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
+
+    // Also add to signed-in users since they just registered
+    const signedInUsers = JSON.parse(localStorage.getItem("signedInUsers") || "[]");
+    const signedInUser = { ...newUser };
+    delete signedInUser.password;
+
+    const existingSignedInIndex = signedInUsers.findIndex((user: any) => user.email === data.email);
+    if (existingSignedInIndex >= 0) {
+      signedInUsers[existingSignedInIndex] = signedInUser;
+    } else {
+      signedInUsers.push(signedInUser);
+    }
+
+    localStorage.setItem("signedInUsers", JSON.stringify(signedInUsers));
+    localStorage.setItem("userEmail", data.email);
+
+    // Registration successful
+    alert("Registration successful! Account created.");
+    navigate("/dashboard");
   };
 
   return (

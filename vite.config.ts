@@ -15,6 +15,9 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     outDir: "dist/spa",
+    rollupOptions: {
+      external: ["oracledb"], // Exclude oracledb from client build
+    },
   },
   plugins: [react(), expressPlugin()],
   resolve: {
@@ -22,6 +25,9 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./client"),
       "@shared": path.resolve(__dirname, "./shared"),
     },
+  },
+  optimizeDeps: {
+    exclude: ["oracledb"], // Exclude from dependency optimization
   },
 }));
 

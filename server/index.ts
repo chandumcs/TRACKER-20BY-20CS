@@ -1,8 +1,6 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-<<<<<<< HEAD
-=======
 import {
   initializeOracleClient,
   createPool,
@@ -25,7 +23,6 @@ import {
 } from "./routes/tasks.js";
 import { UserService } from "./services/userService.js";
 import { TaskService } from "./services/taskService.js";
->>>>>>> refs/remotes/origin/main
 
 export function createServer() {
   const app = express();
@@ -35,8 +32,6 @@ export function createServer() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-<<<<<<< HEAD
-=======
   // Initialize database on server start (optional)
   initializeDatabase().catch((error) => {
     console.warn(
@@ -45,22 +40,12 @@ export function createServer() {
     );
   });
 
->>>>>>> refs/remotes/origin/main
   // Health check
   app.get("/api/ping", (_req, res) => {
     const ping = process.env.PING_MESSAGE ?? "ping";
     res.json({ message: ping });
   });
 
-<<<<<<< HEAD
-  // Basic health check
-  app.get("/api/health", (_req, res) => {
-    res.json({
-      status: "ok",
-      database: "localStorage",
-      timestamp: new Date().toISOString(),
-    });
-=======
   // Database health check
   app.get("/api/health", async (_req, res) => {
     try {
@@ -78,13 +63,10 @@ export function createServer() {
         timestamp: new Date().toISOString(),
       });
     }
->>>>>>> refs/remotes/origin/main
   });
 
   return app;
 }
-<<<<<<< HEAD
-=======
 
 // Initialize database connection and schema
 async function initializeDatabase() {
@@ -119,4 +101,3 @@ async function initializeDatabase() {
     await TaskService.checkDatabaseAvailability();
   }
 }
->>>>>>> refs/remotes/origin/main

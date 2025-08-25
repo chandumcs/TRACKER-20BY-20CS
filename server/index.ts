@@ -65,6 +65,20 @@ export function createServer() {
     }
   });
 
+  // User routes
+  app.post("/api/register", registerUser);
+  app.post("/api/login", loginUser);
+  app.post("/api/logout", logoutUser);
+  app.get("/api/users/signed-in", getSignedInUsers);
+  app.get("/api/users/:email", getUserByEmail);
+
+  // Task routes
+  app.post("/api/tasks", createTask);
+  app.get("/api/tasks", getTasks);
+  app.get("/api/tasks/:id", getTaskById);
+  app.put("/api/tasks/:id", updateTask);
+  app.delete("/api/tasks/:id", deleteTask);
+
   return app;
 }
 

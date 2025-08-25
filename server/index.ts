@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+<<<<<<< HEAD
 import {
   initializeOracleClient,
   createPool,
@@ -23,6 +24,9 @@ import {
 } from "./routes/tasks.js";
 import { UserService } from "./services/userService.js";
 import { TaskService } from "./services/taskService.js";
+=======
+import { uploadToS3, downloadFromS3 } from "./services/s3Service";
+>>>>>>> refs/remotes/origin/main
 
 export function createServer() {
   const app = express();
@@ -32,6 +36,7 @@ export function createServer() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
+<<<<<<< HEAD
   // Initialize database on server start (optional)
   initializeDatabase().catch((error) => {
     console.warn(
@@ -40,28 +45,49 @@ export function createServer() {
     );
   });
 
+=======
+>>>>>>> refs/remotes/origin/main
   // Health check
   app.get("/api/ping", (_req, res) => {
     const ping = process.env.PING_MESSAGE ?? "ping";
     res.json({ message: ping });
   });
 
+<<<<<<< HEAD
   // Database health check
   app.get("/api/health", async (_req, res) => {
+=======
+  // Basic health check
+  app.get("/api/health", (_req, res) => {
+    res.json({
+      status: "ok",
+      database: "localStorage",
+      timestamp: new Date().toISOString(),
+    });
+  });
+
+  // ✅ Upload file to S3
+  app.post("/api/s3/upload", async (req, res) => {
+>>>>>>> refs/remotes/origin/main
     try {
-      const dbConnected = await testConnection();
-      res.json({
-        status: "ok",
-        database: dbConnected ? "connected" : "disconnected",
-        timestamp: new Date().toISOString(),
-      });
-    } catch (error) {
-      res.json({
-        status: "ok",
-        database: "unavailable",
-        error: (error as Error).message,
-        timestamp: new Date().toISOString(),
-      });
+      const { filename, content } = req.body;
+      if (!filename || !content) {
+        return res.status(400).json({ error: "filename and content are required" });
+      }
+      const url = await uploadToS3(filename, content);
+      res.json({ message: "Uploaded", url });
+    } catch (err) {
+      res.status(500).json({ error: "Upload failed", details: err });
+    }
+  });
+
+  // ✅ Download file from S3
+  app.get("/api/s3/download/:filename", async (req, res) => {
+    try {
+      const data = await downloadFromS3(req.params.filename);
+      res.json({ content: data });
+    } catch (err) {
+      res.status(500).json({ error: "Download failed", details: err });
     }
   });
 
@@ -81,6 +107,7 @@ export function createServer() {
 
   return app;
 }
+<<<<<<< HEAD
 
 // Initialize database connection and schema
 async function initializeDatabase() {
@@ -115,3 +142,5 @@ async function initializeDatabase() {
     await TaskService.checkDatabaseAvailability();
   }
 }
+=======
+>>>>>>> refs/remotes/origin/main

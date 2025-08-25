@@ -130,21 +130,101 @@ export default function Index() {
   };
   return (
     <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
-      {/* Floating geometric elements */}
+      {/* Floating alien elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Main floating spheres */}
-        <div className="absolute top-20 left-20 w-40 h-40 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full opacity-60 blur-sm animate-pulse"></div>
-        <div className="absolute top-32 right-32 w-32 h-32 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full opacity-50 blur-sm animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-20 left-1/3 w-48 h-48 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full opacity-40 blur-md animate-pulse" style={{ animationDelay: '2s' }}></div>
+        {/* Alien 1 - Green alien */}
+        <div className="absolute top-16 left-16 animate-bounce" style={{ animationDelay: '0.5s' }}>
+          <div className="relative w-20 h-24">
+            {/* Head */}
+            <div className="w-16 h-16 bg-gradient-to-b from-green-400 to-green-500 rounded-full mx-auto relative">
+              {/* Eyes */}
+              <div className="absolute top-3 left-2 w-3 h-4 bg-black rounded-full"></div>
+              <div className="absolute top-3 right-2 w-3 h-4 bg-black rounded-full"></div>
+              {/* Mouth */}
+              <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-black rounded-full"></div>
+            </div>
+            {/* Body */}
+            <div className="w-8 h-8 bg-gradient-to-b from-green-500 to-green-600 rounded-lg mx-auto -mt-2"></div>
+          </div>
+        </div>
 
-        {/* Geometric shapes */}
-        <div className="absolute top-1/4 right-1/4 w-24 h-24 bg-gradient-to-br from-pink-500 to-rose-500 opacity-70 blur-none animate-bounce rotate-45" style={{ animationDelay: '0.5s', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
-        <div className="absolute bottom-1/4 right-1/3 w-28 h-28 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-lg opacity-60 blur-none animate-bounce rotate-12" style={{ animationDelay: '1.5s' }}></div>
-        <div className="absolute top-1/2 left-1/6 w-20 h-20 bg-gradient-to-br from-yellow-500 to-orange-500 opacity-80 blur-none animate-pulse rotate-45" style={{ animationDelay: '3s', clipPath: 'polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)' }}></div>
+        {/* UFO 1 */}
+        <div className="absolute top-20 right-20 animate-pulse" style={{ animationDelay: '1s' }}>
+          <div className="relative w-24 h-12">
+            {/* UFO dome */}
+            <div className="w-12 h-6 bg-gradient-to-b from-cyan-300 to-cyan-500 rounded-t-full mx-auto opacity-80"></div>
+            {/* UFO base */}
+            <div className="w-24 h-4 bg-gradient-to-b from-gray-300 to-gray-500 rounded-full -mt-2 opacity-80"></div>
+            {/* Lights */}
+            <div className="absolute bottom-0 left-2 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
+            <div className="absolute bottom-0 right-2 w-2 h-2 bg-yellow-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
+          </div>
+        </div>
 
-        {/* Additional accent elements */}
-        <div className="absolute top-1/3 left-1/2 w-16 h-16 bg-gradient-to-br from-violet-500 to-purple-500 rounded-full opacity-90 blur-none animate-ping" style={{ animationDelay: '2.5s' }}></div>
-        <div className="absolute bottom-1/3 left-1/4 w-12 h-12 bg-gradient-to-br from-blue-400 to-indigo-500 opacity-75 blur-none animate-spin" style={{ animationDelay: '4s', clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}></div>
+        {/* Alien 2 - Blue alien */}
+        <div className="absolute bottom-20 right-16 animate-bounce" style={{ animationDelay: '2s' }}>
+          <div className="relative w-18 h-22">
+            {/* Head */}
+            <div className="w-14 h-14 bg-gradient-to-b from-blue-400 to-blue-500 rounded-full mx-auto relative">
+              {/* Eyes */}
+              <div className="absolute top-2 left-1 w-4 h-5 bg-white rounded-full">
+                <div className="absolute top-1 left-1 w-2 h-2 bg-black rounded-full"></div>
+              </div>
+              <div className="absolute top-2 right-1 w-4 h-5 bg-white rounded-full">
+                <div className="absolute top-1 right-1 w-2 h-2 bg-black rounded-full"></div>
+              </div>
+            </div>
+            {/* Body */}
+            <div className="w-6 h-6 bg-gradient-to-b from-blue-500 to-blue-600 rounded-lg mx-auto -mt-1"></div>
+          </div>
+        </div>
+
+        {/* UFO 2 - Larger */}
+        <div className="absolute top-1/3 left-1/3 animate-pulse opacity-70" style={{ animationDelay: '3s' }}>
+          <div className="relative w-32 h-16">
+            {/* UFO dome */}
+            <div className="w-16 h-8 bg-gradient-to-b from-purple-300 to-purple-500 rounded-t-full mx-auto"></div>
+            {/* UFO base */}
+            <div className="w-32 h-6 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full -mt-3"></div>
+            {/* Beam */}
+            <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-gradient-to-b from-yellow-300 to-transparent opacity-50" style={{ clipPath: 'polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%)' }}></div>
+          </div>
+        </div>
+
+        {/* Alien 3 - Purple alien */}
+        <div className="absolute bottom-1/4 left-1/4 animate-bounce" style={{ animationDelay: '1.5s' }}>
+          <div className="relative w-16 h-20">
+            {/* Head */}
+            <div className="w-12 h-12 bg-gradient-to-b from-purple-400 to-purple-500 rounded-full mx-auto relative">
+              {/* Antennae */}
+              <div className="absolute -top-2 left-2 w-1 h-3 bg-purple-300"></div>
+              <div className="absolute -top-2 right-2 w-1 h-3 bg-purple-300"></div>
+              <div className="absolute -top-3 left-2 w-2 h-2 bg-yellow-400 rounded-full"></div>
+              <div className="absolute -top-3 right-2 w-2 h-2 bg-yellow-400 rounded-full"></div>
+              {/* Eyes */}
+              <div className="absolute top-3 left-2 w-2 h-3 bg-white rounded-full"></div>
+              <div className="absolute top-3 right-2 w-2 h-3 bg-white rounded-full"></div>
+            </div>
+            {/* Body */}
+            <div className="w-6 h-6 bg-gradient-to-b from-purple-500 to-purple-600 rounded-lg mx-auto -mt-1"></div>
+          </div>
+        </div>
+
+        {/* Small UFO */}
+        <div className="absolute top-1/2 right-1/3 animate-ping opacity-60" style={{ animationDelay: '4s' }}>
+          <div className="relative w-16 h-8">
+            <div className="w-8 h-4 bg-gradient-to-b from-green-300 to-green-500 rounded-t-full mx-auto"></div>
+            <div className="w-16 h-3 bg-gradient-to-b from-gray-300 to-gray-500 rounded-full -mt-1"></div>
+          </div>
+        </div>
+
+        {/* Planet */}
+        <div className="absolute bottom-1/3 right-1/4 animate-pulse opacity-50" style={{ animationDelay: '2.5s' }}>
+          <div className="w-20 h-20 bg-gradient-to-br from-orange-400 to-red-500 rounded-full relative">
+            {/* Planet rings */}
+            <div className="absolute inset-0 border-2 border-yellow-400 rounded-full scale-125 opacity-60"></div>
+          </div>
+        </div>
       </div>
 
       {/* Content */}

@@ -129,17 +129,20 @@ export default function Index() {
     navigate("/dashboard");
   };
   return (
-    <div
-      className="min-h-screen flex items-center justify-center px-4"
-      style={{
-        backgroundImage:
-          "url('https://cdn.builder.io/api/v1/image/assets%2F68d80f357eb44d4f91b54f9959266e98%2F8d16a2e9ec1743bca22b41627cfcc12a?format=webp&width=800')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+      {/* Floating geometric elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-20 blur-xl animate-pulse"></div>
+        <div className="absolute top-3/4 right-1/4 w-40 h-40 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full opacity-20 blur-xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full opacity-10 blur-2xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-16 right-16 w-24 h-24 bg-gradient-to-r from-pink-400 to-red-400 rounded-lg opacity-20 blur-lg animate-bounce rotate-45" style={{ animationDelay: '0.5s' }}></div>
+        <div className="absolute bottom-16 left-16 w-28 h-28 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-lg opacity-20 blur-lg animate-bounce rotate-12" style={{ animationDelay: '1.5s' }}></div>
+        <div className="absolute top-1/3 right-1/3 w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-15 blur-md animate-pulse" style={{ animationDelay: '3s' }}></div>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10">
+        <Card className="w-full max-w-md backdrop-blur-sm bg-white/10 border-white/20">
         <CardHeader className="space-y-1">
           <CardTitle className="text-center">
             <img
@@ -196,6 +199,7 @@ export default function Index() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

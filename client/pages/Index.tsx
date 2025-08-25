@@ -132,12 +132,19 @@ export default function Index() {
     <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
       {/* Floating geometric elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-20 blur-xl animate-pulse"></div>
-        <div className="absolute top-3/4 right-1/4 w-40 h-40 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full opacity-20 blur-xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full opacity-10 blur-2xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-16 right-16 w-24 h-24 bg-gradient-to-r from-pink-400 to-red-400 rounded-lg opacity-20 blur-lg animate-bounce rotate-45" style={{ animationDelay: '0.5s' }}></div>
-        <div className="absolute bottom-16 left-16 w-28 h-28 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-lg opacity-20 blur-lg animate-bounce rotate-12" style={{ animationDelay: '1.5s' }}></div>
-        <div className="absolute top-1/3 right-1/3 w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-15 blur-md animate-pulse" style={{ animationDelay: '3s' }}></div>
+        {/* Main floating spheres */}
+        <div className="absolute top-20 left-20 w-40 h-40 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full opacity-60 blur-sm animate-pulse"></div>
+        <div className="absolute top-32 right-32 w-32 h-32 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full opacity-50 blur-sm animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-20 left-1/3 w-48 h-48 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full opacity-40 blur-md animate-pulse" style={{ animationDelay: '2s' }}></div>
+
+        {/* Geometric shapes */}
+        <div className="absolute top-1/4 right-1/4 w-24 h-24 bg-gradient-to-br from-pink-500 to-rose-500 opacity-70 blur-none animate-bounce rotate-45" style={{ animationDelay: '0.5s', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
+        <div className="absolute bottom-1/4 right-1/3 w-28 h-28 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-lg opacity-60 blur-none animate-bounce rotate-12" style={{ animationDelay: '1.5s' }}></div>
+        <div className="absolute top-1/2 left-1/6 w-20 h-20 bg-gradient-to-br from-yellow-500 to-orange-500 opacity-80 blur-none animate-pulse rotate-45" style={{ animationDelay: '3s', clipPath: 'polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)' }}></div>
+
+        {/* Additional accent elements */}
+        <div className="absolute top-1/3 left-1/2 w-16 h-16 bg-gradient-to-br from-violet-500 to-purple-500 rounded-full opacity-90 blur-none animate-ping" style={{ animationDelay: '2.5s' }}></div>
+        <div className="absolute bottom-1/3 left-1/4 w-12 h-12 bg-gradient-to-br from-blue-400 to-indigo-500 opacity-75 blur-none animate-spin" style={{ animationDelay: '4s', clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}></div>
       </div>
 
       {/* Content */}
